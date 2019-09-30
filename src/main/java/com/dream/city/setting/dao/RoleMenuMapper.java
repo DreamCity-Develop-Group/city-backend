@@ -11,7 +11,6 @@ import java.util.Map;
 /**
  * Created by eric on 2017/10/30.
  */
-@Repository
 @Mapper
 public interface RoleMenuMapper {
 

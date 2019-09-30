@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-@Repository
 public interface RoleMapper {
     int deleteById(Integer id);
 

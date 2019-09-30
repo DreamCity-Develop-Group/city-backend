@@ -26,7 +26,7 @@
     where liked_id = #{likedId,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insertSelective" parameterType="com.dream.city.base.model.req.PlayerLikesReq" >
+  <insert id="insertSelective" parameterType="com.dream.city.player.entity.PlayerLikes" >
     insert into player_likes
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="likedId != null" >
@@ -69,7 +69,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dream.city.base.model.req.PlayerLikesReq" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.dream.city.player.entity.PlayerLikes" >
     update player_likes
     <set >
       <if test="likedPlayerId != null" >
@@ -91,14 +91,14 @@
     where liked_id = #{likedId,jdbcType=INTEGER}
   </update>
 
-  <select id="playerLikesCount" resultType="INTEGER" parameterType="com.dream.city.base.model.req.PlayerLikesReq" >
+  <select id="playerLikesCount" resultType="INTEGER" parameterType="com.dream.city.player.entity.PlayerLikes" >
     select sum(liked_invest_total)
     from player_likes
     where liked_player_id = #{likedPlayerId,jdbcType=VARCHAR}
   </select>
 
 
-  <select id="playerLikesList" resultMap="BaseResultMap" parameterType="com.dream.city.base.model.req.PlayerLikesReq" >
+  <select id="playerLikesList" resultMap="BaseResultMap" parameterType="com.dream.city.player.entity.PlayerLikes" >
     select <include refid="Base_Column_List" />
     from player_likes
     where liked_player_id = #{likedPlayerId,jdbcType=VARCHAR}

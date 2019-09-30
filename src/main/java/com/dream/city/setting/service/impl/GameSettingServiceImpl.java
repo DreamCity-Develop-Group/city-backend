@@ -1,6 +1,5 @@
 package com.dream.city.setting.service.impl;
 
-import com.dream.city.other.dao.NoticeMapper;
 import com.dream.city.setting.dao.GameSettingMapper;
 import com.dream.city.setting.entity.GameSetting;
 import com.dream.city.setting.enu.GameSettingType;
@@ -15,8 +14,6 @@ public class GameSettingServiceImpl implements GameSettingService {
 
     @Autowired
     private GameSettingMapper gameSettingMapper;
-    @Autowired
-    private NoticeMapper noticeMapper;
 
 
 
