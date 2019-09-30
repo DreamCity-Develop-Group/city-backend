@@ -27,25 +27,25 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="userForm">
-                        <input type="hidden" id="id" name="id" value="${empDto.id}">
+                        <input type="hidden" id="id" name="id" value="${userDto.id}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">用户名：</label>
                             <div class="col-sm-8">
-                                <input id="loginName" name="loginName" class="form-control" type="text" value="${empDto.loginName}" />
+                                <input id="loginName" name="loginName" class="form-control" type="text" value="${userDto.loginName}" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">昵称：</label>
                             <div class="col-sm-8">
-                                <input id="name" name="name" class="form-control" type="text" value="${empDto.name}">
+                                <input id="name" name="name" class="form-control" type="text" value="${userDto.name}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
                                 <select name="state" class="form-control">
-                                    <option value="0" <#if empDto.state == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if empDto.state == 1>selected="selected"</#if>>是</option>
+                                    <option value="0" <#if userDto.state == 0>selected="selected"</#if>>否</option>
+                                    <option value="1" <#if userDto.state == 1>selected="selected"</#if>>是</option>
                                 </select>
                             </div>
                         </div>
@@ -54,25 +54,25 @@
                             <div class="col-sm-8">
                                 <input id="createDate" name="createDate" readonly="readonly"
                                        class="laydate-icon form-control"
-                                       value="${empDto.createDate?string('yyyy-MM-dd HH:mm:ss')}">
+                                       value="${userDto.createDate?string('yyyy-MM-dd HH:mm:ss')}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">电话：</label>
                             <div class="col-sm-8">
-                                <input id="phone" name="phone" class="form-control" value="${empDto.phone}">
+                                <input id="phone" name="phone" class="form-control" value="${userDto.phone}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">E-mail：</label>
                             <div class="col-sm-8">
-                                <input id="email" name="email" class="form-control" value="${empDto.email}" />
+                                <input id="email" name="email" class="form-control" value="${userDto.email}" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <input id="remarks" name="remarks" class="form-control" value="${empDto.remarks}">
+                                <input id="remarks" name="remarks" class="form-control" value="${userDto.remarks}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -139,7 +139,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/emp/update",
+                        url: "${ctx}/user/update",
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){

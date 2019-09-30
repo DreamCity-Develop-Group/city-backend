@@ -69,7 +69,7 @@
 
   <select id="getUserRoleCountByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(*)
-    from user_role ur, `emp` u
+    from user_role ur, `user` u
     <where>
       ur.user_id = u.id
       and u.state = 1

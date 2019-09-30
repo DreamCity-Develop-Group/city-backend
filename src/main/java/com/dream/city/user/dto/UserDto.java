@@ -1,4 +1,4 @@
-package com.dream.city.emp.dto;
+package com.dream.city.user.dto;
 
 import com.dream.city.setting.dto.UserRoleDto;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-public class EmpDto {
+public class UserDto {
 
     /**
      * 用户id

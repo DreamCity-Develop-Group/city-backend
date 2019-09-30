@@ -1,4 +1,4 @@
-package com.dream.city.emp.entity;
+package com.dream.city.user.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 职员
+ *
  * @author Wvv
  */
 @Setter
 @Getter
 @ToString
-public class Emp implements Serializable {
+public class User implements Serializable {
     /**
      * 编号
      */

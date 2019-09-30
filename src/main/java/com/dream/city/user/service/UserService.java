@@ -1,7 +1,7 @@
-package com.dream.city.emp.service;
+package com.dream.city.user.service;
 
-import com.dream.city.emp.dto.EmpDto;
-import com.dream.city.emp.entity.Emp;
+import com.dream.city.user.dto.UserDto;
+import com.dream.city.user.entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -10,17 +10,17 @@ import java.util.Map;
  * 职员
  * Created by Wvv on 2017/11/02.
  */
-public interface EmpService {
+public interface UserService {
 
     /**
      * 创建用户
      */
-    int insert(EmpDto empDto);
+    int insert(UserDto userDto);
 
     /**
      * 更新用户
      */
-    int update(Emp emp);
+    int update(User user);
 
     /**
      * 获取用户列表
@@ -35,20 +35,20 @@ public interface EmpService {
     /**
      * 获取用户详情
      */
-    Emp getUserDetail(Integer id);
+    User getUserDetail(Integer id);
 
     /**
      * 更新用户相关信息
      */
-    int updateUser(EmpDto empDto);
+    int updateUser(UserDto userDto);
 
     /**
      * 删除用户相关信息（del_flag更新为1）
      */
-    void deleteUser(Emp emp);
+    void deleteUser(User user);
 
     /**
      * 根据用户名查找用户
      */
-    Emp findUserByName(String loginName);
+    User findUserByName(String loginName);
 }

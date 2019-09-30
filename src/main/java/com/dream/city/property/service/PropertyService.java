@@ -2,6 +2,7 @@ package com.dream.city.property.service;
 
 
 import com.dream.city.property.entity.Property;
+import com.github.pagehelper.Page;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface PropertyService {
      * @param record: inId 、inName
      * @return
      */
-    Property getInvestByInName(Property record);
+    Property getInvestByIdOrName(Property record);
 
     /**
      * 更新物业
@@ -34,10 +35,10 @@ public interface PropertyService {
 
     /**
      * 物业列表
-     * @param record
+     * @param pageReq
      * @return
      */
-    List<Property> getInvestLsit(Property record);
+    Page<Property> getInvestLsit(Page<Property> pageReq);
 
 
 

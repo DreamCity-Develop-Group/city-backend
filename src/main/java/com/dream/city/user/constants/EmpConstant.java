@@ -1,4 +1,4 @@
-package com.dream.city.emp.constants;
+package com.dream.city.user.constants;
 
 /**
  * @author Wvv

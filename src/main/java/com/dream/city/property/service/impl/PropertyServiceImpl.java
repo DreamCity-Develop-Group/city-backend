@@ -4,6 +4,7 @@ package com.dream.city.property.service.impl;
 import com.dream.city.property.dao.PropertyMapper;
 import com.dream.city.property.entity.Property;
 import com.dream.city.property.service.PropertyService;
+import com.github.pagehelper.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public Property getInvestByInName(Property record) {
+    public Property getInvestByIdOrName(Property record) {
         if (record.getInId() == null && StringUtils.isBlank(record.getInName())){
             return null;
         }
@@ -40,8 +41,12 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public List<Property> getInvestLsit(Property record) {
-        return investMapper.getInvestLsit(record);
+    public Page<Property> getInvestLsit(Page<Property> pageReq) {
+        Page<Property> page = new Page<>();
+        Property record = new Property();
+
+        investMapper.getInvestLsit(record);
+        return page;
     }
 
 }

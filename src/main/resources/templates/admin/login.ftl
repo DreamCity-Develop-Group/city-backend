@@ -50,7 +50,7 @@
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input id="username" name="username" type="text" class="form-control" placeholder="用户名" />
-															<i class="icon-emp"></i>
+															<i class="icon-user"></i>
 														</span>
 													</label>
 
@@ -85,7 +85,7 @@
 											</div>
 
 											<div>
-												<a href="#" onclick="show_box('signup-box'); return false;" class="emp-signup-link">
+												<a href="#" onclick="show_box('signup-box'); return false;" class="user-signup-link">
 													注册
 													<i class="icon-arrow-right"></i>
 												</a>
@@ -158,7 +158,7 @@
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="text" class="form-control" placeholder="Username" />
-															<i class="icon-emp"></i>
+															<i class="icon-user"></i>
 														</span>
 													</label>
 

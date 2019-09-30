@@ -17,15 +17,15 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-emp-photo" src="${ctx}/avatars/emp.jpg" alt="Jason's Photo" />
-                        <span class="emp-info">
+                        <img class="nav-user-photo" src="${ctx}/avatars/user.jpg" alt="Jason's Photo" />
+                        <span class="user-info">
 									<small>欢迎光临,</small>
 									Jason
 								</span>
 
                         <i class="icon-caret-down"></i>
                     </a>
-                    <ul class="emp-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
                             <a href="#">
                                 <i class="icon-cog"></i>
@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <i class="icon-emp"></i>
+                                <i class="icon-user"></i>
                                 个人资料
                             </a>
                         </li>

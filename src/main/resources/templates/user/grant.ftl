@@ -25,7 +25,7 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <p>为【${emp.loginName}】分配角色</p>
+                        <p>为【${user.loginName}】分配角色</p>
                     </div>
                 </div>
             </div>
@@ -37,8 +37,8 @@
                         <h5>选择角色</h5>
                     </div>
                     <div class="ibox-content">
-                        <form class="form-horizontal" id="frm" method="post" action="${ctx}/emp/update">
-                        	<input type="hidden" id="id" name="id" value="${emp.id}">
+                        <form class="form-horizontal" id="frm" method="post" action="${ctx}/user/update">
+                        	<input type="hidden" id="id" name="id" value="${user.id}">
                         	<div class="form-group">
                         		<#list roles as role>
                                 <div class="col-sm-12">
@@ -77,7 +77,7 @@
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/emp/update" ,
+   	    		   url: "${ctx}/user/update" ,
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){

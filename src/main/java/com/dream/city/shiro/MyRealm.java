@@ -1,7 +1,7 @@
 package com.dream.city.shiro;
 
-import com.dream.city.emp.entity.Emp;
-import com.dream.city.emp.service.EmpService;
+import com.dream.city.user.entity.User;
+import com.dream.city.user.service.UserService;
 import com.dream.city.setting.entity.Menu;
 import com.dream.city.setting.entity.Role;
 import com.dream.city.setting.service.MenuService;
@@ -35,7 +35,7 @@ public class MyRealm extends AuthorizingRealm {
 	}
 
 	@Autowired
-	private EmpService empService;
+	private UserService userService;
 
 	@Autowired
 	private RoleService roleService;
@@ -46,10 +46,10 @@ public class MyRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
-		Emp emp = (Emp) principals.getPrimaryPrincipal();
+		User user = (User) principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Emp dbEmp = empService.findUserByName(emp.getLoginName());
-		List<Role> roleList = roleService.getListByUserId(emp.getId());
+		User dbUser = userService.findUserByName(user.getLoginName());
+		List<Role> roleList = roleService.getListByUserId(user.getId());
 		Set<String> shiroPermissions = new HashSet<>();
 		Set<String> roleSet = new HashSet<String>();
 		for (Role role : roleList) {
@@ -70,24 +70,24 @@ public class MyRealm extends AuthorizingRealm {
 			AuthenticationToken token) throws AuthenticationException {
 		String loginName = (String) token.getPrincipal();
 
-		Emp emp = empService.findUserByName(loginName);
+		User user = userService.findUserByName(loginName);
 
 		String password = new String((char[]) token.getCredentials());
 
 		// 账号不存在
-		if (emp == null) {
+		if (user == null) {
 			throw new UnknownAccountException("账号或密码不正确");
 		}
 		// 密码错误
-		if (!EncryptUtils.encryptMD5(password).equals(emp.getPassword())) {
+		if (!EncryptUtils.encryptMD5(password).equals(user.getPassword())) {
 			throw new IncorrectCredentialsException("账号或密码不正确");
 		}
 		// 账号锁定
-		if (emp.getState() == 0) {
+		if (user.getState() == 0) {
 			throw new LockedAccountException("账号已被锁定,请联系管理员");
 		}
 
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(emp, password, getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 
 		return info;
 	}

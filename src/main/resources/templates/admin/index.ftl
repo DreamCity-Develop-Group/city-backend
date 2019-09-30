@@ -595,8 +595,8 @@
 														<div id="member-tab" class="tab-pane">
 															<div class="clearfix">
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
-																		<img alt="Bob Doe's avatar" src="${ctx}/avatars/emp.jpg" />
+																	<div class="user">
+																		<img alt="Bob Doe's avatar" src="${ctx}/avatars/user.jpg" />
 																	</div>
 
 																	<div class="body">
@@ -648,7 +648,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Joe Doe's avatar" src="${ctx}/avatars/avatar2.png" />
 																	</div>
 
@@ -701,7 +701,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Jim Doe's avatar" src="${ctx}/avatars/avatar.png" />
 																	</div>
 
@@ -754,7 +754,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Alex Doe's avatar" src="${ctx}/avatars/avatar5.png" />
 																	</div>
 
@@ -775,7 +775,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Bob Doe's avatar" src="${ctx}/avatars/avatar2.png" />
 																	</div>
 
@@ -796,7 +796,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Susan's avatar" src="${ctx}/avatars/avatar3.png" />
 																	</div>
 
@@ -817,7 +817,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Phil Doe's avatar" src="${ctx}/avatars/avatar4.png" />
 																	</div>
 
@@ -838,7 +838,7 @@
 																</div>
 
 																<div class="itemdiv memberdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Alexa Doe's avatar" src="${ctx}/avatars/avatar1.png" />
 																	</div>
 
@@ -875,7 +875,7 @@
 														<div id="comment-tab" class="tab-pane">
 															<div class="comments">
 																<div class="itemdiv commentdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Bob Doe's Avatar" src="${ctx}/avatars/avatar.png" />
 																	</div>
 
@@ -931,7 +931,7 @@
 																</div>
 
 																<div class="itemdiv commentdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Jennifer's Avatar" src="${ctx}/avatars/avatar1.png" />
 																	</div>
 
@@ -965,7 +965,7 @@
 																</div>
 
 																<div class="itemdiv commentdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Joe's Avatar" src="${ctx}/avatars/avatar2.png" />
 																	</div>
 
@@ -999,7 +999,7 @@
 																</div>
 
 																<div class="itemdiv commentdiv">
-																	<div class="emp">
+																	<div class="user">
 																		<img alt="Rita's Avatar" src="${ctx}/avatars/avatar3.png" />
 																	</div>
 
@@ -1066,7 +1066,7 @@
 												<div class="widget-main no-padding">
 													<div class="dialogs">
 														<div class="itemdiv dialogdiv">
-															<div class="emp">
+															<div class="user">
 																<img alt="Alexa's Avatar" src="${ctx}/avatars/avatar1.png" />
 															</div>
 
@@ -1090,7 +1090,7 @@
 														</div>
 
 														<div class="itemdiv dialogdiv">
-															<div class="emp">
+															<div class="user">
 																<img alt="John's Avatar" src="${ctx}/avatars/avatar.png" />
 															</div>
 
@@ -1114,8 +1114,8 @@
 														</div>
 
 														<div class="itemdiv dialogdiv">
-															<div class="emp">
-																<img alt="Bob's Avatar" src="${ctx}/avatars/emp.jpg" />
+															<div class="user">
+																<img alt="Bob's Avatar" src="${ctx}/avatars/user.jpg" />
 															</div>
 
 															<div class="body">
@@ -1139,7 +1139,7 @@
 														</div>
 
 														<div class="itemdiv dialogdiv">
-															<div class="emp">
+															<div class="user">
 																<img alt="Jim's Avatar" src="${ctx}/avatars/avatar4.png" />
 															</div>
 
@@ -1163,7 +1163,7 @@
 														</div>
 
 														<div class="itemdiv dialogdiv">
-															<div class="emp">
+															<div class="user">
 																<img alt="Alexa's Avatar" src="${ctx}/avatars/avatar1.png" />
 															</div>
 

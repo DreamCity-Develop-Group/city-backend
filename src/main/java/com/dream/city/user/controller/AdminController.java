@@ -1,4 +1,4 @@
-package com.dream.city.emp.controller;
+package com.dream.city.user.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

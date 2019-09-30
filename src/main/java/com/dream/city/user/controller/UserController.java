@@ -1,11 +1,11 @@
-package com.dream.city.emp.controller;
+package com.dream.city.user.controller;
 
 import com.dream.city.base.Codes;
 import com.dream.city.base.ResponseResult;
-import com.dream.city.emp.dto.EmpDto;
-import com.dream.city.emp.service.EmpService;
+import com.dream.city.user.dto.UserDto;
+import com.dream.city.user.entity.User;
+import com.dream.city.user.service.UserService;
 import com.dream.city.setting.entity.Role;
-import com.dream.city.emp.entity.Emp;
 import com.dream.city.setting.service.MenuService;
 import com.dream.city.setting.dto.UserRoleDto;
 import com.dream.city.setting.service.RoleService;
@@ -32,9 +32,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 @CrossOrigin
-public class EmpController {
+public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmpController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private MenuService menuService;
@@ -43,7 +43,7 @@ public class EmpController {
     private RoleService roleService;
 
     @Autowired
-    private EmpService empService;
+    private UserService userService;
 
     @Autowired
     private UserRoleService userRoleService;
@@ -58,19 +58,19 @@ public class EmpController {
 
     /**
      * 生成用户
-     * @param empDto
+     * @param userDto
      */
     @ResponseBody
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public ResponseResult insertOrUpdate(EmpDto empDto){
+    public ResponseResult insertOrUpdate(UserDto userDto){
 
-		if(StringUtils.isNotBlank(empDto.getPassword())){
-			empDto.setPassword(EncryptUtils.encryptMD5(empDto.getPassword()));
+		if(StringUtils.isNotBlank(userDto.getPassword())){
+			userDto.setPassword(EncryptUtils.encryptMD5(userDto.getPassword()));
 		}else {
 			return ResponseResult.error(Codes.PARAM_ERROR);
 		}
-		this.empService.insert(empDto);
-		Integer userId = empDto.getId();
+		this.userService.insert(userDto);
+		Integer userId = userDto.getId();
         return ResponseResult.ok(userId);
     }
 
@@ -79,11 +79,11 @@ public class EmpController {
      */
     @RequestMapping(value = "/getUser", method = RequestMethod.GET)
     public ResponseResult getUser(@RequestParam Integer id){
-        Emp emp = this.empService.getUserDetail(id);
+        User user = this.userService.getUserDetail(id);
         List<Role> roleList = this.roleService.getList(new HashMap());
         List<UserRoleDto> userRoleList = DataUtils.getDataArray(roleList, UserRoleDto.class);
-        EmpDto empDto = DataUtils.getData(emp, EmpDto.class);
-        empDto.setRoleList(userRoleList);
+        UserDto userDto = DataUtils.getData(user, UserDto.class);
+        userDto.setRoleList(userRoleList);
 
         //获取角色信息
         List<Integer> userIdList = new ArrayList<>();
@@ -91,7 +91,7 @@ public class EmpController {
         List<UserRoleDto> userRoleDtoList = this.userRoleService.getUserRoleList(userIdList);
 
         //用户对应角色列表是否被选中
-        for (UserRoleDto userRoleDto : empDto.getRoleList()){
+        for (UserRoleDto userRoleDto : userDto.getRoleList()){
             for (UserRoleDto selectRole : userRoleDtoList){
                 if (userRoleDto.getId().equals(selectRole.getRoleId())){
                     userRoleDto.setIsSelect(1);
@@ -99,7 +99,7 @@ public class EmpController {
             }
         }
 
-        return ResponseResult.ok(empDto);
+        return ResponseResult.ok(userDto);
     }
 
 	/**
@@ -108,23 +108,23 @@ public class EmpController {
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String toEdit(@PathVariable Integer id, ModelMap map){
-		Emp emp = empService.getUserDetail(id);
-		map.addAttribute("userDto", emp);
+		User user = userService.getUserDetail(id);
+		map.addAttribute("userDto", user);
 		return "/user/edit";
 	}
 
     /**
      * 更新用户信息
-     * @param empDto
+     * @param userDto
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-    public ResponseResult update(EmpDto empDto){
+    public ResponseResult update(UserDto userDto){
 
-        if(empDto.getId() == null){
+        if(userDto.getId() == null){
             return ResponseResult.error(Codes.PARAM_ERROR);
         }
-        int count = empService.updateUser(empDto);
+        int count = userService.updateUser(userDto);
         return ResponseResult.ok(count);
     }
 
@@ -139,20 +139,20 @@ public class EmpController {
 
     /**
      * 获取用户列表
-     * @param empDtoParam
+     * @param userDtoParam
      */
 	@ResponseBody
     @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public ResponseResult getList(EmpDto empDtoParam,
+    public ResponseResult getList(UserDto userDtoParam,
                                   @RequestParam(defaultValue = "1") Integer pageNumber,
                                   @RequestParam(defaultValue = "10") Integer pageSize){
         Map param = new HashMap();
         param.put("pageSize", pageSize);
         param.put("startRow", (pageNumber - 1) * pageSize);
-        if (StringUtils.isNotBlank(empDtoParam.getLoginName())){
-            param.put("loginName", empDtoParam.getLoginName());
+        if (StringUtils.isNotBlank(userDtoParam.getLoginName())){
+            param.put("loginName", userDtoParam.getLoginName());
         }
-        List<Map> userMapList = this.empService.getList(param);
+        List<Map> userMapList = this.userService.getList(param);
         //没有用户数据直接返回
         if(userMapList == null || userMapList.size() == 0){
             Map<String, Object> responseResult = new HashMap<>();
@@ -161,29 +161,29 @@ public class EmpController {
             return ResponseResult.ok(responseResult);
         }
 
-        List<EmpDto> userList = DataUtils.getDataArray(userMapList, EmpDto.class);
+        List<UserDto> userList = DataUtils.getDataArray(userMapList, UserDto.class);
 
         List<Integer> userIdList = new ArrayList<>();
-        for(EmpDto empDto : userList){
-            userIdList.add(empDto.getId());
+        for(UserDto userDto : userList){
+            userIdList.add(userDto.getId());
         }
         //获取用户角色信息
         List<UserRoleDto> userRoleVOList = this.userRoleService.getUserRoleList(userIdList);
-        for(EmpDto empDto : userList){
+        for(UserDto userDto : userList){
             //添加角色list
             for(UserRoleDto userRoleDto : userRoleVOList){
-                if(empDto.getId().equals(userRoleDto.getUserId())){
-                    if(empDto.getRoleList() == null){
-                        empDto.setRoleList(new ArrayList<>());
-                        empDto.getRoleList().add(userRoleDto);
+                if(userDto.getId().equals(userRoleDto.getUserId())){
+                    if(userDto.getRoleList() == null){
+                        userDto.setRoleList(new ArrayList<>());
+                        userDto.getRoleList().add(userRoleDto);
                     }else{
-                        empDto.getRoleList().add(userRoleDto);
+                        userDto.getRoleList().add(userRoleDto);
                     }
                 }
             }
         }
 
-        Integer count = this.empService.getCount(param);
+        Integer count = this.userService.getCount(param);
         Map<String, Object> responseResult = new HashMap<>();
         responseResult.put("userList",userList);
         responseResult.put("count", count);
@@ -201,17 +201,17 @@ public class EmpController {
         if(userId == null){
             return ResponseResult.error(Codes.PARAM_ERROR);
         }
-        Emp emp = new Emp();
-        emp.setId(userId);
-        emp.setDelFlag(1);
-        empService.deleteUser(emp);
-        return ResponseResult.ok(emp.getId());
+        User user = new User();
+        user.setId(userId);
+        user.setDelFlag(1);
+        userService.deleteUser(user);
+        return ResponseResult.ok(user.getId());
     }
 
     @RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
     public String grant(@PathVariable Integer id, ModelMap map) {
-        Emp emp = empService.getUserDetail(id);
-        map.put("user", emp);
+        User user = userService.getUserDetail(id);
+        map.put("user", user);
 
         List<Role> roleList = roleService.getListByUserId(id);
         List<Integer> roleIds = new ArrayList<Integer>();
