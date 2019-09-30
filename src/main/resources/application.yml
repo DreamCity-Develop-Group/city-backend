@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: dev
+server:
+  port: 8000
+
+mybatis:
+  config-location: classpath:log4j2.xml
+  type-aliases-package: com.dream.city.*.dao
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  #pagehelper��ҳ�������
+pagehelper:
+  reasonable: false
+  #pageheler����������Ĭ��Ϊfalse��
+  #���ú���ʱ�����pageNum<1���ѯ��һҳ�����pageNum>pages���ѯ���һҳ;
+  support-methods-arguments: true
+  params: countSql
+  helper-dialect: mysql
+#���ú���ʱ�����pageNum<1��pageNum>pages�᷵�ؿ����ݡ�

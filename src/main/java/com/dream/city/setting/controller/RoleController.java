@@ -1,8 +1,8 @@
 package com.dream.city.setting.controller;
 
 import com.dream.city.base.Codes;
-import com.dream.city.setting.entity.Role;
 import com.dream.city.base.ResponseResult;
+import com.dream.city.setting.entity.Role;
 import com.dream.city.setting.dto.RoleDto;
 import com.dream.city.setting.service.RoleService;
 import com.github.pagehelper.PageInfo;
