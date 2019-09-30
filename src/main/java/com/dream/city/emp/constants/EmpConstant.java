@@ -4,7 +4,7 @@ package com.dream.city.emp.constants;
  * @author Wvv
  * @date 2017/11/25
  **/
-public interface UserConstant {
+public interface EmpConstant {
 
     int LOGIN_PARAM_LACK = 1001;
 

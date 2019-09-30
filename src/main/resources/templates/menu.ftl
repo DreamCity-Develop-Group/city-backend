@@ -146,7 +146,7 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/user/index.ftl">
+                    <a href="${ctx}/emp/index.ftl">
                         <i class="icon-double-angle-right"></i>
                         用户管理
                     </a>

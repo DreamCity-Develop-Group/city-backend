@@ -93,7 +93,7 @@
                                             用户名：<input id="loginName" name="loginName" type="text"/>
                                         </div>
                                         <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-                                        <@shiro.hasPermission name="system:user:add">
+                                        <@shiro.hasPermission name="system:emp:add">
                                             <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
                                         </@shiro.hasPermission>
                                     </div>
@@ -250,7 +250,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/user/getList",
+                    url: "${ctx}/emp/getList",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -316,9 +316,9 @@
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
-                            operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:delete"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
-                            operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:grant"><button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;关联角色</button></@shiro.hasPermission>';
+                            var operateHtml = '<@shiro.hasPermission name="system:emp:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
+                            operateHtml = operateHtml + '<@shiro.hasPermission name="system:emp:delete"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
+                            operateHtml = operateHtml + '<@shiro.hasPermission name="system:emp:grant"><button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;关联角色</button></@shiro.hasPermission>';
                             return operateHtml;
                         }
                     }]
@@ -350,7 +350,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/user/add',
+                    content: '${ctx}/emp/add',
                     end: function(index){
                         $('#userListTable').bootstrapTable("refresh");
                     }
@@ -363,7 +363,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/user/grant/'  + id,
+                    content: '${ctx}/emp/grant/'  + id,
                     end: function(index){
                         $('#userListTable').bootstrapTable("refresh");
                     }
@@ -376,7 +376,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/user/edit/'  + id,
+                    content: '${ctx}/emp/edit/'  + id,
                     end: function(index){
                         $('#userListTable').bootstrapTable("refresh");
                     }
@@ -387,7 +387,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/user/delete/" + id,
+                        url: "${ctx}/emp/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#userListTable').bootstrapTable("refresh");

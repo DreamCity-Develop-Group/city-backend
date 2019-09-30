@@ -145,7 +145,7 @@
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/user/insert",
+   	    		   url: "${ctx}/emp/insert",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){

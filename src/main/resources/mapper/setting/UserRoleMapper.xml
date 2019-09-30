@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dream.city.setting.dao.UserRoleMapper">
 
-  <resultMap id="BaseResultMap" type="com.dream.city.setting.entity.UserRole">
+  <resultMap id="BaseResultMap" type="com.dream.city.emp.entity.UserRole">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <id column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
@@ -12,7 +12,7 @@
   </sql>
 
 
-  <insert id="insert" parameterType="com.dream.city.setting.entity.UserRole">
+  <insert id="insert" parameterType="com.dream.city.emp.entity.UserRole">
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -69,7 +69,7 @@
 
   <select id="getUserRoleCountByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(*)
-    from user_role ur, `user` u
+    from user_role ur, `emp` u
     <where>
       ur.user_id = u.id
       and u.state = 1

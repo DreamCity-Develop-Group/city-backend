@@ -1,25 +1,22 @@
-package com.dream.city.emp.dto;
+package com.dream.city.emp.entity;
 
-import com.dream.city.setting.dto.UserRoleDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
- *
+ * 职员
  * @author Wvv
- * @date 2017/11/01
  */
 @Setter
 @Getter
 @ToString
-public class UserDto {
-
+public class Emp implements Serializable {
     /**
-     * 用户id
+     * 编号
      */
     private Integer id;
 
@@ -71,7 +68,7 @@ public class UserDto {
     /**
      * 最后登陆IP
      */
-    private String loginIp;
+        private String loginIp;
 
     /**
      * 最后登陆时间
@@ -86,7 +83,7 @@ public class UserDto {
     /**
      * 创建时间
      */
-    private String createDate;
+    private Date createDate;
 
     /**
      * 更新者
@@ -96,7 +93,7 @@ public class UserDto {
     /**
      * 更新时间
      */
-    private String updateDate;
+    private Date updateDate;
 
     /**
      * 备注信息
@@ -106,16 +103,6 @@ public class UserDto {
     /**
      * 删除标记
      */
-    private String delFlag;
-
-    /**
-     * 角色id列表
-     */
-    private List<Integer> roleIdList;
-
-    /**
-     * 用户对应的角色列表
-     */
-    private List<UserRoleDto> roleList;
+    private Integer delFlag;
 
 }

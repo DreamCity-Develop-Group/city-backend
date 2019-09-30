@@ -42,11 +42,11 @@ CREATE TABLE `menu` (
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES ('1', null, '系统管理', '10000', null, null, '0', 'system', null, '2017-09-20 15:52:54', 'admin', '2017-09-20 15:52:54', null, '0');
-INSERT INTO `menu` VALUES ('2', '1', '用户管理', '10100', null, null, '1', 'system:user', null, '2017-09-20 15:55:34', 'admin', '2017-09-20 15:55:34', null, '0');
-INSERT INTO `menu` VALUES ('3', '2', '编辑用户', '10101', null, null, '2', 'system:user:edit', null, '2018-05-14 22:45:54', null, '2018-05-14 22:45:54', null, '0');
-INSERT INTO `menu` VALUES ('4', '2', '删除用户', '10102', null, null, '2', 'system:user:delete', null, '2018-05-14 22:47:25', null, '2018-05-14 22:47:25', null, '0');
-INSERT INTO `menu` VALUES ('5', '2', '分配角色', '10103', null, null, '2', 'system:user:grant', null, '2018-05-14 22:48:04', null, '2018-05-14 22:48:04', null, '0');
-INSERT INTO `menu` VALUES ('6', '2', '添加用户', '10104', null, null, '2', 'system:user:add', null, '2018-05-14 22:49:16', null, '2018-05-14 22:49:16', null, '0');
+INSERT INTO `menu` VALUES ('2', '1', '用户管理', '10100', null, null, '1', 'system:emp', null, '2017-09-20 15:55:34', 'admin', '2017-09-20 15:55:34', null, '0');
+INSERT INTO `menu` VALUES ('3', '2', '编辑用户', '10101', null, null, '2', 'system:emp:edit', null, '2018-05-14 22:45:54', null, '2018-05-14 22:45:54', null, '0');
+INSERT INTO `menu` VALUES ('4', '2', '删除用户', '10102', null, null, '2', 'system:emp:delete', null, '2018-05-14 22:47:25', null, '2018-05-14 22:47:25', null, '0');
+INSERT INTO `menu` VALUES ('5', '2', '分配角色', '10103', null, null, '2', 'system:emp:grant', null, '2018-05-14 22:48:04', null, '2018-05-14 22:48:04', null, '0');
+INSERT INTO `menu` VALUES ('6', '2', '添加用户', '10104', null, null, '2', 'system:emp:add', null, '2018-05-14 22:49:16', null, '2018-05-14 22:49:16', null, '0');
 INSERT INTO `menu` VALUES ('7', '1', '角色管理', '10200', null, null, '1', 'system:role', null, '2018-05-19 22:03:19', null, '2018-05-19 22:03:19', null, '0');
 INSERT INTO `menu` VALUES ('8', '7', '添加角色', '10201', null, null, '2', 'system:role:add', null, '2018-05-19 23:08:02', null, '2018-05-19 23:08:02', null, '0');
 INSERT INTO `menu` VALUES ('9', '7', '编辑角色', '10202', null, null, '2', 'system:role:edit', null, '2018-05-19 23:08:02', null, '2018-05-19 23:08:02', null, '0');
@@ -120,10 +120,10 @@ INSERT INTO `role_menu` VALUES ('1', '15');
 INSERT INTO `role_menu` VALUES ('1', '48');
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for emp
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `emp`;
+CREATE TABLE `emp` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `login_name` varchar(100) NOT NULL COMMENT '登录名',
   `password` varchar(100) NOT NULL COMMENT '密码',
@@ -149,13 +149,13 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
--- Records of user
+-- Records of emp
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '管理员', null, null, null, null, null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
-INSERT INTO `user` VALUES ('2', 'superadmin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '超级管理员', null, null, null, null, null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
-INSERT INTO `user` VALUES ('3', 'test2', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '测试2', 'test@mail.cn', '13100131000', null, null, null, null, null, '2017-11-05 23:14:22', null, '2017-11-05 23:14:22', null, '0');
-INSERT INTO `user` VALUES ('4', 'test1', 'f4cc399f0effd13c888e310ea2cf5399', '1', null, 'test1', 'tw@mail.com', '13800138000', null, null, null, null, null, '2018-05-26 00:00:45', null, '2018-05-16 23:27:53', '123eee', '0');
-INSERT INTO `user` VALUES ('5', 'test1', 'e358efa489f58062f10dd7316b65649e', '1', null, 'test', '123@main.com', '123', null, null, null, null, null, '2018-05-19 20:13:03', null, '2018-05-19 20:13:19', '123', '0');
+INSERT INTO `emp` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '管理员', null, null, null, null, null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
+INSERT INTO `emp` VALUES ('2', 'superadmin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '超级管理员', null, null, null, null, null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
+INSERT INTO `emp` VALUES ('3', 'test2', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '测试2', 'test@mail.cn', '13100131000', null, null, null, null, null, '2017-11-05 23:14:22', null, '2017-11-05 23:14:22', null, '0');
+INSERT INTO `emp` VALUES ('4', 'test1', 'f4cc399f0effd13c888e310ea2cf5399', '1', null, 'test1', 'tw@mail.com', '13800138000', null, null, null, null, null, '2018-05-26 00:00:45', null, '2018-05-16 23:27:53', '123eee', '0');
+INSERT INTO `emp` VALUES ('5', 'test1', 'e358efa489f58062f10dd7316b65649e', '1', null, 'test', '123@main.com', '123', null, null, null, null, null, '2018-05-19 20:13:03', null, '2018-05-19 20:13:19', '123', '0');
 
 -- ----------------------------
 -- Table structure for user_role

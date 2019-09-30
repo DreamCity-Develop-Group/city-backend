@@ -1,13 +1,10 @@
 package com.dream.city.setting.service.impl;
 
-import com.dream.city.base.model.Result;
+import com.dream.city.other.dao.NoticeMapper;
+import com.dream.city.setting.dao.GameSettingMapper;
 import com.dream.city.setting.entity.GameSetting;
-import com.dream.city.base.model.entity.Notice;
-import com.dream.city.base.model.enu.GameSettingType;
-import com.dream.city.base.utils.RedisUtils;
-import com.dream.city.domain.mapper.GameSettingMapper;
-import com.dream.city.domain.mapper.NoticeMapper;
-import com.dream.city.service.GameSettingService;
+import com.dream.city.setting.enu.GameSettingType;
+import com.dream.city.setting.service.GameSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +17,6 @@ public class GameSettingServiceImpl implements GameSettingService {
     private GameSettingMapper gameSettingMapper;
     @Autowired
     private NoticeMapper noticeMapper;
-    @Autowired
-    RedisUtils redisUtils;
 
 
 
@@ -45,7 +40,7 @@ public class GameSettingServiceImpl implements GameSettingService {
         return gameSettingMapper.updateByPrimaryKeySelective(gameSetting)>0?Boolean.TRUE:Boolean.FALSE;
     }
 
-    @Override
+    /*@Override
     public Result getGameNotices(){
         //取出公告
         List<Notice> notices = new ArrayList<>();
@@ -61,5 +56,5 @@ public class GameSettingServiceImpl implements GameSettingService {
         }
         //返回公告
         return new Result(true,"取公告消息成功",200,notices);
-    }
+    }*/
 }

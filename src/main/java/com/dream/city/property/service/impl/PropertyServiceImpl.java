@@ -1,7 +1,7 @@
 package com.dream.city.property.service.impl;
 
 
-import com.dream.city.property.domain.mapper.PropertyMapper;
+import com.dream.city.property.dao.PropertyMapper;
 import com.dream.city.property.entity.Property;
 import com.dream.city.property.service.PropertyService;
 import org.apache.commons.lang3.StringUtils;

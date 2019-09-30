@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dream.city.setting.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.dream.city.setting.entity.User">
+<mapper namespace="com.dream.city.emp.dao.EmpMapper">
+  <resultMap id="BaseResultMap" type="com.dream.city.emp.entity.Emp">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="login_name" jdbcType="VARCHAR" property="loginName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -48,15 +48,15 @@
   <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user
+    from city_emp
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteById" parameterType="java.lang.Integer">
-    delete from user
+  <delete id="deleteByUuid" parameterType="java.lang.Integer">
+    delete from city_emp
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insertUser" parameterType="com.dream.city.setting.entity.User" useGeneratedKeys="true" keyProperty="id">
-    insert into user
+  <insert id="insertUser" parameterType="com.dream.city.emp.entity.Emp" useGeneratedKeys="true" keyProperty="id">
+    insert into city_emp
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="loginName != null">
         login_name,
@@ -164,8 +164,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateById" parameterType="com.dream.city.setting.entity.User">
-    update user
+  <update id="updateById" parameterType="com.dream.city.emp.entity.Emp">
+    update city_emp
     <set>
       <if test="id != null">
         id = #{id},
@@ -230,7 +230,7 @@
   <select id="getList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from user
+    from city_emp
     <include refid="Example_Where_Clause" />
     <include refid="Exclude_Delete_Flag" />
     <if test="pageSize != null and startRow != null">
@@ -240,7 +240,7 @@
   <select id="getCount" resultType="java.lang.Integer">
     select
       count(1)
-    from user
+    from city_emp
     <include refid="Example_Where_Clause" />
     <include refid="Exclude_Delete_Flag" />
   </select>
@@ -248,7 +248,7 @@
   <select id="findUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from user
+    from city_emp
     where login_name = #{loginName}
   </select>
 </mapper>

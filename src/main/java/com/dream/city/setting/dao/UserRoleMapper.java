@@ -1,7 +1,7 @@
 package com.dream.city.setting.dao;
 
-import com.dream.city.setting.entity.UserRole;
 import com.dream.city.setting.dto.UserRoleDto;
+import com.dream.city.setting.entity.UserRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
