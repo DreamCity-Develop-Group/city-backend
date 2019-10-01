@@ -1,4 +1,4 @@
-package com.dream.city.trade.entity;
+package com.dream.city.verify.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

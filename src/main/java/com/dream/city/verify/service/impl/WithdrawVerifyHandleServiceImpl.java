@@ -1,4 +1,4 @@
-package com.dream.city.trade.service.impl;
+package com.dream.city.verify.service.impl;
 
 import com.dream.city.account.entity.PlayerAccount;
 import com.dream.city.account.service.AccountService;
@@ -6,17 +6,17 @@ import com.dream.city.base.Codes;
 import com.dream.city.base.Result;
 import com.dream.city.exception.OperationException;
 import com.dream.city.trade.dto.PlayerAccountReq;
-import com.dream.city.trade.dto.VerifyReq;
+import com.dream.city.verify.dto.VerifyReq;
 import com.dream.city.trade.entity.PlayerEarning;
 import com.dream.city.trade.entity.PlayerTrade;
-import com.dream.city.trade.entity.TradeVerify;
+import com.dream.city.verify.entity.TradeVerify;
 import com.dream.city.trade.enu.AmountDynType;
 import com.dream.city.trade.enu.TradeAmountType;
-import com.dream.city.trade.enu.VerifyStatus;
+import com.dream.city.verify.enu.VerifyStatus;
 import com.dream.city.trade.service.EarningService;
 import com.dream.city.trade.service.PlayerTradeService;
-import com.dream.city.trade.service.TradeVerifyService;
-import com.dream.city.trade.service.WithdrawVerifyHandleService;
+import com.dream.city.verify.service.TradeVerifyService;
+import com.dream.city.verify.service.WithdrawVerifyHandleService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

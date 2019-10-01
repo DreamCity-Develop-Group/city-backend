@@ -1,9 +1,9 @@
-package com.dream.city.invest.service;
+package com.dream.city.verify.service;
 
 
 import com.dream.city.base.Result;
 import com.dream.city.exception.OperationException;
-import com.dream.city.trade.dto.VerifyReq;
+import com.dream.city.verify.dto.VerifyReq;
 
 /**
  *  投资审核

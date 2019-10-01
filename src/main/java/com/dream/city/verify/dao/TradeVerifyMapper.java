@@ -1,7 +1,7 @@
-package com.dream.city.trade.dao;
+package com.dream.city.verify.dao;
 
 
-import com.dream.city.trade.entity.TradeVerify;
+import com.dream.city.verify.entity.TradeVerify;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

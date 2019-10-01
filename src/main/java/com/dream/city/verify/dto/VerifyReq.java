@@ -1,4 +1,4 @@
-package com.dream.city.trade.dto;
+package com.dream.city.verify.dto;
 
 import java.io.Serializable;
 

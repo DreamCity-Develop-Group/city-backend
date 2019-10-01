@@ -8,5 +8,69 @@
     <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
+  <sql id="Base_Column_List" >
+    notice_id, notice_content, notice_state, createtime
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="NoticeBaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from game_notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from game_notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.dream.city.other.entity.Notice" >
+    insert into game_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        notice_id,
+      </if>
+      <if test="noticeContent != null" >
+        notice_content,
+      </if>
+      <if test="noticeState != null" >
+        notice_state,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="noticeContent != null" >
+        #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeState != null" >
+        #{noticeState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dream.city.other.entity.Notice" >
+    update game_notice
+    <set >
+      <if test="noticeContent != null" >
+        notice_content = #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeState != null" >
+        notice_state = #{noticeState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+
 
 </mapper>

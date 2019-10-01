@@ -1,4 +1,4 @@
-package com.dream.city.trade.enu;
+package com.dream.city.verify.enu;
 
 /**
  * 审核状态(待审核wait，审核中verifying，pass审核通过，notpass审核不通过)

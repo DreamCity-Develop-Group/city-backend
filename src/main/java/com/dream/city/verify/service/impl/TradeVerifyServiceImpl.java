@@ -1,8 +1,8 @@
-package com.dream.city.trade.service.impl;
+package com.dream.city.verify.service.impl;
 
-import com.dream.city.trade.dao.TradeVerifyMapper;
-import com.dream.city.trade.entity.TradeVerify;
-import com.dream.city.trade.service.TradeVerifyService;
+import com.dream.city.verify.dao.TradeVerifyMapper;
+import com.dream.city.verify.entity.TradeVerify;
+import com.dream.city.verify.service.TradeVerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

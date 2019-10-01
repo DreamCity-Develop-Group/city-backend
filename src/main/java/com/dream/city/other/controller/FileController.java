@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/set/file")
+@RequestMapping("/other/file")
 public class FileController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -23,7 +23,7 @@ public class FileController {
 
 
 
-    @RequestMapping("/deleteFileById/{id}")
+    @RequestMapping("/delete/{id}")
     public CityFile deleteFileById(@PathVariable("id") Long id){
         logger.info("删除文件，{}", id);
         CityFile file = null;
@@ -35,7 +35,7 @@ public class FileController {
         return file;
     }
 
-    @RequestMapping("/insertFile")
+    @RequestMapping("/insert")
     public CityFile insertFile(@RequestBody CityFile record){
         logger.info("新增文件，{}", record);
         CityFile file = null;
@@ -47,7 +47,7 @@ public class FileController {
         return file;
     }
 
-    @RequestMapping("/getFileById/{id}")
+    @RequestMapping("/get/{id}")
     public CityFile getFileById(@PathVariable("id") Long id){
         logger.info("查询文件，{}", id);
         CityFile file = null;
@@ -59,7 +59,7 @@ public class FileController {
         return file;
     }
 
-    @RequestMapping("/getFileList")
+    @RequestMapping("/getList")
     public List<CityFile> getFileList(@RequestBody CityFile record){
         logger.info("查询文件列表，{}", record);
         List<CityFile> fileList = null;
@@ -71,7 +71,7 @@ public class FileController {
         return fileList;
     }
 
-    @RequestMapping("/updateFileById")
+    @RequestMapping("/update")
     public CityFile updateFileById(@RequestBody CityFile record){
         logger.info("修改文件，{}", record);
         CityFile cityFile = null;
