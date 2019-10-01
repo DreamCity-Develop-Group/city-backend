@@ -1,8 +1,11 @@
 package com.dream.city.other.service.impl;
 
+import com.dream.city.base.PageReq;
 import com.dream.city.other.dao.CityHelpMapper;
 import com.dream.city.other.entity.CityHelp;
 import com.dream.city.other.service.CityHelpService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +36,11 @@ public class CityHelpServiceImpl implements CityHelpService {
     }
 
     @Override
-    public List<CityHelp> getCityHelpList(CityHelp record) {
-        return helpMapper.selectCityHelpList(record);
+    public PageInfo<CityHelp> getCityHelpList(PageReq<CityHelp> record) {
+        PageHelper.startPage(record.getPageNum(), record.getPageSize());
+        List<CityHelp> cityHelps = helpMapper.selectCityHelpList(record.getCondition());
+        PageInfo<CityHelp> pageInfo = new PageInfo<>(cityHelps);
+        return new PageInfo<>(cityHelps);
     }
 
     @Override

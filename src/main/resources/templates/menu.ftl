@@ -35,7 +35,7 @@
 
     <ul class="nav nav-list">
         <li class="active">
-            <a href="/admin/index.ftl">
+            <a href="/admin/index">
                 <i class="icon-dashboard"></i>
                 <span class="menu-text"> 控制台 </span>
             </a>
@@ -146,19 +146,19 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/user/index.ftl">
+                    <a href="${ctx}/user/index">
                         <i class="icon-double-angle-right"></i>
                         用户管理
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/role/index.ftl">
+                    <a href="${ctx}/role/index">
                         <i class="icon-double-angle-right"></i>
                         角色管理
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/menu/index.ftl">
+                    <a href="${ctx}/menu/index">
                         <i class="icon-double-angle-right"></i>
                         资源管理
                     </a>
@@ -299,7 +299,7 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="faq.html">
+                    <a href="${ctx}/other/help/index">
                         <i class="icon-double-angle-right"></i>
                         帮助
                     </a>

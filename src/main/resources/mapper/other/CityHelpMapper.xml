@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.dream.city.other.entity.CityHelp" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="is_valid" property="isValid" jdbcType="TINYINT" />
     <result column="descr" property="descr" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -42,11 +42,11 @@
       <if test="id != null">
         and id = #{id,jdbcType=INTEGER}
       </if>
-      <if test="name != null">
-        and name = #{name,jdbcType=INTEGER}
+      <if test="name != null and name != ''">
+        and name = #{name,jdbcType=VARCHAR}
       </if>
-      <if test="type != null">
-        and type = #{type,jdbcType=TINYINT}
+      <if test="type != null and type != ''">
+        and type = #{type,jdbcType=VARCHAR}
       </if>
       <if test="isValid != null">
         and is_valid = #{isValid,jdbcType=TINYINT}
@@ -96,7 +96,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
-        #{type,jdbcType=TINYINT},
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="isValid != null" >
         #{isValid,jdbcType=TINYINT},
@@ -118,8 +118,8 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=TINYINT},
+      <if test="type != null and type != ''" >
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="isValid != null" >
         is_valid = #{isValid,jdbcType=TINYINT},

@@ -1,9 +1,8 @@
 package com.dream.city.other.service;
 
-
+import com.dream.city.base.PageReq;
 import com.dream.city.other.entity.CityHelp;
-
-import java.util.List;
+import com.github.pagehelper.PageInfo;
 
 public interface CityHelpService {
 
@@ -13,7 +12,7 @@ public interface CityHelpService {
 
     CityHelp getCityHelpById(Integer id);
 
-    List<CityHelp> getCityHelpList(CityHelp record);
+    PageInfo<CityHelp> getCityHelpList(PageReq<CityHelp> record);
 
     Integer updateCityHelpById(CityHelp record);
 

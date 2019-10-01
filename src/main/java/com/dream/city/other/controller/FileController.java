@@ -60,7 +60,7 @@ public class FileController {
     }
 
     @RequestMapping("/getList")
-    public List<CityFile> getFileList(@RequestBody CityFile record){
+    public List<CityFile> getFileList(CityFile record){
         logger.info("查询文件列表，{}", record);
         List<CityFile> fileList = null;
         try {

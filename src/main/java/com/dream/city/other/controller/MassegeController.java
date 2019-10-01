@@ -95,7 +95,7 @@ public class MassegeController {
     }
 
     @RequestMapping("/getList")
-    public Result<List<CityMessage>> getCityMessageList(@RequestBody CityMessage record){
+    public Result<List<CityMessage>> getCityMessageList(CityMessage record){
         boolean success = Boolean.TRUE;
         List<CityMessage> message = null;
         try {

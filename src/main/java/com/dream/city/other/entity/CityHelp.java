@@ -7,7 +7,7 @@ public class CityHelp {
 
     private String name;
 
-    private Byte type;
+    private String type;
 
     private Byte isValid;
 
@@ -35,11 +35,11 @@ public class CityHelp {
         this.name = name == null ? null : name.trim();
     }
 
-    public Byte getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(String type) {
         this.type = type;
     }
 
