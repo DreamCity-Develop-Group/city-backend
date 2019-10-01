@@ -14,7 +14,7 @@ public class EarningServiceImpl implements EarningService {
     @Autowired
     private PlayerEarningMapper earningMapper;
 
-    @Override
+    /*@Override
     public int deleteEarningById(Integer earnId) {
         Integer i = earningMapper.deleteByPrimaryKey(earnId);
         return i == null? 0: i;
@@ -24,7 +24,7 @@ public class EarningServiceImpl implements EarningService {
     public int insertEarning(PlayerEarning record) {
         Integer i = earningMapper.insertSelective(record);
         return i == null? 0: i;
-    }
+    }*/
 
     @Override
     public PlayerEarning getEarning(Integer earnId) {

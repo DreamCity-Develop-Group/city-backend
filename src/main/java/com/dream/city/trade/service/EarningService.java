@@ -15,14 +15,14 @@ public interface EarningService {
      * @param earnId
      * @return
      */
-    int deleteEarningById(Integer earnId);
+    //int deleteEarningById(Integer earnId);
 
     /**
      * 新增玩家提现收入
      * @param record
      * @return
      */
-    int insertEarning(PlayerEarning record);
+    //int insertEarning(PlayerEarning record);
 
     /**
      * 查询玩家提现收入
