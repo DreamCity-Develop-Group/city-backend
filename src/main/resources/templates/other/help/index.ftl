@@ -78,33 +78,35 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<div class="hr hr-18 dotted hr-double"></div>
+								<#--<div class="hr hr-18 dotted hr-double"></div>
 								<h4 class="pink">
 									<i class="icon-hand-right icon-animated-hand-pointer blue"></i>
 									<a href="#modal-table" role="button" class="green" data-toggle="modal"> Table Inside a Modal Box </a>
-								</h4>
+								</h4>-->
 
 								<div class="hr hr-18 dotted hr-double"></div>
 
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
-                                        <div class="form-group">
+                                        <div class="col-sm-3 form-group">
                                             名称：<input id="name" name="name" type="text"/>
                                         </div>
-										<div class="form-group">
+										<div class="col-sm-3 form-group">
 											内容：<input id="content" name="content" type="text"/>
 										</div>
-										<div class="form-group">
+										<div class="col-sm-3 form-group">
 											类型：<input id="type" name="type" type="text"/>
 										</div>
-										<div class="form-group">
+										<div class="col-sm-3 form-group">
 											是否可以：<input id="isValid" name="isValid" type="text"/>
 										</div>
-                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
-										<#--<@shiro.hasPermission name="system:user:add">
-                                        </@shiro.hasPermission>-->
+										<div class="form-group">
+											<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+											<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+											<#--<@shiro.hasPermission name="system:user:add">
+                                            </@shiro.hasPermission>-->
+										</div>
                                     </div>
 								</div>
                                 <div class="space-6"></div>

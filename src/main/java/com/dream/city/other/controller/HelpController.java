@@ -22,68 +22,32 @@ public class HelpController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    CityHelpService helpService;
+    private CityHelpService helpService;
 
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public Result<Integer> deleteCityHelpById(@PathVariable("id") Integer id){
-        logger.info("刪除幫助內容id:{}",id);
+
+    @RequestMapping("/index")
+    public ModelAndView helpsIndex(Model model){
+        model.addAttribute("title","帮助");
+        model.addAttribute("table","帮助列表");
+        return new ModelAndView("other/help/index");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getList", method = RequestMethod.GET)
+    public Result getCityHelpList(PageReq page,CityHelp record){
+        logger.info("查詢幫助列表:{}",record);
         boolean success = Boolean.TRUE;
-        Integer result = null;
+        PageInfo<CityHelp> result = null;
         try {
-            result = helpService.deleteCityHelpById(id);
-            if (result == null && (result != null && result < 1)){
-                success = Boolean.FALSE;
-            }
+            page.setCondition(record);
+            result = helpService.getCityHelpList(page);
         }catch (Exception e){
             success = Boolean.FALSE;
-            logger.error("刪除幫助內容异常",e);
+            logger.error("查詢幫助列表异常",e);
         }
-        return new Result(success,"刪除幫助內容",result);
+        return new Result(success,"查詢幫助列表",result);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Result<Integer> insertCityHelp(@RequestBody CityHelp record){
-        logger.info("新增幫助內容:{}",record);
-        boolean success = Boolean.TRUE;
-        Integer result = null;
-        try {
-            result = helpService.insertCityHelp(record);
-            if (result == null && (result != null && result < 1)){
-                success = Boolean.FALSE;
-            }
-        }catch (Exception e){
-            success = Boolean.FALSE;
-            logger.error("新增幫助內容异常",e);
-        }
-        return new Result(success,"新增幫助內容",result);
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Integer id,Model model){
-        model.addAttribute("title","编辑");
-        model.addAttribute("table","编辑帮助");
-        model.addAttribute("edit",Boolean.TRUE);
-        CityHelp cityHelp = helpService.getCityHelpById(id);
-        model.addAttribute("data",cityHelp);
-        return new ModelAndView("other/help/edit");
-    }
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> update(CityHelp record){
-        logger.info("更新幫助內容:{}",record);
-        boolean success = Boolean.TRUE;
-        Integer result = null;
-        try {
-            result = helpService.updateCityHelpById(record);
-            if (result == null && (result != null && result < 1)){
-                success = Boolean.FALSE;
-            }
-        }catch (Exception e){
-            success = Boolean.FALSE;
-            logger.error("更新幫助內容异常",e);
-        }
-        return new Result(success,"更新幫助內容",result);
-    }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public ModelAndView getCityHelpById(@PathVariable("id") Integer id,Model model){
@@ -102,28 +66,71 @@ public class HelpController {
     }
 
 
-    @RequestMapping("/index")
-    public ModelAndView helpsIndex(Model model){
-        model.addAttribute("title","帮助");
-        model.addAttribute("table","帮助列表");
-        return new ModelAndView("other/help/index");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public Result getCityHelpList(PageReq<CityHelp> record){
-        logger.info("查詢幫助列表:{}",record);
-        boolean success = Boolean.TRUE;
-        PageInfo<CityHelp> result = null;
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public Result<Integer> deleteCityHelpById(@PathVariable("id") Integer id){
+        logger.info("刪除幫助內容id:{}",id);
+        boolean success = Boolean.FALSE;
+        Integer result = null;
         try {
-            result = helpService.getCityHelpList(record);
+            result = helpService.deleteCityHelpById(id);
+            if (result != null && result > 0){
+                success = Boolean.TRUE;
+            }
         }catch (Exception e){
-            success = Boolean.FALSE;
-            logger.error("查詢幫助列表异常",e);
+            logger.error("刪除幫助內容异常",e);
         }
-        return new Result(success,"查詢幫助列表",result);
+        return new Result(success,"刪除幫助內容",result);
     }
 
 
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("id") Integer id,Model model){
+        model.addAttribute("title","编辑");
+        model.addAttribute("table","编辑帮助");
+        model.addAttribute("edit",Boolean.TRUE);
+        CityHelp result = helpService.getCityHelpById(id);
+        model.addAttribute("data",result);
+        return new ModelAndView("other/help/edit");
+    }
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Result<Integer> update(CityHelp record){
+        logger.info("更新幫助內容:{}",record);
+        boolean success = Boolean.FALSE;
+        Integer result = null;
+        try {
+            result = helpService.updateCityHelpById(record);
+            if (result != null && result > 0){
+                success = Boolean.TRUE;
+            }
+        }catch (Exception e){
+            logger.error("更新幫助內容异常",e);
+        }
+        return new Result(success,"更新幫助內容",result);
+    }
+
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public ModelAndView add(CityHelp record,Model model){
+        model.addAttribute("title","添加");
+        model.addAttribute("table","添加帮助");
+        model.addAttribute("data",record);
+        return new ModelAndView("other/help/add");
+    }
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public Result<Integer> insertCityHelp(CityHelp record){
+        logger.info("新增幫助內容:{}",record);
+        boolean success = Boolean.FALSE;
+        Integer result = null;
+        try {
+            result = helpService.insertCityHelp(record);
+            if (result != null && result > 0){
+                success = Boolean.TRUE;
+            }
+        }catch (Exception e){
+            logger.error("新增幫助內容异常",e);
+        }
+        return new Result(success,"新增幫助內容",result);
+    }
 
 }

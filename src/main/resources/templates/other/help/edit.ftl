@@ -25,7 +25,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="userForm">
+                    <form class="form-horizontal m-t" id="updateForm">
                         <input type="hidden" id="id" name="id" value="${data.id}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">名称：</label>
@@ -51,13 +51,15 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">内容：</label>
                             <div class="col-sm-8">
-                                <input id="remarks" name="remarks" class="form-control" value="${data.isValid}">
+                                <input id="content" name="content" class="form-control" value="${data.content}">
                             </div>
                         </div>
                         <div class="form-group">
+                            <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
                             </div>
+                            </#if>
                         </div>
                     </form>
                 </div>
@@ -72,7 +74,7 @@
 
         $(document).ready(function () {
 
-            $("#userForm").validate({
+            $("#updateForm").validate({
                 rules: {
                     name: {
                         required: true,
@@ -100,7 +102,9 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
+                        //contentType: "application/json;charset=UTF-8",
                         url: "${ctx}/other/help/update",
+                        //data: JSON.stringify($(form).serialize()),
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){
@@ -109,7 +113,7 @@
                             });
                         },
                         error: function(msg){
-                            layer.msg(msg.msg, {time: 2000},function(){
+                            layer.msg(msg.msg, {time: 6000},function(){
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index);
                             });

@@ -14,9 +14,8 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="${ctx}/backend/css/font-awesome.min.css" />
-    <link href="${ctx}/backend/css/animate.css" rel="stylesheet">
-    <link href="${ctx}/backend/css/style.css" rel="stylesheet">
+    <link href="${ctx}/css/animate.css" rel="stylesheet">
+    <#--<link href="${ctx}/backend/css/style.css" rel="stylesheet">-->
 
 </head>
 
@@ -26,28 +25,22 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <form class="form-horizontal m-t" id="userForm">
+                        <form class="form-horizontal m-t" id="addForm">
                         	<input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">用户名：</label>
+                                <label class="col-sm-3 control-label">名称：</label>
                                 <div class="col-sm-8">
-                                    <input id="loginName" name="loginName" class="form-control" type="text" value="" />
+                                    <input id="name" name="name" class="form-control" type="text" value="" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">密码：</label>
+                                <label class="col-sm-3 control-label">类别：</label>
                                 <div class="col-sm-8">
-                                    <input id="password" name="password" class="form-control" type="text" value="" />
+                                    <input id="type" name="type" class="form-control" type="text" value="" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">昵称：</label>
-                                <div class="col-sm-8">
-                                    <input id="name" name="name" class="form-control" type="text" value="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">状态：</label>
+                                <label class="col-sm-3 control-label">是否可用：</label>
                                 <div class="col-sm-8">
                                 	<select name="state" class="form-control">
                                 		<option value="0">否</option>
@@ -56,29 +49,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">创建日期：</label>
+                                <label class="col-sm-3 control-label">内容：</label>
                                 <div class="col-sm-8">
-                                    <input id="createDate" name="createDate" readonly="readonly"
-                                           class="laydate-icon form-control"
-                                           value="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">电话：</label>
-                                <div class="col-sm-8">
-                                    <input id="phone" name="phone" class="form-control" value="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">E-mail：</label>
-                                <div class="col-sm-8">
-                                    <input id="email" name="email" class="form-control" value="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">描述：</label>
-                                <div class="col-sm-8">
-                                    <input id="remarks" name="remarks" class="form-control" value="">
+                                    <input id="content" name="content" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,62 +70,49 @@
     <#include "${ctx}/common.ftl">
     <script type="text/javascript">
     $(document).ready(function () {
-	  	//外部js调用
-	    laydate({
-	        elem: '#createDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-	        event: 'focus', //响应事件。如果没有传入event，则按照默认的click
-            format: 'YYYY-MM-DD hh:mm:ss',
-            istime: true
-	    });
 
-	    $("#userForm").validate({
+	    $("#addForm").validate({
     	    rules: {
-    	    	loginName: {
-    	        required: true,
-    	        minlength: 4,
-    	    	maxlength: 10
-    	      },
-    	      	name: {
-    	        required: true,
-    	        minlength: 4,
-    	    	maxlength: 10
-    	      },
-    	      	state: {
-    	        required: true
-    	      },
-    	      	createDate: {
-    	      	date:true,
-    	        required: true
-    	      },
-    	      	phone: {
-    	        required: true
-    	      },
-    	      	email: {
-    	      	email:true,
-    	        required: true
-    	      },
-    	      	address: {
-    	        required: true,
-    	        maxlength: 40
-    	      },
-                remarks: {
-    	        required: false,
-    	        maxlength: 40
-    	      }
+                name: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 50
+                },
+                content: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 600
+                },
+                type: {
+                    required: true
+                },
+                isValid: {
+                    required: true
+                },
+                descr: {
+                    required: false,
+                    maxlength: 60
+                }
     	    },
     	    messages: {},
     	    submitHandler:function(form){
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/user/insert",
+   	    		   url: "${ctx}/other/help/insert",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){
 	   						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 	   						parent.layer.close(index);
 	   					});
-   	    		   }
+   	    		   },
+                   error: function(msg){
+                        layer.msg(msg.msg, {time: 6000},function(){
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index);
+                        });
+                    }
    	    		});
             }
     	});
