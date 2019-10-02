@@ -7,12 +7,13 @@
     <result column="friend_id" property="friendId" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="have_read" property="haveRead" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, player_id, friend_id, content, have_read, create_time, update_time
+    id, player_id, friend_id, content, have_read, send_time , create_time, update_time
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -42,7 +43,10 @@
       <if test="content != null and content != ''" >
           and content like CONCAT(CONCAT('%',#{content,jdbcType=VARCHAR}),'%')
       </if>
-
+      <if test="sendTime != null" >
+          and send_time = #{haveRead,jdbcType=TIMESTAMP}
+      </if>
+      order by update_time
   </select>
 
 
@@ -69,12 +73,11 @@
       <if test="haveRead != null" >
         have_read,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="sendTime != null" >
+        send_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
+      create_time,
+      update_time,
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -92,12 +95,11 @@
       <if test="haveRead != null" >
         #{haveRead,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+      create_time = now(),
+      update_time = now(),
     </trim>
   </insert>
 
@@ -116,12 +118,10 @@
       <if test="haveRead != null" >
         have_read = #{haveRead,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+      update_time = now(),
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>

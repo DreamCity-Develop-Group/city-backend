@@ -24,6 +24,8 @@ public class MessageResp implements Serializable {
 
     private Integer haveRead;
 
+    private String sendTime;
+
     /**  */
     private Date createTime;
 

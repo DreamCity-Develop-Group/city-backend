@@ -101,7 +101,14 @@
 										<div class="col-sm-3 form-group">
 											是否已读：<input id="haveRead" name="haveRead" type="text"/>
 										</div>
-
+										<div class="col-sm-4 form-group">
+											<label class="col-sm-3 control-label">发送时间：</label>
+											<div class="col-sm-8">
+												<input id="sendTime" name="sendTime"
+													   class="laydate-icon form-control"
+													   value="">
+											</div>
+										</div>
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
 										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
 										<#--<@shiro.hasPermission name="system:user:add">
@@ -253,6 +260,15 @@
 
 		<script type="text/javascript">
             $(document).ready(function () {
+
+				//外部js调用
+				laydate({
+					elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+					format: 'YYYY-MM-DD hh:mm:ss',
+					istime: true
+				});
+
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({
                     //使用get请求到服务器获取数据
@@ -322,6 +338,9 @@
                             return '<span class="label label-danger">否</span>';
                         }
                     },{
+						title: "发送时间",
+						field: "sendTime"
+					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
@@ -354,7 +373,8 @@
 					"friendId":$("#friendId").val(),
 					"friendNick":$("#friendNick").val(),
 					"content":$("#content").val(),
-					"haveRead":$("#haveRead").val()
+					"haveRead":$("#haveRead").val(),
+					"sendTime":$("#sendTime").val()
                 }
                 return params;
             }
@@ -365,7 +385,8 @@
 					"friendId":$("#friendId").val(),
 					"friendNick":$("#friendNick").val(),
 					"content":$("#content").val(),
-					"haveRead":$("#haveRead").val()
+					"haveRead":$("#haveRead").val(),
+					"sendTime":$("#sendTime").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }

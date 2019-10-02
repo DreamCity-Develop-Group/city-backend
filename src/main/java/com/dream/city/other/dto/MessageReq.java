@@ -3,6 +3,7 @@ package com.dream.city.other.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class MessageReq implements Serializable {
@@ -21,6 +22,6 @@ public class MessageReq implements Serializable {
 
     private Integer haveRead;
 
-
+    private String sendTime;
 
 }

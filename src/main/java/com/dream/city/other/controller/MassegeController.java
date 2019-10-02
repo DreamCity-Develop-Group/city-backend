@@ -121,7 +121,7 @@ public class MassegeController {
         return new ModelAndView("other/msg/index");
     }
     @RequestMapping("/getList")
-    public Result<List<MessageResp>> getCityMessageList(PageReq page, MessageReq record){
+    public Result<PageInfo> getCityMessageList(PageReq page, MessageReq record){
         boolean success = Boolean.TRUE;
         PageInfo<MessageResp> result = null;
         try {

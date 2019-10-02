@@ -2,6 +2,7 @@ package com.dream.city.other.controller;
 
 import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
+import com.dream.city.other.dto.NoticeResp;
 import com.dream.city.other.entity.CityHelp;
 import com.dream.city.other.entity.Notice;
 import com.dream.city.other.service.NoticeService;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 /**
  * 公告
@@ -36,10 +36,10 @@ public class NoticeController {
         return new ModelAndView("other/notice/index");
     }
     @RequestMapping("/getList")
-    public Result<List<Notice>> getNoticeList(PageReq page,Notice record){
+    public Result<PageInfo> getNoticeList(PageReq page,Notice record){
         logger.info("获取公告列表:{}",record);
         boolean success = Boolean.TRUE;
-        PageInfo<Notice> result = null;
+        PageInfo<NoticeResp> result = null;
         try {
             page.setCondition(record);
             result = noticeService.getNoticeList(page);
@@ -55,7 +55,7 @@ public class NoticeController {
     public ModelAndView getNoticeById(@PathVariable("noticeId") Integer noticeId,Model model){
         logger.info("获取公告详情id:{}",noticeId);
         boolean success = Boolean.TRUE;
-        Notice result = null;
+        NoticeResp result = null;
         try {
             result = noticeService.getNoticeById(noticeId);
         }catch (Exception e){
@@ -112,9 +112,9 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/edit/{noticeId}", method = RequestMethod.GET)
+    @RequestMapping("/edit/{noticeId}")
     public ModelAndView edit(@PathVariable("noticeId") Integer noticeId,Model model){
-        Notice result = noticeService.getNoticeById(noticeId);
+        NoticeResp result = noticeService.getNoticeById(noticeId);
 
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑公告");

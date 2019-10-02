@@ -34,7 +34,7 @@ public class HelpController {
     }
     @ResponseBody
     @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public Result getCityHelpList(PageReq<CityHelp> page,CityHelp record){
+    public Result<PageInfo> getCityHelpList(PageReq<CityHelp> page,CityHelp record){
         logger.info("查詢幫助列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<CityHelp> result = null;

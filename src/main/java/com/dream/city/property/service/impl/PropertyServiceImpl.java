@@ -1,15 +1,15 @@
 package com.dream.city.property.service.impl;
 
 
+import com.dream.city.base.PageReq;
 import com.dream.city.property.dao.PropertyMapper;
 import com.dream.city.property.entity.Property;
 import com.dream.city.property.service.PropertyService;
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -41,12 +41,10 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public Page<Property> getInvestLsit(Page<Property> pageReq) {
-        Page<Property> page = new Page<>();
-        Property record = new Property();
-
-        investMapper.getInvestLsit(record);
-        return page;
+    public PageInfo<Property> getInvestLsit(PageReq<Property> pageReq) {
+        PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
+        Property record = pageReq.getCondition();
+        return new PageInfo<>(investMapper.getInvestLsit(record));
     }
 
 }

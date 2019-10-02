@@ -26,44 +26,54 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="id" name="id" value="${data.id}">
-                        <input type="hidden" id="playerId" name="playerId" value="${data.playerId}">
-                        <input type="hidden" id="friendId" name="friendId" value="${data.friendId}">
+                        <input type="hidden" id="inId" name="inId" value="${data.inId}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">发送人：</label>
+                            <label class="col-sm-3 control-label">名称：</label>
                             <div class="col-sm-8">
-                                <input id="playerNick" name="playerNick" class="form-control" type="text" value="${data.playerNick}">
+                                <input id="inName" name="inName" class="form-control" type="text" value="${data.inName}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">接收人：</label>
+                            <label class="col-sm-3 control-label">限额：</label>
                             <div class="col-sm-8">
-                                <input id="friendNick" name="friendNick" class="form-control" type="text" value="${data.friendNick}">
+                                <input id="inLimit" name="inLimit" class="form-control" type="text" value="${data.inLimit}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">是否已读：</label>
+                            <label class="col-sm-3 control-label">税金：</label>
                             <div class="col-sm-8">
-                                <select name="haveRead" class="form-control">
-                                    <option value="0" <#if data.haveRead == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.haveRead == 1>selected="selected"</#if>>是</option>
+                                <input id="inTax" name="inTax" class="form-control" type="text" value="${data.inTax}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">收益倍数：</label>
+                            <div class="col-sm-8">
+                                <input id="inEarning" name="inEarning" class="form-control" type="text" value="${data.inEarning}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否可投：</label>
+                            <div class="col-sm-8">
+                                <select name="isValid" class="form-control">
+                                    <option value="0" <#if data.isValid == 0>selected="selected"</#if>>否</option>
+                                    <option value="1" <#if data.isValid == 1>selected="selected"</#if>>是</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">发送时间：</label>
+                            <label class="col-sm-3 control-label">投资结束时间：</label>
                             <div class="col-sm-8">
-                                <input id="sendTime" name="sendTime"
+                                <input id="sendTime" name="inEnd"
                                        class="laydate-icon form-control"
-                                       value="${data.sendTime}">
+                                       value="${data.inEnd}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <label class="col-sm-3 control-label">内容：</label>
                             <div class="col-sm-8">
                                 <input id="content" name="content" class="form-control" value="${data.content}">
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">
@@ -93,21 +103,28 @@
 
             $("#updateForm").validate({
                 rules: {
-                    playerNick: {
+                    inName: {
                         required: true,
                         minlength: 1,
                         maxlength: 60
-                    },friendNick: {
+                    },inLimit: {
                         required: true,
                         minlength: 1,
                         maxlength: 60
-                    },content: {
+                    },inTax: {
                         required: true,
                         minlength: 1,
-                        maxlength: 600
-                    },
-                    haveRead: {
+                        maxlength: 60
+                    },inEarning: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60
+                    },isValid: {
                         required: true
+                    },inEnd: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60
                     }
                 },
                 messages: {},
@@ -115,7 +132,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/other/message/update",
+                        url: "${ctx}/property/update",
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){

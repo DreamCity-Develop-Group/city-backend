@@ -43,6 +43,14 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">发送时间：</label>
+                            <div class="col-sm-8">
+                                <input id="sendTime" name="sendTime"
+                                       class="laydate-icon form-control"
+                                       value="${data.sendTime}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
@@ -59,6 +67,14 @@
 <!-- 全局js -->
 <#include "${ctx}/common.ftl">
     <script type="text/javascript">
+
+        //外部js调用
+        laydate({
+            elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true
+        });
 
         $(document).ready(function () {
 

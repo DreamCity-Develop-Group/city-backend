@@ -28,40 +28,46 @@
                         <form class="form-horizontal m-t" id="addForm">
                         	<input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">发送人：</label>
+                                <label class="col-sm-3 control-label">名称：</label>
                                 <div class="col-sm-8">
-                                    <input id="playerNick" name="playerNick" class="form-control" type="text" value="" />
+                                    <input id="inName" name="inName" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">接收人：</label>
+                                <label class="col-sm-3 control-label">限额：</label>
                                 <div class="col-sm-8">
-                                    <input id="friendNick" name="friendNick" class="form-control" type="text" value="" />
+                                    <input id="inLimit" name="inLimit" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">是否已读：</label>
+                                <label class="col-sm-3 control-label">税金：</label>
                                 <div class="col-sm-8">
-                                	<select name="haveRead" class="form-control">
-                                		<option value="0" selected="selected">否</option>
-                                		<option value="1">是</option>
-                                	</select>
+                                    <input id="inTax" name="inTax" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">发送时间：</label>
+                                <label class="col-sm-3 control-label">收益倍数：</label>
                                 <div class="col-sm-8">
-                                    <input id="sendTime" name="sendTime"
-                                           class="laydate-icon form-control"
-                                           value="">
+                                    <input id="inEarning" name="inEarning" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">内容：</label>
+                                <label class="col-sm-3 control-label">是否可投：</label>
                                 <div class="col-sm-8">
-                                    <input id="content" name="content" class="form-control" value="" />
+                                    <select name="isValid" class="form-control">
+                                        <option value="0" >否</option>
+                                        <option value="1" selected="selected">是</option>
+                                    </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                        <label class="col-sm-3 control-label">投资结束时间：</label>
+                                        <div class="col-sm-8">
+                                            <input id="sendTime" name="inEnd"
+                                                   class="laydate-icon form-control"
+                                                   value="">
+                                        </div>
+                                </div>
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
                                     <button class="btn btn-primary" type="submit">提交</button>
@@ -89,21 +95,28 @@
 
 	    $("#addForm").validate({
             rules: {
-                playerNick: {
+                inName: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },friendNick: {
+                },inLimit: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },content: {
+                },inTax: {
                     required: true,
                     minlength: 1,
-                    maxlength: 600
-                },
-                haveRead: {
+                    maxlength: 60
+                },inEarning: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },isValid: {
                     required: true
+                },inEnd: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
                 }
             },
     	    messages: {},
@@ -111,7 +124,7 @@
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/other/message/insert",
+   	    		   url: "${ctx}/property/insert",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){

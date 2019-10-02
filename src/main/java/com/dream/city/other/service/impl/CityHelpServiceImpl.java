@@ -36,7 +36,7 @@ public class CityHelpServiceImpl implements CityHelpService {
 
     @Override
     public PageInfo<CityHelp> getCityHelpList(PageReq<CityHelp> record) {
-        PageHelper.startPage(record.getPageNum(), record.getPageSize());
+        PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         return new PageInfo<>(helpMapper.selectCityHelpList(record.getCondition()));
     }
 

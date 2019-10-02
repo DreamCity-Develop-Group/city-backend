@@ -5,11 +5,12 @@
     <result column="notice_id" property="noticeId" jdbcType="INTEGER" />
     <result column="notice_content" property="noticeContent" jdbcType="VARCHAR" />
     <result column="notice_state" property="noticeState" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    notice_id, notice_content, notice_state, create_time
+    notice_id, notice_content, notice_state, send_time, create_time
   </sql>
 
   <select id="getNoticeList" resultMap="NoticeBaseResultMap" parameterType="com.dream.city.other.entity.Notice" >
@@ -26,6 +27,9 @@
       </if>
       <if test="noticeState != null">
         and notice_state = #{noticeState,jdbcType=INTEGER}
+      </if>
+      <if test="sendTime != null">
+        and send_time = #{sendTime,jdbcType=TIMESTAMP}
       </if>
     </where>
     order by create_time desc
@@ -55,6 +59,9 @@
       <if test="noticeState != null" >
         notice_state,
       </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
       create_time,
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -66,6 +73,9 @@
       </if>
       <if test="noticeState != null" >
         #{noticeState,jdbcType=TINYINT},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
       </if>
       now(),
     </trim>
@@ -79,6 +89,9 @@
       </if>
       <if test="noticeState != null" >
         notice_state = #{noticeState,jdbcType=TINYINT},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where notice_id = #{noticeId,jdbcType=INTEGER}

@@ -90,20 +90,26 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											内容：<input id="noticeContent" name="noticeContent" type="text"/>
+											名称：<input id="inName" name="inName" type="text"/>
 										</div>
-										<div class="col-sm-3 form-group">
-											状态：<input id="noticeState" name="noticeState" type="text"/>
-										</div>
-										<div class="col-sm-4 form-group">
+										<#--<div class="col-sm-4 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
-												<input id="sendTime" name="sendTime"
+												<input id="inEnd" name="inEnd"
 													   class="laydate-icon form-control"
 													   value="">
 											</div>
+										</div>-->
+										<#--<div class="col-sm-3 form-group">
+											接收人：<input id="friendNick" name="friendNick" type="text"/>
 										</div>
-
+										<div class="col-sm-3 form-group">
+											消息内容：<input id="content" name="content" type="text"/>
+										</div>
+										<div class="col-sm-3 form-group">
+											是否已读：<input id="haveRead" name="haveRead" type="text"/>
+										</div>
+										-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
 										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
 										<#--<@shiro.hasPermission name="system:user:add">
@@ -271,7 +277,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/other/notice/getList",
+                    url: "${ctx}/property/getList",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -313,29 +319,38 @@
                     //数据列
                     columns: [{
                         title: "ID",
-                        field: "noticeId",
+                        field: "inId",
                         sortable: true
                     },{
-                        title: "内容",
-                        field: "noticeContent"
+						title: "名称",
+						field: "inName",
+					},{
+						title: "限额",
+						field: "inLimit",
+					},{
+                        title: "税金",
+                        field: "inTax",
                     },{
-                        title: "状态",
-                        field: "noticeState",
+                        title: "收益倍数",
+                        field: "inEarning",
+                    },{
+                        title: "是否可投",
+                        field: "isValid",
                         formatter: function (value, row, index) {
                             if (value == 1)
                                 return '<span class="label label-info">是</span>';
                             return '<span class="label label-danger">否</span>';
                         }
-                    },/*{
-						title: "发送时间",
-						field: "sendTime"
-					},*/{
+                    },{
+						title: "投资结束时间",
+						field: "inEnd",
+					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.noticeId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.noticeId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.noticeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.inId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.inId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -357,17 +372,25 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-                    "noticeContent":$("#noticeContent").val(),
-                    "noticeState":$("#noticeState").val()/*,
-					"sendTime":$("#sendTime").val()*/
-				}
+					"inId":$("#inId").val(),
+					"inName":$("#inName").val(),
+					"inLimit":$("#inLimit").val(),
+					"inTax":$("#inTax").val(),
+					"inEarning":$("#inEarning").val(),
+					"isValid":$("#isValid").val(),
+					"inEnd":$("#inEnd").val()
+                }
                 return params;
             }
             function search() {
 				var params={
-					"noticeContent":$("#noticeContent").val(),
-					"noticeState":$("#noticeState").val(),
-					"sendTime":$("#sendTime").val()
+					"inId":$("#inId").val(),
+					"inName":$("#inName").val(),
+					"inLimit":$("#inLimit").val(),
+					"inTax":$("#inTax").val(),
+					"inEarning":$("#inEarning").val(),
+					"isValid":$("#isValid").val(),
+					"inEnd":$("#inEnd").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
@@ -378,7 +401,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/other/notice/add/',
+                    content: '${ctx}/property/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -391,7 +414,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/other/notice/edit/'  + id,
+                    content: '${ctx}/property/edit/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -402,7 +425,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/other/notice/delete/" + id,
+                        url: "${ctx}/property/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#helpListTable').bootstrapTable("refresh");
@@ -420,7 +443,7 @@
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/other/notice/get/'  + id,
+					content: '${ctx}/property/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

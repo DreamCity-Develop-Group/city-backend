@@ -1,8 +1,10 @@
 package com.dream.city.property.service;
 
 
+import com.dream.city.base.PageReq;
 import com.dream.city.property.entity.Property;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public interface PropertyService {
      * @param pageReq
      * @return
      */
-    Page<Property> getInvestLsit(Page<Property> pageReq);
+    PageInfo<Property> getInvestLsit(PageReq<Property> pageReq);
 
 
 
