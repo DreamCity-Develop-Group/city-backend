@@ -307,7 +307,7 @@
                 <li>
                     <a href="${ctx}/other/message/index">
                         <i class="icon-double-angle-right"></i>
-                        消息通知
+                        通知
                     </a>
                 </li>
                 <li>

@@ -26,20 +26,34 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="noticeId" name="noticeId" value="${data.noticeId}">
+                        <input type="hidden" id="id" name="id" value="${data.id}">
+                        <input type="hidden" id="playerId" name="playerId" value="${data.playerId}">
+                        <input type="hidden" id="friendId" name="friendId" value="${data.friendId}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">内容：</label>
+                            <label class="col-sm-3 control-label">发送人：</label>
                             <div class="col-sm-8">
-                                <input id="noticeContent" name="noticeContent" class="form-control" value="${data.noticeContent}">
+                                <input id="playerNick" name="playerNick" class="form-control" type="text" value="${data.playerNick}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">状态：</label>
+                            <label class="col-sm-3 control-label">接收人：</label>
                             <div class="col-sm-8">
-                                <select name="noticeState" class="form-control">
-                                    <option value="0" <#if data.noticeState == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.noticeState == 1>selected="selected"</#if>>是</option>
+                                <input id="friendNick" name="friendNick" class="form-control" type="text" value="${data.friendNick}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否已读：</label>
+                            <div class="col-sm-8">
+                                <select name="haveRead" class="form-control">
+                                    <option value="0" <#if data.haveRead == 0>selected="selected"</#if>>否</option>
+                                    <option value="1" <#if data.haveRead == 1>selected="selected"</#if>>是</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">内容：</label>
+                            <div class="col-sm-8">
+                                <input id="content" name="content" class="form-control" value="${data.content}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -64,12 +78,20 @@
 
             $("#updateForm").validate({
                 rules: {
-                    noticeContent: {
+                    playerNick: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60
+                    },friendNick: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60
+                    },content: {
                         required: true,
                         minlength: 1,
                         maxlength: 600
                     },
-                    noticeState: {
+                    haveRead: {
                         required: true
                     }
                 },
@@ -78,7 +100,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/other/notice/update",
+                        url: "${ctx}/other/message/update",
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){

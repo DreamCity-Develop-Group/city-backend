@@ -28,18 +28,30 @@
                         <form class="form-horizontal m-t" id="addForm">
                         	<input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">内容：</label>
+                                <label class="col-sm-3 control-label">发送人：</label>
                                 <div class="col-sm-8">
-                                    <input id="noticeContent" name="noticeContent" class="form-control" value="" />
+                                    <input id="playerNick" name="playerNick" class="form-control" type="text" value="" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">状态：</label>
+                                <label class="col-sm-3 control-label">接收人：</label>
                                 <div class="col-sm-8">
-                                	<select name="noticeState" class="form-control">
-                                		<option value="0">否</option>
-                                		<option value="1" selected="selected">是</option>
+                                    <input id="friendNick" name="friendNick" class="form-control" type="text" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否已读：</label>
+                                <div class="col-sm-8">
+                                	<select name="haveRead" class="form-control">
+                                		<option value="0" selected="selected">否</option>
+                                		<option value="1">是</option>
                                 	</select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">内容：</label>
+                                <div class="col-sm-8">
+                                    <input id="content" name="content" class="form-control" value="" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -61,12 +73,20 @@
 
 	    $("#addForm").validate({
             rules: {
-                noticeContent: {
+                playerNick: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },friendNick: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },content: {
                     required: true,
                     minlength: 1,
                     maxlength: 600
                 },
-                noticeState: {
+                haveRead: {
                     required: true
                 }
             },
@@ -75,7 +95,7 @@
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/other/notice/insert",
+   	    		   url: "${ctx}/other/message/insert",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){

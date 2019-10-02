@@ -19,20 +19,18 @@
   </sql>
 
   <select id="getPlayerById" parameterType="com.dream.city.player.entity.Player" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select  <include refid="Base_Column_List" />
     from city_player p
     where 1=1
     <if test="playerId != null and playerId != ''">
-      and p.player_id = #{playerId,jdbcType=VARCHAR} 
+       and p.player_id = #{playerId,jdbcType=VARCHAR}
     </if>
-    <if test="playerName != null" >
-      and p.player_name = #{playerName,jdbcType=VARCHAR}
+    <if test="playerName != null and playerName != ''" >
+    and p.player_name = #{playerName,jdbcType=VARCHAR}
     </if>
-    <if test="playerNick != null" >
-      and p.player_nick = #{playerNick,jdbcType=VARCHAR}
-    </if>
-    limit 1
+    <if test="playerNick != null and playerNick != ''" >
+    and p.player_nick = #{playerNick,jdbcType=VARCHAR}
+    </if> limit 1
   </select>
 
   <select id="getPlayerByInvite" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -42,8 +40,7 @@
     where 1=1
     <if test="invite != null and invite != ''">
       and player_invite = #{invite,jdbcType=VARCHAR}
-    </if>
-    limit 1
+    </if> limit 1
   </select>
 
   <select id="getPlayerByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">

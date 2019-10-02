@@ -29,14 +29,14 @@ public class NoticeController {
     NoticeService noticeService;
 
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping("/index")
     public ModelAndView helpsIndex(Model model){
         model.addAttribute("title","公告");
         model.addAttribute("table","公告列表");
         return new ModelAndView("other/notice/index");
     }
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public Result<List<Notice>> getNoticeList(PageReq<Notice> page,Notice record){
+    @RequestMapping("/getList")
+    public Result<List<Notice>> getNoticeList(PageReq page,Notice record){
         logger.info("获取公告列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<Notice> result = null;
@@ -51,7 +51,7 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/get/{noticeId}", method = RequestMethod.GET)
+    @RequestMapping("/get/{noticeId}")
     public ModelAndView getNoticeById(@PathVariable("noticeId") Integer noticeId,Model model){
         logger.info("获取公告详情id:{}",noticeId);
         boolean success = Boolean.TRUE;
@@ -62,6 +62,7 @@ public class NoticeController {
             success = Boolean.FALSE;
             logger.error("获取公告详情异常",e);
         }
+
         model.addAttribute("title","详情");
         model.addAttribute("table","公告详情");
         model.addAttribute("edit",Boolean.FALSE);
@@ -87,7 +88,7 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping("/add")
     public ModelAndView add(CityHelp record,Model model){
         model.addAttribute("title","添加");
         model.addAttribute("table","添加公告");
@@ -113,10 +114,11 @@ public class NoticeController {
 
     @RequestMapping(value = "/edit/{noticeId}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("noticeId") Integer noticeId,Model model){
+        Notice result = noticeService.getNoticeById(noticeId);
+
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑公告");
         model.addAttribute("edit",Boolean.TRUE);
-        Notice result = noticeService.getNoticeById(noticeId);
         model.addAttribute("data",result);
         return new ModelAndView("other/notice/edit");
     }

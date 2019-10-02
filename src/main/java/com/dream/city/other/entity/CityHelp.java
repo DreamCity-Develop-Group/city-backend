@@ -1,8 +1,9 @@
 package com.dream.city.other.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CityHelp {
+public class CityHelp implements Serializable {
     private Integer id;
 
     private String name;

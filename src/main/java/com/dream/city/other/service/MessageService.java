@@ -1,21 +1,25 @@
 package com.dream.city.other.service;
 
 
+import com.dream.city.base.PageReq;
+import com.dream.city.other.dto.MessageReq;
+import com.dream.city.other.dto.MessageResp;
 import com.dream.city.other.entity.CityMessage;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
 public interface MessageService {
 
-    int insertMessage(CityMessage record);
+    int insertMessage(MessageReq record);
 
-    int updateMessageById(CityMessage record);
+    int updateMessageById(MessageReq record);
 
     int updateMessageHaveReadById(CityMessage record);
 
     int deleteMessageById(Long id);
 
-    CityMessage getMessageById(Long id);
+    MessageResp getMessageById(Long id);
 
-    List<CityMessage> getCityMessageList(CityMessage record);
+    PageInfo<MessageResp> getCityMessageList(PageReq<MessageReq> record);
 }
