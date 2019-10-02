@@ -26,7 +26,7 @@ public class HelpController {
 
 
 
-    @RequestMapping("/index")
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView helpsIndex(Model model){
         model.addAttribute("title","帮助");
         model.addAttribute("table","帮助列表");
@@ -34,7 +34,7 @@ public class HelpController {
     }
     @ResponseBody
     @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public Result getCityHelpList(PageReq page,CityHelp record){
+    public Result getCityHelpList(PageReq<CityHelp> page,CityHelp record){
         logger.info("查詢幫助列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<CityHelp> result = null;

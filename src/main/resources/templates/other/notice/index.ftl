@@ -89,17 +89,11 @@
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
-                                        <div class="col-sm-3 form-group">
-                                            名称：<input id="name" name="name" type="text"/>
-                                        </div>
 										<div class="col-sm-3 form-group">
-											内容：<input id="content" name="content" type="text"/>
+											内容：<input id="noticeContent" name="noticeContent" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											类型：<input id="type" name="type" type="text"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											是否可以：<input id="isValid" name="isValid" type="text"/>
+											状态：<input id="noticeState" name="noticeState" type="text"/>
 										</div>
 										<div class="form-group">
 											<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
@@ -261,7 +255,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/other/help/getList",
+                    url: "${ctx}/other/notice/getList",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -284,48 +278,39 @@
                     detailFormatter:detailFormatter,
                     //表示服务端请求
                     sidePagination: "server",
-                    //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+                    //设置为undefined可以获取pageNum，pageSize，searchText，sortName，sortOrder
                     //设置为limit可以获取limit, offset, search, sort, order
                     queryParams:getQueryParams,
                     queryParamsType: "",
                     //json数据解析
                     responseHandler: function(res) {
                         return {
-							"rows": res.data.list,
-							"total": res.data.total,
+                            "rows": res.data.list,
+                            "total": res.data.total,
 							"pageNum": res.data.pageNum,
 							"startRow": res.data.startRow,
 							"endRow": res.data.endRow,
-							"pages": res.data.pages,
-							"count": res.data.count
+						    "pages": res.data.pages,
+						    "count": res.data.count
                         };
                     },
                     //数据列
                     columns: [{
                         title: "ID",
-                        field: "id",
+                        field: "noticeId",
                         sortable: true
                     },{
-                        title: "名称",
-                        field: "name"
-                    },{
                         title: "内容",
-                        field: "content",
+                        field: "noticeContent",
                     },{
-                        title: "类别",
-                        field: "type"
-                    },{
-                        title: "是否可用",
-                        field: "isValid",
+                        title: "状态",
+                        field: "noticeState",
                         formatter: function (value, row, index) {
                             if (value == 1)
                                 return '<span class="label label-info">是</span>';
                             return '<span class="label label-danger">否</span>';
                         }
                     },{
-						title: "描述",
-						field: "descr"
-					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
@@ -346,37 +331,33 @@
 
             function getQueryParams(params){
                 var params={
-					"pageNum":params.pageNum,
-					"pageSize":params.pageSize,
-					"startRow":params.startRow,
-					"endRow":params.endRow,
-					"total":params.total,
-					"pages":params.pages,
-					"count":params.count,
-                    "name":$("#name").val(),
-                    "content":$("#content").val(),
-                    "type":$("#type").val(),
-                    "isValid":$("#isValid").val()
+                    "pageNum":params.pageNum,
+                    "pageSize":params.pageSize,
+                    "startRow":params.startRow,
+                    "endRow":params.endRow,
+                    "total":params.total,
+                    "pages":params.pages,
+                    "count":params.count,
+                    "noticeContent":$("#noticeContent").val(),
+                    "noticeState":$("#noticeState").val()
                 }
                 return params;
             }
             function search() {
 				var params={
-					"name":$("#name").val(),
-					"content":$("#content").val(),
-					"type":$("#type").val(),
-					"isValid":$("#isValid").val()
+					"noticeContent":$("#noticeContent").val(),
+					"noticeState":$("#noticeState").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加帮助',
+                    title: '添加公告',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/other/help/add/',
+                    content: '${ctx}/other/notice/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -385,11 +366,11 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑帮助',
+                    title: '编辑公告',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/other/help/edit/'  + id,
+                    content: '${ctx}/other/notice/edit/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -400,7 +381,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/other/help/delete/" + id,
+                        url: "${ctx}/other/notice/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#helpListTable').bootstrapTable("refresh");
@@ -413,11 +394,11 @@
 			function detail(id) {
 				layer.open({
 					type: 2,
-					title: '帮助详情',
+					title: '公告详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/other/help/get/'  + id,
+					content: '${ctx}/other/notice/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

@@ -52,7 +52,7 @@
         and is_valid = #{isValid,jdbcType=TINYINT}
       </if>
       <if test="content != null and content != ''">
-        and content like CONCAT("'%",${content,jdbcType=VARCHAR}"%'"
+        and content like '%${content}%'
       </if>
     </where>
       order by update_time desc

@@ -304,8 +304,21 @@
                         帮助
                     </a>
                 </li>
-
                 <li>
+                    <a href="${ctx}/other/message/index">
+                        <i class="icon-double-angle-right"></i>
+                        消息通知
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/other/notice/index">
+                        <i class="icon-double-angle-right"></i>
+                        公告
+                    </a>
+                </li>
+
+
+                <#--<li>
                     <a href="error-404.html">
                         <i class="icon-double-angle-right"></i>
                         404错误页面
@@ -331,7 +344,7 @@
                         <i class="icon-double-angle-right"></i>
                         空白页面
                     </a>
-                </li>
+                </li>-->
             </ul>
         </li>
     </ul><!-- /.nav-list -->

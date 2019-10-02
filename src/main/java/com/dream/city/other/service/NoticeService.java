@@ -1,8 +1,8 @@
 package com.dream.city.other.service;
 
+import com.dream.city.base.PageReq;
 import com.dream.city.other.entity.Notice;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +15,8 @@ import java.util.List;
 public interface NoticeService {
 
     List<Notice> getGameNotices(int state);
+
+    PageInfo<Notice> getNoticeList(PageReq<Notice> record);
 
     Notice getNoticeById(Integer noticeId);
 
