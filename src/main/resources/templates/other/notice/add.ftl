@@ -28,30 +28,18 @@
                         <form class="form-horizontal m-t" id="addForm">
                         	<input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">名称：</label>
+                                <label class="col-sm-3 control-label">内容：</label>
                                 <div class="col-sm-8">
-                                    <input id="name" name="name" class="form-control" type="text" value="" />
+                                    <input id="noticeContent" name="noticeContent" class="form-control" type="text" value="" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">类别：</label>
+                                <label class="col-sm-3 control-label">状态：</label>
                                 <div class="col-sm-8">
-                                    <input id="type" name="type" class="form-control" type="text" value="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">是否可用：</label>
-                                <div class="col-sm-8">
-                                	<select name="state" class="form-control">
+                                	<select name="noticeState" class="form-control">
                                 		<option value="0">否</option>
                                 		<option value="1" selected="selected">是</option>
                                 	</select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">内容：</label>
-                                <div class="col-sm-8">
-                                    <input id="content" name="content" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -72,28 +60,16 @@
     $(document).ready(function () {
 
 	    $("#addForm").validate({
-    	    rules: {
-                name: {
-                    required: true,
-                    minlength: 1,
-                    maxlength: 50
-                },
-                content: {
+            rules: {
+                noticeContent: {
                     required: true,
                     minlength: 1,
                     maxlength: 600
                 },
-                type: {
+                noticeState: {
                     required: true
-                },
-                isValid: {
-                    required: true
-                },
-                descr: {
-                    required: false,
-                    maxlength: 60
                 }
-    	    },
+            },
     	    messages: {},
     	    submitHandler:function(form){
     	    	$.ajax({

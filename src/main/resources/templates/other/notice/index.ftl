@@ -95,12 +95,11 @@
 										<div class="col-sm-3 form-group">
 											状态：<input id="noticeState" name="noticeState" type="text"/>
 										</div>
-										<div class="form-group">
-											<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-											<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
-											<#--<@shiro.hasPermission name="system:user:add">
-                                            </@shiro.hasPermission>-->
-										</div>
+
+										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+										<#--<@shiro.hasPermission name="system:user:add">
+                                        </@shiro.hasPermission>-->
                                     </div>
 								</div>
                                 <div class="space-6"></div>
@@ -314,9 +313,9 @@
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.noticeId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.noticeId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.noticeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -392,6 +391,7 @@
                 });
             }
 			function detail(id) {
+
 				layer.open({
 					type: 2,
 					title: '公告详情',

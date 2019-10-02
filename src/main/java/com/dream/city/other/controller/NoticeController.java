@@ -51,13 +51,13 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public ModelAndView getNoticeById(@PathVariable("id") Integer id,Model model){
-        logger.info("获取公告详情id:{}",id);
+    @RequestMapping(value = "/get/{noticeId}", method = RequestMethod.GET)
+    public ModelAndView getNoticeById(@PathVariable("noticeId") Integer noticeId,Model model){
+        logger.info("获取公告详情id:{}",noticeId);
         boolean success = Boolean.TRUE;
         Notice result = null;
         try {
-            result = noticeService.getNoticeById(id);
+            result = noticeService.getNoticeById(noticeId);
         }catch (Exception e){
             success = Boolean.FALSE;
             logger.error("获取公告详情异常",e);
@@ -70,13 +70,13 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public Result<Integer> deleteNoticeById(@PathVariable("id") Integer id){
-        logger.info("删除公告id:{}",id);
+    @RequestMapping(value = "/delete/{noticeId}", method = RequestMethod.POST)
+    public Result<Integer> deleteNoticeById(@PathVariable("noticeId") Integer noticeId){
+        logger.info("删除公告id:{}",noticeId);
         boolean success = Boolean.FALSE;
         Integer result = 0;
         try {
-            result = noticeService.deleteNoticeById(id);
+            result = noticeService.deleteNoticeById(noticeId);
             if (result != null && result > 0){
                 success = Boolean.TRUE;
             }
@@ -111,12 +111,12 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Integer id,Model model){
+    @RequestMapping(value = "/edit/{noticeId}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("noticeId") Integer noticeId,Model model){
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑公告");
         model.addAttribute("edit",Boolean.TRUE);
-        Notice result = noticeService.getNoticeById(id);
+        Notice result = noticeService.getNoticeById(noticeId);
         model.addAttribute("data",result);
         return new ModelAndView("other/notice/edit");
     }

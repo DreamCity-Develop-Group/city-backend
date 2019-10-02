@@ -26,32 +26,20 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="id" name="id" value="${data.id}">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">名称：</label>
-                            <div class="col-sm-8">
-                                <input id="name" name="name" class="form-control" type="text" value="${data.name}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">类别：</label>
-                            <div class="col-sm-8">
-                                <input id="type" name="type" class="form-control" type="text" value="${data.type}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">是否可用：</label>
-                            <div class="col-sm-8">
-                                <select name="isValid" class="form-control">
-                                    <option value="0" <#if data.isValid == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.isValid == 1>selected="selected"</#if>>是</option>
-                                </select>
-                            </div>
-                        </div>
+                        <input type="hidden" id="noticeId" name="noticeId" value="${data.noticeId}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">内容：</label>
                             <div class="col-sm-8">
-                                <input id="content" name="content" class="form-control" value="${data.content}">
+                                <input id="noticeContent" name="noticeContent" class="form-control" type="text" value="${data.noticeContent}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="col-sm-8">
+                                <select name="noticeState" class="form-control">
+                                    <option value="0" <#if data.noticeState == 0>selected="selected"</#if>>否</option>
+                                    <option value="1" <#if data.noticeState == 1>selected="selected"</#if>>是</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,25 +64,13 @@
 
             $("#updateForm").validate({
                 rules: {
-                    name: {
-                        required: true,
-                        minlength: 1,
-                        maxlength: 50
-                    },
-                    content: {
+                    noticeContent: {
                         required: true,
                         minlength: 1,
                         maxlength: 600
                     },
-                    type: {
+                    noticeState: {
                         required: true
-                    },
-                    isValid: {
-                        required: true
-                    },
-                    descr: {
-                        required: false,
-                        maxlength: 60
                     }
                 },
                 messages: {},
@@ -102,9 +78,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        //contentType: "application/json;charset=UTF-8",
                         url: "${ctx}/other/notice/update",
-                        //data: JSON.stringify($(form).serialize()),
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){
