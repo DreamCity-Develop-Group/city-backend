@@ -2,37 +2,41 @@ package com.dream.city.setting.controller;
 
 import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.setting.entity.RuleItem;
-import com.dream.city.setting.service.RuleItemService;
+import com.dream.city.setting.dto.RuleReq;
+import com.dream.city.setting.entity.InvestRule;
+import com.dream.city.setting.service.InvestRuleService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 
 /**
  * @author
- * 规则项
+ * 投资规则
  */
 @RestController
-@RequestMapping("/setting/rule/item")
-public class RuleItemController {
+@RequestMapping("/setting/rule/invest")
+public class InvestRuleController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final String modelName = "规则项";
-    private final String actionPath = "setting/rule/item";
+    private final String modelName = "投资规则";
+    private final String actionPath = "setting/rule/invest";
 
     @Autowired
-    private RuleItemService itemService;
+    private InvestRuleService ruleService;
 
 
 
     @RequestMapping("/add")
-    public ModelAndView add(RuleItem record, Model model){
+    public ModelAndView add(InvestRule record, Model model){
         model.addAttribute("title","添加");
         model.addAttribute("table","添加" + modelName);
         model.addAttribute("actionPath",actionPath);
@@ -40,12 +44,12 @@ public class RuleItemController {
         return new ModelAndView(actionPath + "/add");
     }
     @RequestMapping("/insert")
-    public Result insert(RuleItem record){
+    public Result insert(InvestRule record){
         logger.info("新增"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
         try {
-            result = itemService.insertRuleItem(record);
+            result = ruleService.insertInvestRule(record);
             if (result > 0){
                 success = Boolean.TRUE;
             }
@@ -62,7 +66,7 @@ public class RuleItemController {
         boolean success = Boolean.FALSE;
         Integer result = 0;
         try {
-            result = itemService.deleteRuleItem(id);
+            result = ruleService.deleteInvestRuleById(id);
             if (result > 0){
                 success = Boolean.TRUE;
             }
@@ -76,7 +80,7 @@ public class RuleItemController {
 
     @RequestMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("data",itemService.getRuleItemById(id));
+        model.addAttribute("data",ruleService.getInvestRuleById(id));
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
         model.addAttribute("edit",Boolean.TRUE);
@@ -84,12 +88,12 @@ public class RuleItemController {
         return new ModelAndView(actionPath + "/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> update(RuleItem record){
+    public Result<Integer> update(RuleReq record){
         logger.info("修改"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
         try {
-            result = itemService.updateRuleItem(record);
+            result = ruleService.updateInvestRuleById(record);
             if (result != null && result > 0){
                 success = Boolean.TRUE;
             }
@@ -107,12 +111,12 @@ public class RuleItemController {
         logger.info("查询"+ modelName +"：{}",id);
         Object result = null;
         try {
-            result = itemService.getRuleItemById(id);
+            result = ruleService.getInvestRuleById(id);
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
         }
         model.addAttribute("title","详情");
-        model.addAttribute("table",modelName + "详情");
+        model.addAttribute("table", modelName + "详情");
         model.addAttribute("edit",Boolean.FALSE);
         model.addAttribute("data",result);
         return new ModelAndView(actionPath + "/edit");
@@ -129,13 +133,13 @@ public class RuleItemController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result getList(PageReq pageReq, RuleItem record){
+    public Result getList(PageReq pageReq, RuleReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo result = null;
         try{
             pageReq.setCondition(record);
-            result = itemService.getRuleItemList(pageReq);
+            result = ruleService.getInvestRuleList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
         }

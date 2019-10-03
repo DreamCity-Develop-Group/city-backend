@@ -6,6 +6,7 @@ import com.dream.city.setting.entity.RuleItem;
 import com.dream.city.setting.service.RuleItemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,16 @@ public class RuleItemServiceImpl implements RuleItemService {
     @Override
     public RuleItem getRuleItemById(Integer id) {
         return ruleItemMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<RuleItem> getRuleItemListByName(String itemName) {
+        if (StringUtils.isNotBlank(itemName)){
+            return null;
+        }
+        RuleItem record = new RuleItem();
+        record.setItemName(itemName);
+        return ruleItemMapper.getRuleItemList(record);
     }
 
     @Override

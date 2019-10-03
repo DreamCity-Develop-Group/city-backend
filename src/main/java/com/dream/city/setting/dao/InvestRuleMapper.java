@@ -1,18 +1,23 @@
 package com.dream.city.setting.dao;
 
 
+import com.dream.city.setting.dto.RuleReq;
 import com.dream.city.setting.entity.InvestRule;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface InvestRuleMapper {
 
-    int deleteByPrimaryKey(Integer ruleId);
+    Integer deleteByPrimaryKey(Integer ruleId);
 
-    int insertSelective(InvestRule record);
+    Integer insertSelective(InvestRule record);
 
     InvestRule selectByPrimaryKey(Integer ruleId);
 
-    int updateByPrimaryKeySelective(InvestRule record);
+    List<InvestRule> getInvestRuleList(RuleReq record);
+
+    Integer updateByPrimaryKeySelective(InvestRule record);
 
 }

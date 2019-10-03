@@ -26,7 +26,7 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="addForm">
-                            <input type="hidden" id="itemId" name="itemId" value="">
+                            <input type="hidden" id="ruleId" name="ruleId" value="">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">规则项目名称：</label>
                                 <div class="col-sm-8">
@@ -34,18 +34,36 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">可用状态：</label>
+                                <label class="col-sm-3 control-label">规则名称：</label>
                                 <div class="col-sm-8">
-                                    <select name="itemState" class="form-control">
-                                        <option value="0" >否</option>
-                                        <option value="1" selected="selected">是</option>
-                                    </select>
+                                    <input id="ruleName" name="ruleName" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">规则项目描述：</label>
+                                <label class="col-sm-3 control-label">规则税率：</label>
                                 <div class="col-sm-8">
-                                    <input id="itemDesc" name="itemDesc" class="form-control" value="">
+                                    <input id="ruleRate" name="ruleRate" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">规则优先级别：</label>
+                                <div class="col-sm-8">
+                                    <input id="raleLevel" name="raleLevel" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <#--<div class="form-group">
+                                <label class="col-sm-3 control-label">可用状态：</label>
+                                <div class="col-sm-8">
+                                    <select name="itemState" class="form-control">
+                                        <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
+                                        <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">规则描述：</label>
+                                <div class="col-sm-8">
+                                    <input id="ruleDesc" name="ruleDesc" class="form-control" value="">
                                 </div>
                             </div>
 
