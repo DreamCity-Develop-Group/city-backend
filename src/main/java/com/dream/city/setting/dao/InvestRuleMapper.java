@@ -6,9 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface InvestRuleMapper {
-    int deleteByPrimaryKey(Integer ruleId);
 
-    int insert(InvestRule record);
+    int deleteByPrimaryKey(Integer ruleId);
 
     int insertSelective(InvestRule record);
 
@@ -16,5 +15,4 @@ public interface InvestRuleMapper {
 
     int updateByPrimaryKeySelective(InvestRule record);
 
-    int updateByPrimaryKey(InvestRule record);
 }

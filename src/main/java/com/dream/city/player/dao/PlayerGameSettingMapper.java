@@ -10,17 +10,17 @@ import java.util.List;
 @Mapper
 public interface PlayerGameSettingMapper {
 
-    int deleteByPrimaryKey(Long id);
+    Integer deleteByPrimaryKey(Long id);
 
-    int insertSelective(PlayerGameSetting record);
+    Integer insertSelective(PlayerGameSetting record);
 
     PlayerGameSetting selectByPrimaryKey(Long id);
 
     List<PlayerGameSetting> getGameSettingList(PlayerGameSetting record);
 
-    int updateByPrimaryKeySelective(PlayerGameSetting record);
+    Integer updateByPrimaryKeySelective(PlayerGameSetting record);
 
-    int updateByType(PlayerGameSetting record);
+    Integer updateByType(PlayerGameSetting record);
 
     PlayerGameSetting selectByType(@Param("type") String type);
 

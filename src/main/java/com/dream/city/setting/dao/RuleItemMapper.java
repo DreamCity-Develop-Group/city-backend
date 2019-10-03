@@ -4,17 +4,24 @@ package com.dream.city.setting.dao;
 import com.dream.city.setting.entity.RuleItem;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
+/**
+ * 规则项
+ * @author
+ */
 @Mapper
 public interface RuleItemMapper {
-    int deleteByPrimaryKey(Integer itemId);
 
-    int insert(RuleItem record);
+    Integer deleteByPrimaryKey(Integer itemId);
 
-    int insertSelective(RuleItem record);
+    Integer updateByPrimaryKeySelective(RuleItem record);
+
+    Integer insertSelective(RuleItem record);
 
     RuleItem selectByPrimaryKey(Integer itemId);
 
-    int updateByPrimaryKeySelective(RuleItem record);
+    List<RuleItem> getRuleItemList(RuleItem record);
 
-    int updateByPrimaryKey(RuleItem record);
+
 }

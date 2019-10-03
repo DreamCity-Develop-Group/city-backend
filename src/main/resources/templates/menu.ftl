@@ -325,6 +325,30 @@
             <a href="#" class="dropdown-toggle">
                 <i class="icon-file-alt"></i>
                 <span class="menu-text">
+					设置管理
+				</span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="${ctx}/setting/rule/item/index">
+                        <i class="icon-double-angle-right"></i>
+                        规则项配置
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/setting/rule/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        投资规则配置
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-file-alt"></i>
+                <span class="menu-text">
 						其他页面
 						<#--<span class="badge badge-primary ">5</span>-->
 					</span>

@@ -11,27 +11,23 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     rule_id, rule_name, rule_desc, rule_item, rule_rate, rale_level, create_time, update_time
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from invest_rule
     where rule_id = #{ruleId,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from invest_rule
     where rule_id = #{ruleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.dream.city.setting.entity.InvestRule" >
-    insert into invest_rule (rule_id, rule_name, rule_desc, 
-      rule_item, rule_rate, rale_level, 
-      create_time, update_time)
-    values (#{ruleId,jdbcType=INTEGER}, #{ruleName,jdbcType=VARCHAR}, #{ruleDesc,jdbcType=VARCHAR}, 
-      #{ruleItem,jdbcType=INTEGER}, #{ruleRate,jdbcType=DOUBLE}, #{raleLevel,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.dream.city.setting.entity.InvestRule" >
     insert into invest_rule
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -87,6 +83,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.dream.city.setting.entity.InvestRule" >
     update invest_rule
     <set >
@@ -114,15 +111,6 @@
     </set>
     where rule_id = #{ruleId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dream.city.setting.entity.InvestRule" >
-    update invest_rule
-    set rule_name = #{ruleName,jdbcType=VARCHAR},
-      rule_desc = #{ruleDesc,jdbcType=VARCHAR},
-      rule_item = #{ruleItem,jdbcType=INTEGER},
-      rule_rate = #{ruleRate,jdbcType=DOUBLE},
-      rale_level = #{raleLevel,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where rule_id = #{ruleId,jdbcType=INTEGER}
-  </update>
+
+
 </mapper>
