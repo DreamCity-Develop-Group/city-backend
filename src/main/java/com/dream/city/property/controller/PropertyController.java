@@ -150,7 +150,7 @@ public class PropertyController {
         return new ModelAndView("property/index");
     }
     @RequestMapping("/getList")
-    public Result<PropertyResp> getList(PageReq page, PropertyReq record){
+    public Result<PageInfo<PropertyResp>> getList(PageReq page, PropertyReq record){
         logger.info("物业列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<PropertyResp> result = null;

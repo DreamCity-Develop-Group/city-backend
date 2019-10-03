@@ -64,10 +64,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public PageInfo<MessageResp> getCityMessageList(PageReq<MessageReq> record) {
-        PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         CityMessage getCityMessageListReq = this.getMessage(record.getCondition());
+        PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         List<CityMessage> messageList = messageMapper.getCityMessageList(getCityMessageListReq);
-
         List<MessageResp> messageListResp = null;
         if (!CollectionUtils.isEmpty(messageList)){
             messageListResp = new ArrayList<>();
@@ -99,8 +98,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private MessageResp getMessageResp(CityMessage message){
-        Player player = playerService.getPlayerById(message.getPlayerId());
-        Player frien = playerService.getPlayerById(message.getFriendId());
+        Player player = playerService.getPlayerByPlayerId(message.getPlayerId());
+        Player frien = playerService.getPlayerByPlayerId(message.getFriendId());
         MessageResp messageResp = DataUtils.toJavaObject(message,MessageResp.class);
         messageResp.setPlayerName(player.getPlayerName());
         messageResp.setPlayerNick(player.getPlayerNick());

@@ -26,48 +26,32 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="addForm">
-                        	<input type="hidden" id="id" name="id" value="">
+                            <input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">名称：</label>
+                                <label class="col-sm-3 control-label">玩家：</label>
                                 <div class="col-sm-8">
-                                    <input id="inName" name="inName" class="form-control" type="text" value="">
+                                    <input id="playerNick" name="playerNick" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">限额：</label>
+                                <label class="col-sm-3 control-label">设置类型：</label>
                                 <div class="col-sm-8">
-                                    <input id="inLimit" name="inLimit" class="form-control" type="text" value="">
+                                    <input id="type" name="type" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">税金：</label>
+                                <label class="col-sm-3 control-label">设置值：</label>
                                 <div class="col-sm-8">
-                                    <input id="inTax" name="inTax" class="form-control" type="text" value="">
+                                    <input id="val" name="val" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">收益倍数：</label>
+                                <label class="col-sm-3 control-label">状态：</label>
                                 <div class="col-sm-8">
-                                    <input id="inEarning" name="inEarning" class="form-control" type="text" value="">
+                                    <input id="status" name="status" class="form-control" type="text" value="">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">是否可投：</label>
-                                <div class="col-sm-8">
-                                    <select name="isValid" class="form-control">
-                                        <option value="0" >否</option>
-                                        <option value="1" selected="selected">是</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                        <label class="col-sm-3 control-label">投资结束时间：</label>
-                                        <div class="col-sm-8">
-                                            <input id="sendTime" name="inEnd"
-                                                   class="laydate-icon form-control"
-                                                   value="">
-                                        </div>
-                                </div>
+
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
                                     <button class="btn btn-primary" type="submit">提交</button>
@@ -95,28 +79,22 @@
 
 	    $("#addForm").validate({
             rules: {
-                inName: {
+                playerNick: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },inLimit: {
+                },type: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },inTax: {
+                },val: {
                     required: true,
                     minlength: 1,
-                    maxlength: 60
-                },inEarning: {
+                    maxlength: 600
+                },status: {
                     required: true,
                     minlength: 1,
-                    maxlength: 60
-                },isValid: {
-                    required: true
-                },inEnd: {
-                    required: true,
-                    minlength: 1,
-                    maxlength: 60
+                    maxlength: 20
                 }
             },
     	    messages: {},

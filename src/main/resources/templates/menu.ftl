@@ -288,15 +288,29 @@
         <li>
             <a href="#" class="dropdown-toggle">
                 <i class="icon-file-alt"></i>
-
                 <span class="menu-text">
-									物业管理
-									<span class="badge badge-primary ">5</span>
-								</span>
-
+					玩家管理
+				</span>
                 <b class="arrow icon-angle-down"></b>
             </a>
+            <ul class="submenu">
+                <li>
+                    <a href="${ctx}/player/game/setting/index">
+                        <i class="icon-double-angle-right"></i>
+                        玩家游戏设置
+                    </a>
+                </li>
+            </ul>
+        </li>
 
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-file-alt"></i>
+                <span class="menu-text">
+					物业管理
+				</span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
             <ul class="submenu">
                 <li>
                     <a href="${ctx}/property/index">
@@ -310,15 +324,12 @@
         <li>
             <a href="#" class="dropdown-toggle">
                 <i class="icon-file-alt"></i>
-
                 <span class="menu-text">
-									其他页面
-									<span class="badge badge-primary ">5</span>
-								</span>
-
+						其他页面
+						<#--<span class="badge badge-primary ">5</span>-->
+					</span>
                 <b class="arrow icon-angle-down"></b>
             </a>
-
             <ul class="submenu">
                 <li>
                     <a href="${ctx}/other/help/index">

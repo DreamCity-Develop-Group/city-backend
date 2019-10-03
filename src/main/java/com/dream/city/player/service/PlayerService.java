@@ -17,7 +17,7 @@ public interface PlayerService {
 
     Player getPlayer(Player player);
 
-    Player getPlayerById(String playerId);
+    Player getPlayerByPlayerId(String playerId);
 
     /**
      * 玩家列表
@@ -30,7 +30,11 @@ public interface PlayerService {
 
     Player getPlayerByNick(String playerNick);
 
+    Player getPlayerByNameOrNick(String nameOrNick);
+
     Player getPlayerByInvite(String invite);
+
+    String getPlayerNickByPlayerId(String playerId);
 
 
     /**

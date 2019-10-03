@@ -5,7 +5,6 @@ import com.dream.city.player.entity.Player;
 import com.dream.city.player.service.LoginLogServcie;
 import com.dream.city.player.service.PlayerExtService;
 import com.dream.city.player.service.PlayerService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -42,7 +41,7 @@ public class PlayerController {
     @RequestMapping("/get/{playerId}")
     public Player getPlayer(@PathVariable("playerId")String playerId){
         log.info("获取玩家，playerId:{}",playerId);
-        return playerService.getPlayerById(playerId);
+        return playerService.getPlayerByPlayerId(playerId);
     }
 
 

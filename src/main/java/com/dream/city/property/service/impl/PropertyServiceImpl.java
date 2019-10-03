@@ -60,8 +60,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public PageInfo<PropertyResp> getInvestLsit(PageReq<PropertyReq> pageReq) {
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        PropertyReq record = pageReq.getCondition();
-        List<Property> investLsit = investMapper.getInvestLsit(record);
+        List<Property> investLsit = investMapper.getInvestLsit(pageReq.getCondition());
 
         List<PropertyResp> lsit = null;
         if (!CollectionUtils.isEmpty(investLsit)){

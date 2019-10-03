@@ -40,7 +40,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player getPlayerById(String playerId) {
+    public Player getPlayerByPlayerId(String playerId) {
         Player player = new Player();
         if (StringUtils.isBlank(playerId)){
             return null;
@@ -82,9 +82,34 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public Player getPlayerByNameOrNick(String nameOrNick) {
+        Player playerResp = null;
+        if (StringUtils.isNotBlank(nameOrNick)) {
+            Player nameReq = new Player();
+            nameReq.setPlayerName(nameOrNick);
+            playerResp = playerMapper.getPlayerById(nameReq);
+            if (playerResp == null){
+                Player nickReq = new Player();
+                nickReq.setPlayerNick(nameOrNick);
+                playerResp = playerMapper.getPlayerById(nickReq);
+            }
+        }
+        return playerResp;
+    }
+
+    @Override
     public Player getPlayerByInvite(String invite){
         Player player = playerMapper.getPlayerByInvite(invite);
         return player;
+    }
+
+    @Override
+    public String getPlayerNickByPlayerId(String playerId) {
+        Player player = getPlayerByPlayerId(playerId);
+        if (player == null) {
+            return null;
+        }
+        return player.getPlayerNick();
     }
 
 

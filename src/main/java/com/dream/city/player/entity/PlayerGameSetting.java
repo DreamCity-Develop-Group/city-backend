@@ -1,9 +1,9 @@
-package com.dream.city.setting.entity;
+package com.dream.city.player.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class GameSetting implements Serializable {
+public class PlayerGameSetting implements Serializable {
     private Long id;
 
     private String playerId;

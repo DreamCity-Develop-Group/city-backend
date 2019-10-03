@@ -90,28 +90,24 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											名称：<input id="inName" name="inName" type="text"/>
+											玩家：<input id="playerNick" name="playerNick" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
+											设置类型：<input id="type" name="type" type="text"/>
+										</div>
+										<div class="col-sm-3 form-group">
+											设置值：<input id="val" name="val" type="text"/>
+										</div>
+										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
 												<input id="inEnd" name="inEnd"
 													   class="laydate-icon form-control"
 													   value="">
 											</div>
-										</div>
-										<#--<div class="col-sm-3 form-group">
-											接收人：<input id="friendNick" name="friendNick" type="text"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											消息内容：<input id="content" name="content" type="text"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											是否已读：<input id="haveRead" name="haveRead" type="text"/>
-										</div>
-										-->
+										</div>-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+										<#--<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>-->
 										<#--<@shiro.hasPermission name="system:user:add">
                                         </@shiro.hasPermission>-->
                                     </div>
@@ -263,12 +259,12 @@
             $(document).ready(function () {
 
 				//外部js调用
-				laydate({
+				/*laydate({
 					elem: '#inEnd', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
 					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
 					format: 'YYYY-MM-DD hh:mm:ss',
 					istime: true
-				});
+				});*/
 
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({
@@ -317,40 +313,35 @@
                         };
                     },
                     //数据列
-                    columns: [{
-                        title: "ID",
-                        field: "inId",
-                        sortable: true
-                    },{
-						title: "名称",
-						field: "inName"
+					columns: [{
+						title: "ID",
+						field: "id",
+						sortable: true
 					},{
-						title: "限额",
-						field: "inLimit"
+						title: "玩家",
+						field: "playerNick"
 					},{
-                        title: "税金",
-                        field: "inTax"
-                    },{
-                        title: "收益倍数",
-                        field: "inEarning"
-                    },{
-                        title: "是否可投",
-                        field: "isValid",
+						title: "设置类型",
+						field: "type"
+					},{
+						title: "设置值",
+						field: "val"
+					},{
+						title: "状态",
+						field: "status"/*,
                         formatter: function (value, row, index) {
                             if (value === 1)
                                 return '<span class="label label-info">是</span>';
                             return '<span class="label label-danger">否</span>';
-                        }
-                    },{
-						title: "投资结束时间",
-						field: "inEnd"
+                        }*/
 					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.inId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.inId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+							var operateHtml = '';
+                            //operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -372,17 +363,17 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"inName":$("#inName").val(),
-					"isValid":$("#isValid").val(),
-					"inEnd":$("#inEnd").val()
+					"playerNick":$("#playerNick").val(),
+					"type":$("#type").val(),
+					"val":$("#val").val()
                 }
                 return params;
             }
             function search() {
 				var params={
-					"inName":$("#inName").val(),
-					"isValid":$("#isValid").val(),
-					"inEnd":$("#inEnd").val()
+					"playerNick":$("#playerNick").val(),
+					"type":$("#type").val(),
+					"val":$("#val").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }

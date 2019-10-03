@@ -26,32 +26,32 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="inId" name="inId" value="${data.inId}">
+                        <input type="hidden" id="id" name="id" value="${data.id}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">名称：</label>
+                            <label class="col-sm-3 control-label">玩家：</label>
                             <div class="col-sm-8">
-                                <input id="inName" name="inName" class="form-control" type="text" value="${data.inName}">
+                                <input id="playerNick" name="playerNick" class="form-control" type="text" value="${data.playerNick}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">限额：</label>
+                            <label class="col-sm-3 control-label">设置类型：</label>
                             <div class="col-sm-8">
-                                <input id="inLimit" name="inLimit" class="form-control" type="text" value="${data.inLimit}">
+                                <input id="type" name="type" class="form-control" type="text" value="${data.type}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">税金：</label>
+                            <label class="col-sm-3 control-label">设置值：</label>
                             <div class="col-sm-8">
-                                <input id="inTax" name="inTax" class="form-control" type="text" value="${data.inTax}">
+                                <input id="val" name="val" class="form-control" type="text" value="${data.val}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">收益倍数：</label>
+                            <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
-                                <input id="inEarning" name="inEarning" class="form-control" type="text" value="${data.inEarning}">
+                                <input id="status" name="status" class="form-control" type="text" value="${data.status}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <label class="col-sm-3 control-label">是否可投：</label>
                             <div class="col-sm-8">
                                 <select name="isValid" class="form-control">
@@ -67,7 +67,7 @@
                                        class="laydate-icon form-control"
                                        value="${data.inEnd}">
                             </div>
-                        </div>
+                        </div>-->
                         <#--<div class="form-group">
                             <label class="col-sm-3 control-label">内容：</label>
                             <div class="col-sm-8">
@@ -103,28 +103,22 @@
 
             $("#updateForm").validate({
                 rules: {
-                    inName: {
+                    playerNick: {
                         required: true,
                         minlength: 1,
                         maxlength: 60
-                    },inLimit: {
+                    },type: {
                         required: true,
                         minlength: 1,
                         maxlength: 60
-                    },inTax: {
+                    },val: {
                         required: true,
                         minlength: 1,
-                        maxlength: 60
-                    },inEarning: {
+                        maxlength: 600
+                    },status: {
                         required: true,
                         minlength: 1,
-                        maxlength: 60
-                    },isValid: {
-                        required: true
-                    },inEnd: {
-                        required: true,
-                        minlength: 1,
-                        maxlength: 60
+                        maxlength: 20
                     }
                 },
                 messages: {},
