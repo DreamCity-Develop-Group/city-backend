@@ -11,7 +11,7 @@
 
 		<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="${ctx}/backend/css/font-awesome.min.css" />
+        <#--<link rel="stylesheet" href="${ctx}/backend/css/font-awesome.min.css" />-->
 		<!-- page specific plugin styles -->
 
 		<!-- ace styles -->

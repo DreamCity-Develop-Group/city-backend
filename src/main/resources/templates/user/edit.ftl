@@ -14,9 +14,8 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="${ctx}/backend/css/font-awesome.min.css" />
-    <link href="${ctx}/backend/css/animate.css" rel="stylesheet">
-    <link href="${ctx}/backend/css/style.css" rel="stylesheet">
+    <link href="${ctx}/css/animate.css" rel="stylesheet">
+    <#--<link href="${ctx}/backend/css/style.css" rel="stylesheet">-->
 
 </head>
 
