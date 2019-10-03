@@ -26,55 +26,48 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="ruleId" name="ruleId" value="${data.ruleId}">
+                        <input type="hidden" id="id" name="id" value="${data.id}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则项目名称：</label>
+                            <label class="col-sm-3 control-label">用户名：</label>
                             <div class="col-sm-8">
-                                <input id="itemName" name="itemName" class="form-control" type="text" value="${data.itemName}">
+                                <input id="playerName" name="playerName" class="form-control" type="text" value="${data.playerName}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则名称：</label>
+                            <label class="col-sm-3 control-label">昵称：</label>
                             <div class="col-sm-8">
-                                <input id="ruleName" name="ruleName" class="form-control" type="text" value="${data.ruleName}">
+                                <input id="playerNick" name="playerNick" class="form-control" type="text" value="${data.playerNick}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则税率：</label>
+                            <label class="col-sm-3 control-label">等级：</label>
                             <div class="col-sm-8">
-                                <input id="ruleRate" name="ruleRate" class="form-control" type="text" value="${data.ruleRate}">
+                                <input id="playerLevel" name="playerLevel" class="form-control" type="text" value="${data.playerLevel}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则优先级别：</label>
+                            <label class="col-sm-3 control-label">是否有效：</label>
                             <div class="col-sm-8">
-                                <input id="raleLevel" name="raleLevel" class="form-control" type="text" value="${data.raleLevel}">
-                            </div>
-                        </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">可用状态：</label>
-                            <div class="col-sm-8">
-                                <select name="itemState" class="form-control">
-                                    <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
+                                <select name="isValid" class="form-control">
+                                    <option value="0" <#if data.isValid == 0>selected="selected"</#if>>否</option>
+                                    <option value="1" <#if data.isValid == 1>selected="selected"</#if>>是</option>
                                 </select>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则描述：</label>
+                            <label class="col-sm-3 control-label">注册时间：</label>
                             <div class="col-sm-8">
-                                <input id="ruleDesc" name="ruleDesc" class="form-control" value="${data.ruleDesc}">
+                                <input id="createTime" name="createTime"
+                                       class="laydate-icon form-control"
+                                       value="${data.createTime}">
                             </div>
                         </div>
-                        <#--
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">投资结束时间：</label>
+                            <label class="col-sm-3 control-label">头像：</label>
                             <div class="col-sm-8">
-                                <input id="sendTime" name="inEnd"
-                                       class="laydate-icon form-control"
-                                       value="${data.inEnd}">
+                                <img id="imgurl" class="pull-left" alt="Alex Doe's avatar" src="${data.imgurl}">
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

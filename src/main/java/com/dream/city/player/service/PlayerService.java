@@ -1,6 +1,7 @@
 package com.dream.city.player.service;
 
 import com.dream.city.base.PageReq;
+import com.dream.city.player.dto.PlayerReq;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.entity.PlayerGrade;
 import com.github.pagehelper.Page;
@@ -17,6 +18,8 @@ public interface PlayerService {
 
     Player getPlayer(Player player);
 
+    Player getPlayerByrId(Long id);
+
     Player getPlayerByPlayerId(String playerId);
 
     /**
@@ -24,7 +27,7 @@ public interface PlayerService {
      * @param pageReq
      * @return
      */
-    PageInfo getPlayers(PageReq pageReq);
+    PageInfo getPlayers(PageReq<PlayerReq> pageReq);
 
     Player getPlayerByName(String playerName);
 

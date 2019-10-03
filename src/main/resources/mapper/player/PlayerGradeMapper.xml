@@ -48,12 +48,8 @@
       <if test="integral != null">
         integral,
       </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="updateDate != null">
-        update_date,
-      </if>
+      create_date,
+      update_date,
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -68,12 +64,8 @@
       <if test="integral != null">
         #{integral,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null">
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
+      now(),
+      now(),
     </trim>
   </insert>
 
@@ -90,9 +82,7 @@
       <if test="createDate != null">
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateDate != null">
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
+      update_date = now(),
     </set>
     where player_id = #{playerId,jdbcType=BIGINT}
   </update>

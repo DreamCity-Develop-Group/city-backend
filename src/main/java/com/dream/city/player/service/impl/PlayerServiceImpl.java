@@ -3,6 +3,7 @@ package com.dream.city.player.service.impl;
 import com.dream.city.base.PageReq;
 import com.dream.city.player.dao.PlayerGradeMapper;
 import com.dream.city.player.dao.PlayerMapper;
+import com.dream.city.player.dto.PlayerReq;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.entity.PlayerGrade;
 import com.dream.city.player.service.FriendsService;
@@ -40,6 +41,20 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public Player getPlayerByrId(Long id) {
+        if (id == null){
+            return null;
+        }
+        if (id <= 0){
+            return null;
+        }
+        Player player = new Player();
+        player.setId(id);
+        return playerMapper.getPlayerById(player);
+    }
+
+
+    @Override
     public Player getPlayerByPlayerId(String playerId) {
         Player player = new Player();
         if (StringUtils.isBlank(playerId)){
@@ -51,10 +66,10 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public PageInfo getPlayers(PageReq pageReq) {
+    public PageInfo getPlayers(PageReq<PlayerReq> pageReq) {
+        Player playerReq = DataUtils.getData(pageReq.getCondition(),Player.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        Player player = DataUtils.toJavaObject(pageReq.getCondition(),Player.class);
-        List<Map> players = playerMapper.getPlayers(player);
+        List<Map> players = playerMapper.getPlayers(playerReq);
         return new PageInfo<>(players);
     }
 

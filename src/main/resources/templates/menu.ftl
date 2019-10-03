@@ -295,9 +295,33 @@
             </a>
             <ul class="submenu">
                 <li>
+                    <a href="${ctx}/player/index">
+                        <i class="icon-double-angle-right"></i>
+                        玩家
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/player/friend/index">
+                        <i class="icon-double-angle-right"></i>
+                        好友
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/player/like/index">
+                        <i class="icon-double-angle-right"></i>
+                        点赞
+                    </a>
+                </li>
+                <li>
                     <a href="${ctx}/player/game/setting/index">
                         <i class="icon-double-angle-right"></i>
                         玩家游戏设置
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/player/loginlog/index">
+                        <i class="icon-double-angle-right"></i>
+                        玩家登陆日志
                     </a>
                 </li>
             </ul>
