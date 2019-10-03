@@ -25,7 +25,7 @@
         and rule_id = #{ruleId,jdbcType=INTEGER}
       </if>
       <if test="ruleName != null and ruleName != ''" >
-        and rule_name = #{ruleName,jdbcType=VARCHAR}
+        and rule_name like '%${ruleName}%'
       </if>
       <if test="ruleItem != null" >
         and rule_item = #{ruleItem,jdbcType=INTEGER}

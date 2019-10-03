@@ -53,13 +53,13 @@
         and id = #{id,jdbcType=INTEGER}
       </if>
       <if test="name != null and name != ''" >
-        and name = #{name,jdbcType=VARCHAR}
+        and name like '%${name}%'
       </if>
       <if test="key != null and key != ''" >
-        and key = #{key,jdbcType=VARCHAR}
+        and key like '%${key}%'
       </if>
       <if test="val != null and val != ''" >
-        and val = #{val,jdbcType=VARCHAR}
+        and val like '%${val}%'
       </if>
       <if test="isValid != null" >
         and is_valid = #{isValid,jdbcType=TINYINT}

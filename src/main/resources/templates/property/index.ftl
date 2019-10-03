@@ -92,14 +92,14 @@
 										<div class="col-sm-3 form-group">
 											名称：<input id="inName" name="inName" type="text"/>
 										</div>
-										<div class="col-sm-3 form-group">
+										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
 												<input id="inEnd" name="inEnd"
 													   class="laydate-icon form-control"
 													   value="">
 											</div>
-										</div>
+										</div>-->
 										<#--<div class="col-sm-3 form-group">
 											接收人：<input id="friendNick" name="friendNick" type="text"/>
 										</div>
@@ -263,12 +263,12 @@
             $(document).ready(function () {
 
 				//外部js调用
-				laydate({
+				/*laydate({
 					elem: '#inEnd', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
 					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
 					format: 'YYYY-MM-DD hh:mm:ss',
 					istime: true
-				});
+				});*/
 
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({

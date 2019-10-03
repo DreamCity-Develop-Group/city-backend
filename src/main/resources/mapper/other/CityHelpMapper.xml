@@ -43,7 +43,7 @@
         and id = #{id,jdbcType=INTEGER}
       </if>
       <if test="name != null and name != ''">
-        and name = #{name,jdbcType=VARCHAR}
+        and name like '%${name}%'
       </if>
       <if test="type != null and type != ''">
         and type = #{type,jdbcType=VARCHAR}

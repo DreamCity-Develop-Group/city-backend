@@ -29,7 +29,7 @@
         and item_id = #{itemId,jdbcType=INTEGER}
       </if>
       <if test="itemName != null and itemName != ''" >
-        and item_name = #{itemName,jdbcType=VARCHAR}
+        and item_name like '%${itemName}%'
       </if>
       <if test="itemDesc != null and itemDesc != ''" >
         and item_desc like '%${itemDesc}%'

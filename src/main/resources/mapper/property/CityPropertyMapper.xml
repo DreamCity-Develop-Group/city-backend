@@ -45,7 +45,7 @@
         and in_id = #{inId,jdbcType=INTEGER}
       </if>
       <if test="inName !=null and inName !=''">
-        and in_name = #{inName,jdbcType=VARCHAR}
+        and in_name like '%${inName}%'
       </if>
       <if test="isValid !=null">
         and is_valid = #{isValid,jdbcType=CHAR}
