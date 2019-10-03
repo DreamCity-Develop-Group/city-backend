@@ -132,7 +132,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/property/update",
+                        url: "${ctx}/${actionPath}/update",
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){

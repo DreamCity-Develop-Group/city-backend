@@ -3,15 +3,25 @@ package com.dream.city.property.service.impl;
 
 import com.dream.city.base.PageReq;
 import com.dream.city.property.dao.PropertyMapper;
+import com.dream.city.property.dto.PropertyReq;
+import com.dream.city.property.dto.PropertyResp;
 import com.dream.city.property.entity.Property;
 import com.dream.city.property.service.PropertyService;
+import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
+/**
+ * @author
+ */
 @Service
 public class PropertyServiceImpl implements PropertyService {
 
@@ -27,11 +37,18 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public Property getInvestByIdOrName(Property record) {
+    public int deletePropertyById(Integer inId) {
+        Integer integer = investMapper.deleteByPrimaryKey(inId);
+        return integer ==null?0:integer;
+    }
+
+    @Override
+    public PropertyResp getInvestByIdOrName(Property record) {
         if (record.getInId() == null && StringUtils.isBlank(record.getInName())){
             return null;
         }
-        return investMapper.selectByPrimaryKey(record);
+        Property property = investMapper.selectByPrimaryKey(record);
+        return DataUtils.toJavaObject(property,PropertyResp.class);
     }
 
     @Override
@@ -41,10 +58,23 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PageInfo<Property> getInvestLsit(PageReq<Property> pageReq) {
+    public PageInfo<PropertyResp> getInvestLsit(PageReq<PropertyReq> pageReq) {
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        Property record = pageReq.getCondition();
-        return new PageInfo<>(investMapper.getInvestLsit(record));
+        PropertyReq record = pageReq.getCondition();
+        List<Property> investLsit = investMapper.getInvestLsit(record);
+
+        List<PropertyResp> lsit = null;
+        if (!CollectionUtils.isEmpty(investLsit)){
+            lsit = new ArrayList<>();
+            PropertyResp propertyResp = null;
+            for (Property property : investLsit){
+                propertyResp = DataUtils.toJavaObject(property,PropertyResp.class);
+                lsit.add(propertyResp);
+            }
+        }
+        return new PageInfo<>(lsit);
     }
+
+
 
 }

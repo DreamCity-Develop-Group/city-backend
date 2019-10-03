@@ -5,7 +5,6 @@ import com.dream.city.base.Result;
 import com.dream.city.other.dto.MessageReq;
 import com.dream.city.other.dto.MessageResp;
 import com.dream.city.other.entity.CityHelp;
-import com.dream.city.other.entity.CityMessage;
 import com.dream.city.other.service.MessageService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 /**
  * 消息

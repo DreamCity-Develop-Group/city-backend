@@ -35,7 +35,7 @@
     limit 1
   </select>
 
-  <select id="getInvestLsit" resultMap="BaseResultMap" parameterType="com.dream.city.property.entity.Property" >
+  <select id="getInvestLsit" resultMap="BaseResultMap" parameterType="com.dream.city.property.dto.PropertyReq" >
     select
     <include refid="Base_Column_List" />
     from city_invest
@@ -50,7 +50,9 @@
       <if test="isValid !=null">
         and is_valid = #{isValid,jdbcType=CHAR}
       </if>
-
+      <if test="inEnd !=null and inEnd !=''">
+        and in_end <![CDATA[<]]> #{inEnd,jdbcType=VARCHAR}
+      </if>
     </where>
 
   </select>

@@ -2,6 +2,8 @@ package com.dream.city.property.service;
 
 
 import com.dream.city.base.PageReq;
+import com.dream.city.property.dto.PropertyReq;
+import com.dream.city.property.dto.PropertyResp;
 import com.dream.city.property.entity.Property;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
@@ -21,12 +23,15 @@ public interface PropertyService {
     int insertInvest(Property record);
 
 
+    int deletePropertyById(Integer inId);
+
+
     /**
      * 查询物业
      * @param record: inId 、inName
      * @return
      */
-    Property getInvestByIdOrName(Property record);
+    PropertyResp getInvestByIdOrName(Property record);
 
     /**
      * 更新物业
@@ -40,7 +45,7 @@ public interface PropertyService {
      * @param pageReq
      * @return
      */
-    PageInfo<Property> getInvestLsit(PageReq<Property> pageReq);
+    PageInfo<PropertyResp> getInvestLsit(PageReq<PropertyReq> pageReq);
 
 
 

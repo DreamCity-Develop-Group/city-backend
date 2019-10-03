@@ -95,7 +95,7 @@
 										<div class="col-sm-3 form-group">
 											状态：<input id="noticeState" name="noticeState" type="text"/>
 										</div>
-										<div class="col-sm-4 form-group">
+										<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
 												<input id="sendTime" name="sendTime"
@@ -326,10 +326,10 @@
                                 return '<span class="label label-info">是</span>';
                             return '<span class="label label-danger">否</span>';
                         }
-                    },/*{
+                    },{
 						title: "发送时间",
 						field: "sendTime"
-					},*/{
+					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
@@ -358,8 +358,8 @@
                     "pages":params.pages,
                     "count":params.count,
                     "noticeContent":$("#noticeContent").val(),
-                    "noticeState":$("#noticeState").val()/*,
-					"sendTime":$("#sendTime").val()*/
+                    "noticeState":$("#noticeState").val(),
+					"sendTime":$("#sendTime").val()
 				}
                 return params;
             }

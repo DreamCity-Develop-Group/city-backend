@@ -3,7 +3,8 @@ package com.dream.city.property.controller;
 
 import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.other.dto.MessageResp;
+import com.dream.city.property.dto.PropertyReq;
+import com.dream.city.property.dto.PropertyResp;
 import com.dream.city.property.entity.Property;
 import com.dream.city.property.service.PropertyService;
 import com.github.pagehelper.PageInfo;
@@ -33,6 +34,7 @@ public class PropertyController {
     public ModelAndView add(Property record,Model model){
         model.addAttribute("title","添加");
         model.addAttribute("table","添加物业");
+        model.addAttribute("actionPath","property");
         model.addAttribute("data",record);
         return new ModelAndView("property/add");
     }
@@ -58,19 +60,36 @@ public class PropertyController {
     }
 
 
+    /*@RequestMapping("/delete/{id}")
+    public Result deletePropertyById(@PathVariable("id") Integer id){
+        logger.info("删除物业，：{}",id);
+        boolean success = Boolean.FALSE;
+        Integer result = 0;
+        try {
+            result = propertyService.deletePropertyById(id);
+            if (result > 0){
+                success = Boolean.TRUE;
+            }
+        }catch (Exception e){
+            logger.error("删除物业异常",e);
+        }
+        return new Result(success,"删除物业",result);
+    }*/
+
     /**
      * 修改物业
-     * @param inId
+     * @param id
      * @return
      */
-    @RequestMapping("/edit/{inId}")
-    public ModelAndView edit(@PathVariable("inId") Integer inId, Model model){
+    @RequestMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Integer id, Model model){
         Property recordReq = new Property();
-        recordReq.setInId(inId);
-        Property result = propertyService.getInvestByIdOrName(recordReq);
+        recordReq.setInId(id);
+        PropertyResp result = propertyService.getInvestByIdOrName(recordReq);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑物业");
         model.addAttribute("edit",Boolean.TRUE);
+        model.addAttribute("actionPath","property");
         model.addAttribute("data",result);
         return new ModelAndView("property/edit");
     }
@@ -94,16 +113,16 @@ public class PropertyController {
 
     /**
      * 查询物业
-     * @param inId
+     * @param id
      * @return
      */
-    @RequestMapping("/get/{inId}")
-    public ModelAndView getInvestByIdOrName(@PathVariable("inId") Integer inId,Model model){
-        logger.info("查询物业：{}",inId);
-        Property result = null;
+    @RequestMapping("/get/{id}")
+    public ModelAndView getInvestByIdOrName(@PathVariable("id") Integer id,Model model){
+        logger.info("查询物业：{}",id);
+        PropertyResp result = null;
         try {
             Property record = new Property();
-            record.setInId(inId);
+            record.setInId(id);
             result = propertyService.getInvestByIdOrName(record);
         }catch (Exception e){
             logger.error("查询物业异常",e);
@@ -127,13 +146,14 @@ public class PropertyController {
     public ModelAndView helpsIndex(Model model){
         model.addAttribute("title","物业");
         model.addAttribute("table","物业列表");
+        model.addAttribute("actionPath","property");
         return new ModelAndView("property/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> friendList(PageReq<Property> page, Property record){
+    public Result<PropertyResp> friendList(PageReq page, PropertyReq record){
         logger.info("物业列表，：{}",record);
         boolean success = Boolean.TRUE;
-        PageInfo<Property> result = null;
+        PageInfo<PropertyResp> result = null;
         try{
             page.setCondition(record);
             result = propertyService.getInvestLsit(page);

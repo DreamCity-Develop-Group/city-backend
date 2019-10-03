@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Wvv
  */
 @Data
-public class NoticeResp implements Serializable {
+public class NoticeReq implements Serializable {
 
     private Integer noticeId;
 

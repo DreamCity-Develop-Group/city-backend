@@ -2,10 +2,12 @@ package com.dream.city.other.controller;
 
 import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
+import com.dream.city.other.dto.NoticeReq;
 import com.dream.city.other.dto.NoticeResp;
 import com.dream.city.other.entity.CityHelp;
 import com.dream.city.other.entity.Notice;
 import com.dream.city.other.service.NoticeService;
+import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +38,13 @@ public class NoticeController {
         return new ModelAndView("other/notice/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> getNoticeList(PageReq page,Notice record){
+    public Result<PageInfo> getNoticeList(PageReq page, NoticeReq record){
         logger.info("获取公告列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<NoticeResp> result = null;
         try {
-            page.setCondition(record);
+            Notice notice = DataUtils.toJavaObject(record,Notice.class);
+            page.setCondition(notice);
             result = noticeService.getNoticeList(page);
         }catch (Exception e){
             success = Boolean.FALSE;
@@ -51,13 +54,13 @@ public class NoticeController {
     }
 
 
-    @RequestMapping("/get/{noticeId}")
-    public ModelAndView getNoticeById(@PathVariable("noticeId") Integer noticeId,Model model){
-        logger.info("获取公告详情id:{}",noticeId);
+    @RequestMapping("/get/{id}")
+    public ModelAndView getNoticeById(@PathVariable("id") Integer id,Model model){
+        logger.info("获取公告详情id:{}",id);
         boolean success = Boolean.TRUE;
         NoticeResp result = null;
         try {
-            result = noticeService.getNoticeById(noticeId);
+            result = noticeService.getNoticeById(id);
         }catch (Exception e){
             success = Boolean.FALSE;
             logger.error("获取公告详情异常",e);
@@ -71,13 +74,13 @@ public class NoticeController {
     }
 
 
-    @RequestMapping(value = "/delete/{noticeId}", method = RequestMethod.POST)
-    public Result<Integer> deleteNoticeById(@PathVariable("noticeId") Integer noticeId){
-        logger.info("删除公告id:{}",noticeId);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public Result<Integer> deleteNoticeById(@PathVariable("id") Integer id){
+        logger.info("删除公告id:{}",id);
         boolean success = Boolean.FALSE;
         Integer result = 0;
         try {
-            result = noticeService.deleteNoticeById(noticeId);
+            result = noticeService.deleteNoticeById(id);
             if (result != null && result > 0){
                 success = Boolean.TRUE;
             }
@@ -112,9 +115,9 @@ public class NoticeController {
     }
 
 
-    @RequestMapping("/edit/{noticeId}")
-    public ModelAndView edit(@PathVariable("noticeId") Integer noticeId,Model model){
-        NoticeResp result = noticeService.getNoticeById(noticeId);
+    @RequestMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Integer id,Model model){
+        NoticeResp result = noticeService.getNoticeById(id);
 
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑公告");

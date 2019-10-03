@@ -1,6 +1,5 @@
 package com.dream.city.other.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.dream.city.base.PageReq;
 import com.dream.city.other.dao.MessageMapper;
 import com.dream.city.other.dto.MessageReq;
@@ -9,6 +8,7 @@ import com.dream.city.other.entity.CityMessage;
 import com.dream.city.other.service.MessageService;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.service.PlayerService;
+import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +101,7 @@ public class MessageServiceImpl implements MessageService {
             friendId = getFriendNick.getPlayerId();
         }
 
-        CityMessage message = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(messageReq)),CityMessage.class);
+        CityMessage message = DataUtils.toJavaObject(messageReq,CityMessage.class);
         message.setPlayerId(playerId);
         message.setFriendId(friendId);
         return message;
@@ -110,7 +110,7 @@ public class MessageServiceImpl implements MessageService {
     private MessageResp getMessageResp(CityMessage message){
         Player player = playerService.getPlayerById(message.getPlayerId());
         Player frien = playerService.getPlayerById(message.getFriendId());
-        MessageResp messageResp = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(message)),MessageResp.class);
+        MessageResp messageResp = DataUtils.toJavaObject(message,MessageResp.class);
         messageResp.setPlayerName(player.getPlayerName());
         messageResp.setPlayerNick(player.getPlayerNick());
         messageResp.setFriendName(frien.getPlayerName());

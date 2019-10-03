@@ -92,14 +92,14 @@
 										<div class="col-sm-3 form-group">
 											名称：<input id="inName" name="inName" type="text"/>
 										</div>
-										<#--<div class="col-sm-4 form-group">
+										<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
 												<input id="inEnd" name="inEnd"
 													   class="laydate-icon form-control"
 													   value="">
 											</div>
-										</div>-->
+										</div>
 										<#--<div class="col-sm-3 form-group">
 											接收人：<input id="friendNick" name="friendNick" type="text"/>
 										</div>
@@ -264,7 +264,7 @@
 
 				//外部js调用
 				laydate({
-					elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+					elem: '#inEnd', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
 					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
 					format: 'YYYY-MM-DD hh:mm:ss',
 					istime: true
@@ -277,7 +277,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/property/getList",
+                    url: "${ctx}/${actionPath}/getList",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -323,33 +323,33 @@
                         sortable: true
                     },{
 						title: "名称",
-						field: "inName",
+						field: "inName"
 					},{
 						title: "限额",
-						field: "inLimit",
+						field: "inLimit"
 					},{
                         title: "税金",
-                        field: "inTax",
+                        field: "inTax"
                     },{
                         title: "收益倍数",
-                        field: "inEarning",
+                        field: "inEarning"
                     },{
                         title: "是否可投",
                         field: "isValid",
                         formatter: function (value, row, index) {
-                            if (value == 1)
+                            if (value === 1)
                                 return '<span class="label label-info">是</span>';
                             return '<span class="label label-danger">否</span>';
                         }
                     },{
 						title: "投资结束时间",
-						field: "inEnd",
+						field: "inEnd"
 					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.inId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
                             operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.inId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
@@ -372,11 +372,7 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"inId":$("#inId").val(),
 					"inName":$("#inName").val(),
-					"inLimit":$("#inLimit").val(),
-					"inTax":$("#inTax").val(),
-					"inEarning":$("#inEarning").val(),
 					"isValid":$("#isValid").val(),
 					"inEnd":$("#inEnd").val()
                 }
@@ -384,11 +380,7 @@
             }
             function search() {
 				var params={
-					"inId":$("#inId").val(),
 					"inName":$("#inName").val(),
-					"inLimit":$("#inLimit").val(),
-					"inTax":$("#inTax").val(),
-					"inEarning":$("#inEarning").val(),
 					"isValid":$("#isValid").val(),
 					"inEnd":$("#inEnd").val()
 				}
@@ -401,7 +393,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/property/add/',
+                    content: '${ctx}/${actionPath}/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -414,7 +406,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/property/edit/'  + id,
+                    content: '${ctx}/${actionPath}/edit/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -425,7 +417,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/property/delete/" + id,
+                        url: "${ctx}/${actionPath}/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#helpListTable').bootstrapTable("refresh");
@@ -443,7 +435,7 @@
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/property/get/'  + id,
+					content: '${ctx}/${actionPath}/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

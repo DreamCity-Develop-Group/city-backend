@@ -1,6 +1,7 @@
 package com.dream.city.property.dao;
 
 
+import com.dream.city.property.dto.PropertyReq;
 import com.dream.city.property.entity.Property;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,7 +18,7 @@ public interface PropertyMapper {
 
     Property selectByPrimaryKey(Property record);
 
-    List<Property> getInvestLsit(Property record);
+    List<Property> getInvestLsit(PropertyReq record);
 
     Integer updateByPrimaryKeySelective(Property record);
 

@@ -101,7 +101,7 @@
 										<div class="col-sm-3 form-group">
 											是否已读：<input id="haveRead" name="haveRead" type="text"/>
 										</div>
-										<div class="col-sm-4 form-group">
+										<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
 												<input id="sendTime" name="sendTime"
@@ -322,13 +322,13 @@
                         sortable: true
                     },{
 						title: "发送人",
-						field: "playerNick",
+						field: "playerNick"
 					},{
 						title: "接收人",
-						field: "friendNick",
+						field: "friendNick"
 					},{
                         title: "内容",
-                        field: "content",
+                        field: "content"
                     },{
                         title: "是否已读",
                         field: "haveRead",
@@ -368,9 +368,7 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"playerId":$("#playerId").val(),
 					"playerNick":$("#playerNick").val(),
-					"friendId":$("#friendId").val(),
 					"friendNick":$("#friendNick").val(),
 					"content":$("#content").val(),
 					"haveRead":$("#haveRead").val(),
@@ -380,9 +378,7 @@
             }
             function search() {
 				var params={
-					"playerId":$("#playerId").val(),
 					"playerNick":$("#playerNick").val(),
-					"friendId":$("#friendId").val(),
 					"friendNick":$("#friendNick").val(),
 					"content":$("#content").val(),
 					"haveRead":$("#haveRead").val(),
