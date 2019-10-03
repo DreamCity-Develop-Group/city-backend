@@ -44,7 +44,7 @@ public class PropertyController {
      * @return
      */
     @RequestMapping("/insert")
-    public Result insertInvest(Property record){
+    public Result insert(Property record){
         logger.info("新增物业，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -61,7 +61,7 @@ public class PropertyController {
 
 
     /*@RequestMapping("/delete/{id}")
-    public Result deletePropertyById(@PathVariable("id") Integer id){
+    public Result delete(@PathVariable("id") Integer id){
         logger.info("删除物业，：{}",id);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -94,7 +94,7 @@ public class PropertyController {
         return new ModelAndView("property/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> updateInvest(@RequestBody Property record){
+    public Result<Integer> update(@RequestBody Property record){
         logger.info("修改物业，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -117,7 +117,7 @@ public class PropertyController {
      * @return
      */
     @RequestMapping("/get/{id}")
-    public ModelAndView getInvestByIdOrName(@PathVariable("id") Integer id,Model model){
+    public ModelAndView get(@PathVariable("id") Integer id,Model model){
         logger.info("查询物业：{}",id);
         PropertyResp result = null;
         try {
@@ -143,14 +143,14 @@ public class PropertyController {
      * @return
      */
     @RequestMapping("/index")
-    public ModelAndView helpsIndex(Model model){
+    public ModelAndView index(Model model){
         model.addAttribute("title","物业");
         model.addAttribute("table","物业列表");
         model.addAttribute("actionPath","property");
         return new ModelAndView("property/index");
     }
     @RequestMapping("/getList")
-    public Result<PropertyResp> friendList(PageReq page, PropertyReq record){
+    public Result<PropertyResp> getList(PageReq page, PropertyReq record){
         logger.info("物业列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<PropertyResp> result = null;

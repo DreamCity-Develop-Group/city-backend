@@ -37,7 +37,7 @@ public class MassegeController {
         return new ModelAndView("other/msg/add");
     }
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public Result<Integer> insertMessage(MessageReq record){
+    public Result<Integer> insert(MessageReq record){
         boolean success = Boolean.TRUE;
         int result = 0;
         try {
@@ -54,16 +54,14 @@ public class MassegeController {
 
     @RequestMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id,Model model){
-        MessageResp result = messageService.getMessageById(id);
-
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑通知");
         model.addAttribute("edit",Boolean.TRUE);
-        model.addAttribute("data",result);
+        model.addAttribute("data",messageService.getMessageById(id));
         return new ModelAndView("other/msg/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> updateMessageById(MessageReq record){
+    public Result<Integer> update(MessageReq record){
         boolean success = Boolean.FALSE;
         int result = 0;
         try {
@@ -79,7 +77,7 @@ public class MassegeController {
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public Result<Integer> deleteMessageById(@PathVariable("id") Long id){
+    public Result<Integer> delete(@PathVariable("id") Long id){
         boolean success = Boolean.FALSE;
         int result = 0;
         try {
@@ -95,14 +93,13 @@ public class MassegeController {
 
 
     @RequestMapping("/get/{id}")
-    public ModelAndView getMessageById(@PathVariable("id") Long id,Model model){
+    public ModelAndView get(@PathVariable("id") Long id,Model model){
         MessageResp result = null;
         try {
             result = messageService.getMessageById(id);
         }catch (Exception e){
             logger.error("查询通知异常",e);
         }
-
         model.addAttribute("title","详情");
         model.addAttribute("table","通知详情");
         model.addAttribute("edit",Boolean.FALSE);
@@ -113,13 +110,13 @@ public class MassegeController {
 
 
     @RequestMapping(value = "/index")
-    public ModelAndView helpsIndex(Model model){
+    public ModelAndView index(Model model){
         model.addAttribute("title","通知");
         model.addAttribute("table","通知列表");
         return new ModelAndView("other/msg/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> getCityMessageList(PageReq page, MessageReq record){
+    public Result<PageInfo> getList(PageReq page, MessageReq record){
         boolean success = Boolean.TRUE;
         PageInfo<MessageResp> result = null;
         try {

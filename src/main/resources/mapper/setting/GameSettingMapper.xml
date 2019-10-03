@@ -14,8 +14,32 @@
     id, player_id, type, val, status,create_date, update_date
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="getGameSettingList" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
+    <include refid="Base_Column_List" />
+    from city_game_setting
+    <where>
+      <if test="id != null" >
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="playerId != null and playerId != ''" >
+        and player_id = #{playerId,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != ''" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="val != null and val != ''" >
+        val = #{val,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by update_date desc
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
     <include refid="Base_Column_List" />
     from city_game_setting
     where id = #{id,jdbcType=BIGINT}
@@ -28,29 +52,6 @@
 
   <insert id="insertSelective" parameterType="com.dream.city.setting.entity.GameSetting" >
     insert into city_game_setting
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="playerId != null" >
-        player_id,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="val != null" >
-        val,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-    </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
@@ -67,12 +68,27 @@
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
+      now(),
+      now(),
+    </trim>
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
       </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
+      <if test="playerId != null" >
+        player_id,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="val != null" >
+        val,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      create_date,
+      update_date,
     </trim>
   </insert>
 
@@ -91,12 +107,7 @@
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
+      update_date = now(),
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -110,12 +121,7 @@
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
+      update_date = now(),
     </set>
     where player_id = #{playerId,jdbcType=VARCHAR}
     <if test="type != null" >

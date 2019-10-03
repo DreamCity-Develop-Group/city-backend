@@ -1,23 +1,23 @@
 package com.dream.city.setting.service;
 
+import com.dream.city.setting.entity.GameSetting;
+
+import java.util.List;
+
 /**
  * 游戏设置
  */
 public interface GameSettingService {
 
-    /**
-     * 游戏音效
-     * @return
-     */
-    boolean settingGameVioce(String playerId, boolean isOpen);
+    int deleteGameSettingById(Long id);
 
+    int updateGameSettingById(GameSetting record);
 
-    /**
-     * 背景音效
-     * @param isOpen
-     * @return
-     */
-    boolean settingBgVioce(String playerId, boolean isOpen);
+    int insertGameSetting(GameSetting record);
+
+    GameSetting getGameSettingById(Long id);
+
+    List<GameSetting> getGameSettingList(GameSetting record);
 
 
 }

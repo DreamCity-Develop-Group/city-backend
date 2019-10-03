@@ -81,24 +81,15 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private CityMessage getMessage(MessageReq messageReq){
-        Player getPlayerByName = playerService.getPlayerByName(messageReq.getPlayerNick(),null);
+        Player getPlayerByName = playerService.getPlayerByName(messageReq.getPlayerNick());
         String playerId = null;
         if (getPlayerByName != null){
             playerId = getPlayerByName.getPlayerId();
         }
-        Player getPlayerNick = playerService.getPlayerByName(null,messageReq.getPlayerNick());
-        if (getPlayerNick != null){
-            playerId = getPlayerNick.getPlayerId();
-        }
-
-        Player getFriendByName = playerService.getPlayerByName(messageReq.getFriendNick(),null);
+        Player getFriendByNick = playerService.getPlayerByNick(messageReq.getFriendNick());
         String friendId = null;
-        if (getFriendByName != null){
-            friendId = getFriendByName.getPlayerId();
-        }
-        Player getFriendNick = playerService.getPlayerByName(null, messageReq.getFriendNick());
-        if (getFriendNick != null){
-            friendId = getFriendNick.getPlayerId();
+        if (getFriendByNick != null){
+            friendId = getFriendByNick.getPlayerId();
         }
 
         CityMessage message = DataUtils.toJavaObject(messageReq,CityMessage.class);

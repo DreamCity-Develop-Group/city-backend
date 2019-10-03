@@ -24,7 +24,7 @@ public class FileController {
 
 
     @RequestMapping("/delete/{id}")
-    public CityFile deleteFileById(@PathVariable("id") Long id){
+    public CityFile delete(@PathVariable("id") Long id){
         logger.info("删除文件，{}", id);
         CityFile file = null;
         try {
@@ -35,8 +35,9 @@ public class FileController {
         return file;
     }
 
+
     @RequestMapping("/insert")
-    public CityFile insertFile(@RequestBody CityFile record){
+    public CityFile insert(@RequestBody CityFile record){
         logger.info("新增文件，{}", record);
         CityFile file = null;
         try {
@@ -47,8 +48,9 @@ public class FileController {
         return file;
     }
 
+
     @RequestMapping("/get/{id}")
-    public CityFile getFileById(@PathVariable("id") Long id){
+    public CityFile get(@PathVariable("id") Long id){
         logger.info("查询文件，{}", id);
         CityFile file = null;
         try {
@@ -59,8 +61,9 @@ public class FileController {
         return file;
     }
 
+
     @RequestMapping("/getList")
-    public List<CityFile> getFileList(CityFile record){
+    public List<CityFile> getList(CityFile record){
         logger.info("查询文件列表，{}", record);
         List<CityFile> fileList = null;
         try {
@@ -71,8 +74,9 @@ public class FileController {
         return fileList;
     }
 
+
     @RequestMapping("/update")
-    public CityFile updateFileById(@RequestBody CityFile record){
+    public CityFile update(@RequestBody CityFile record){
         logger.info("修改文件，{}", record);
         CityFile cityFile = null;
         try {

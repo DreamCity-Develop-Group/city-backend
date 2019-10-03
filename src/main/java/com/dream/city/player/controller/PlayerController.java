@@ -1,10 +1,12 @@
 package com.dream.city.player.controller;
 
+import com.dream.city.base.PageReq;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.service.LoginLogServcie;
 import com.dream.city.player.service.PlayerExtService;
 import com.dream.city.player.service.PlayerService;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +52,9 @@ public class PlayerController {
      * @return
      */
     @RequestMapping("/getPlayers")
-    public Page getPlayers(@RequestBody Page pageReq){
+    public PageInfo getPlayers(@RequestBody PageReq pageReq){
         log.info("获取广场玩家列表，{}",pageReq);
-        Page page = null;
+        PageInfo page = null;
         try {
             page = playerService.getPlayers(pageReq);
         }catch (Exception e){
@@ -65,7 +67,11 @@ public class PlayerController {
     @RequestMapping(value = "/getPlayerByName",method = RequestMethod.POST,produces="application/json; utf-8")
     public Player getPlayerByName(@RequestBody Player playerReq){
         log.info("根据用户名或昵称获取玩家，{}",playerReq);
-        return playerService.getPlayerByName(playerReq.getPlayerName(),playerReq.getPlayerNick());
+        Player player = playerService.getPlayerByName(playerReq.getPlayerName());
+        if (player == null){
+            player = playerService.getPlayerByNick(playerReq.getPlayerNick());
+        }
+        return player;
     }
 
 

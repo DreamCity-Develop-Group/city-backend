@@ -32,13 +32,13 @@ public class NoticeController {
 
 
     @RequestMapping("/index")
-    public ModelAndView helpsIndex(Model model){
+    public ModelAndView index(Model model){
         model.addAttribute("title","公告");
         model.addAttribute("table","公告列表");
         return new ModelAndView("other/notice/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> getNoticeList(PageReq page, NoticeReq record){
+    public Result<PageInfo> getList(PageReq page, NoticeReq record){
         logger.info("获取公告列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<NoticeResp> result = null;
@@ -55,14 +55,12 @@ public class NoticeController {
 
 
     @RequestMapping("/get/{id}")
-    public ModelAndView getNoticeById(@PathVariable("id") Integer id,Model model){
+    public ModelAndView get(@PathVariable("id") Integer id,Model model){
         logger.info("获取公告详情id:{}",id);
-        boolean success = Boolean.TRUE;
         NoticeResp result = null;
         try {
             result = noticeService.getNoticeById(id);
         }catch (Exception e){
-            success = Boolean.FALSE;
             logger.error("获取公告详情异常",e);
         }
 
@@ -75,7 +73,7 @@ public class NoticeController {
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public Result<Integer> deleteNoticeById(@PathVariable("id") Integer id){
+    public Result<Integer> delete(@PathVariable("id") Integer id){
         logger.info("删除公告id:{}",id);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -99,7 +97,7 @@ public class NoticeController {
         return new ModelAndView("other/notice/add");
     }
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public Result<Integer> insertNotice(Notice record){
+    public Result<Integer> insert(Notice record){
         logger.info("新增公告record:{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -117,16 +115,14 @@ public class NoticeController {
 
     @RequestMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Integer id,Model model){
-        NoticeResp result = noticeService.getNoticeById(id);
-
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑公告");
         model.addAttribute("edit",Boolean.TRUE);
-        model.addAttribute("data",result);
+        model.addAttribute("data",noticeService.getNoticeById(id));
         return new ModelAndView("other/notice/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> updateNoticeById(Notice record){
+    public Result<Integer> update(Notice record){
         logger.info("更新公告record:{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
