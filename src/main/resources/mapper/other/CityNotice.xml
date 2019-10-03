@@ -16,7 +16,7 @@
   <select id="getNoticeList" resultMap="NoticeBaseResultMap" parameterType="com.dream.city.other.entity.Notice" >
     select
     <include refid="Base_Column_List" />
-    from game_notice
+    from city_notice
     <where>
       1=1
       <if test="noticeId != null">
@@ -38,17 +38,17 @@
   <select id="selectByPrimaryKey" resultMap="NoticeBaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
-    from game_notice
+    from city_notice
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from game_notice
+    delete from city_notice
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </delete>
 
   <insert id="insertSelective" parameterType="com.dream.city.other.entity.Notice" >
-    insert into game_notice
+    insert into city_notice
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="noticeId != null" >
         notice_id,
@@ -82,7 +82,7 @@
   </insert>
 
   <update id="updateByPrimaryKeySelective" parameterType="com.dream.city.other.entity.Notice" >
-    update game_notice
+    update city_notice
     <set >
       <if test="noticeContent != null" >
         notice_content = #{noticeContent,jdbcType=VARCHAR},

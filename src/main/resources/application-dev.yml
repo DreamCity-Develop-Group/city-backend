@@ -4,9 +4,9 @@ spring:
     ehcache:
       config: classpath:ehcache.xml
 
-  #添加那个目录的文件需要restart
   devtools:
     restart:
+      #添加那个目录的文件需要restart
       additional-paths: src/main/java
       #排除那个目录的文件不需要restart
       exclude: static/**

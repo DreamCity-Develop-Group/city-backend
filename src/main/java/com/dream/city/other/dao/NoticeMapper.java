@@ -16,7 +16,7 @@ import java.util.List;
 public interface NoticeMapper {
 
     @ResultMap("NoticeBaseResultMap")
-    @Select("select * from game_notice where 1=1 and notice_state=#{isValid}")
+    @Select("select * from city_notice where 1=1 and notice_state=#{isValid}")
     List<Notice> getGameNotices(int state);
 
     List<Notice> getNoticeList(Notice record);

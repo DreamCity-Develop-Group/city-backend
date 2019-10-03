@@ -1,8 +1,10 @@
 package com.dream.city.player.service;
 
+import com.dream.city.base.PageReq;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.entity.PlayerGrade;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,8 +15,6 @@ import org.springframework.stereotype.Repository;
 public interface PlayerService {
 
 
-    Player update(Player player);
-
     Player getPlayer(Player player);
 
     Player getPlayerById(String playerId);
@@ -24,13 +24,14 @@ public interface PlayerService {
      * @param pageReq
      * @return
      */
-    Page getPlayers(Page pageReq);
+    PageInfo getPlayers(PageReq pageReq);
 
-    Player getPlayerByName(String username, String playerNick);
+    Player getPlayerByName(String playerName);
+
+    Player getPlayerByNick(String playerNick);
 
     Player getPlayerByInvite(String invite);
 
-    Player getPlayerByAccount(String account);
 
     /**
      * 获取玩家等级

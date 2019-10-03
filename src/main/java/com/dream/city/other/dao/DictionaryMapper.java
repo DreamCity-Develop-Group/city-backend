@@ -5,18 +5,28 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+/**
+ * 字典
+ * @author
+ */
 @Mapper
 public interface DictionaryMapper {
 
 
-    Integer deleteByPrimaryKey(Integer id);
-
     Integer insertSelective(Dictionary record);
+
+    Integer updateByPrimaryKeySelective(Dictionary record);
+
+    Integer deleteByPrimaryKey(Integer id);
 
     Dictionary selectByPrimaryKey(Integer id);
 
-    List<Dictionary> selectByPrimaryKey(Dictionary id);
+    List<Dictionary> getDictionaryByKey(String key);
 
-    Integer updateByPrimaryKeySelective(Dictionary record);
+    List<Dictionary> getDictionaryByVal(String val);
+
+    List<Dictionary> getDictionaryByName(String name);
+
+    List<Dictionary> getDictionaryList(Dictionary record);
 
 }

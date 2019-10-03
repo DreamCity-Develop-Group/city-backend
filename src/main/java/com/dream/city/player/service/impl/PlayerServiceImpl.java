@@ -1,14 +1,15 @@
 package com.dream.city.player.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.dream.city.base.PageReq;
 import com.dream.city.player.dao.PlayerGradeMapper;
 import com.dream.city.player.dao.PlayerMapper;
-import com.dream.city.player.entity.Friends;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.entity.PlayerGrade;
 import com.dream.city.player.service.FriendsService;
 import com.dream.city.player.service.PlayerService;
-import com.github.pagehelper.Page;
+import com.dream.city.util.DataUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,11 +33,6 @@ public class PlayerServiceImpl implements PlayerService {
     @Value("${spring.application.name}")
     private String appName;
 
-    @Override
-    public Player update(Player player) {
-        int i = playerMapper.updateByPlayerId(player);
-        return i > 0? player: null;
-    }
 
     @Override
     public Player getPlayer(Player player) {
@@ -55,57 +51,32 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public Page getPlayers(Page pageReq) {//todo
-        Page page = new Page();
-
-        Integer count = playerMapper.getPlayersCount(pageReq);
-        List<Map> players = playerMapper.getPlayers(pageReq);
-        return page;
-    }
-
-    private String getFriendAgree(String playerId,Map player){
-        String friendId = player.containsKey("player")?String.valueOf(player.get("player")): null;
-        Friends record = new Friends();
-        record.setPlayerId(playerId);
-        record.setFriendId(friendId);
-        Integer getFriendAgree = friendsService.getFriendAgree(record);
-
-        String result = "添加";
-        if (getFriendAgree == null){
-            result = "添加";
-        }else {
-            if (getFriendAgree == 0){
-                result = "已申请";
-            } else if (getFriendAgree == 1){
-                result = "已添加";
-            }
-        }
-        return result;
+    public PageInfo getPlayers(PageReq pageReq) {
+        PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
+        Player player = DataUtils.toJavaObject(pageReq.getCondition(),Player.class);
+        List<Map> players = playerMapper.getPlayers(player);
+        return new PageInfo<>(players);
     }
 
     @Override
-    public Player getPlayerByName(String playerName,String playerNick) {
-        Player player = new Player();
-        if (StringUtils.isNotBlank(playerName)) {
-            player.setPlayerName(playerName);
-        }
-        if (StringUtils.isNotBlank(playerNick)) {
-            player.setPlayerNick(playerNick);
-        }
-        Player playerByName = null;
-        if (StringUtils.isNotBlank(playerName) || StringUtils.isNotBlank(playerNick)) {
-            playerByName = playerMapper.getPlayerById(player);
-        }
+    public Player getPlayerByName(String playerName) {
         Player playerResp = null;
-        if (playerByName != null){
-            playerResp = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(playerByName)),Player.class);
+        if (StringUtils.isNotBlank(playerName)) {
+            Player playerReq = new Player();
+            playerReq.setPlayerName(playerName);
+            playerResp = playerMapper.getPlayerById(playerReq);
+        }
+        return playerResp;
+    }
 
-            /*这里不用查询级别
-            PlayerGrade playerGrade = getPlayerGradeByPlayerId(player.getPlayerId());
-            playerResp.setGrade(playerGrade.getGrade());
-            playerResp.setCommerceMember(0); //商会成员数 todo
-            */
-            return playerResp;
+
+    @Override
+    public Player getPlayerByNick(String playerNick) {
+        Player playerResp = null;
+        if (StringUtils.isNotBlank(playerNick)) {
+            Player playerReq = new Player();
+            playerReq.setPlayerNick(playerNick);
+            playerResp = playerMapper.getPlayerById(playerReq);
         }
         return playerResp;
     }
@@ -116,11 +87,6 @@ public class PlayerServiceImpl implements PlayerService {
         return player;
     }
 
-    @Override
-    public Player getPlayerByAccount(String account){
-        Player player = playerMapper.getPlayerByAccount(account);
-        return player;
-    }
 
     @Override
     public PlayerGrade getPlayerGradeByPlayerId(String playerId) {
