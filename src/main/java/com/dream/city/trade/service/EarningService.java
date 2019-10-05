@@ -29,9 +29,10 @@ public interface EarningService {
      * @param earnId
      * @return
      */
-    PlayerEarning getEarning(Integer earnId);
+    PlayerEarning getEarningById(Integer earnId);
 
-    PlayerEarning getPlayerEarningByPlayerId(String playerId);
+    PlayerEarning getEarning(PlayerEarning record);
+
 
     /**
      * 查询玩家提现收入列表

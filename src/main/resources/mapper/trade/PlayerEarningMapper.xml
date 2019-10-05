@@ -26,7 +26,14 @@
     select
     <include refid="Base_Column_List" />
     from player_earning
-    where earn_player_id = #{earnPlayerId,jdbcType=VARCHAR}
+    where 1=1
+    <if test="earnId != null">
+      and earn_id = #{earnId,jdbcType=INTEGER}
+    </if>
+    <if test="earnPlayerId != null and earnPlayerId != ''">
+      and earn_player_id = #{earnPlayerId,jdbcType=VARCHAR}
+    </if>
+    order by update_time desc limit 1
   </select>
 
   <select id="selectPlayerEarningList" resultMap="BaseResultMap" parameterType="com.dream.city.trade.entity.PlayerEarning" >
@@ -38,7 +45,7 @@
         <if test="earnId != null">
           and earn_id = #{earnId,jdbcType=INTEGER}
         </if>
-        <if test="earnPlayerId != null">
+        <if test="earnPlayerId != null and earnPlayerId != ''">
           and earn_player_id = #{earnPlayerId,jdbcType=VARCHAR}
         </if>
         <if test="earnMax != null">
@@ -47,12 +54,12 @@
         <if test="earnTax != null">
           and earn_tax = #{earnTax,jdbcType=DECIMAL}
         </if>
-        <if test="isWithdrew != null">
+        <if test="isWithdrew != null and isWithdrew != ''">
           and is_withdrew = #{isWithdrew,jdbcType=CHAR}
         </if>
 
     </where>
-    order by create_time desc
+    order by update_time desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -79,6 +86,7 @@
         is_withdrew,
       </if>
       create_time
+      update_time
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="earnId != null" >
@@ -96,7 +104,8 @@
       <if test="isWithdrew != null" >
         #{isWithdrew,jdbcType=CHAR},
       </if>
-      now()
+      now(),
+      now(),
     </trim>
   </insert>
 

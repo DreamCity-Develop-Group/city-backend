@@ -8,7 +8,7 @@ public enum VerifyStatus {
     wait("待审核"),
     verifying("审核中"),
     pass("审核通过"),
-    notpass("审核不通过");
+    notpass("不通过");
 
     private String desc;
 

@@ -12,6 +12,8 @@ import com.dream.city.player.service.PlayerService;
 import com.dream.city.property.dto.PropertyResp;
 import com.dream.city.property.service.PropertyService;
 import com.dream.city.util.DataUtils;
+import com.dream.city.verify.entity.TradeVerify;
+import com.dream.city.verify.service.TradeVerifyService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class OrderServiceImpl implements OrderService {
     private PropertyService propertyService;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private TradeVerifyService verifyService;
 
 
 
@@ -95,6 +99,12 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.countOrdersByPayerIdPropertyId(record);
     }
 
+    @Override
+    public int updateOrderStateById(Order record) {
+        Integer integer = orderMapper.updateOrderStateById(record);
+        return integer ==null?0:integer;
+    }
+
     private OrderResp getOrderResp(Order order){
         OrderResp resp = DataUtils.toJavaObject(order,OrderResp.class);
         Player player = playerService.getPlayerByPlayerId(order.getOrderPayerId());
@@ -106,6 +116,30 @@ public class OrderServiceImpl implements OrderService {
             resp.setInName(propertyResp.getInName());
             resp.setInTax(BigDecimal.valueOf(Double.parseDouble(String.valueOf(propertyResp.getInTax()))));
         }
+        String orderState = "";
+        switch (resp.getOrderState()){
+            case "SUBSCRIBE": orderState = InvestStatus.SUBSCRIBE.getDesc();break;
+            case "SUBSCRIBED": orderState = InvestStatus.SUBSCRIBED.getDesc();break;
+            case "SUBSCRIBE_PASS": orderState = InvestStatus.SUBSCRIBE_PASS.getDesc();break;
+            case "INVEST": orderState = InvestStatus.INVEST.getDesc();break;
+            case "MANAGEMENT": orderState = InvestStatus.MANAGEMENT.getDesc();break;
+            case "EXTRACT": orderState = InvestStatus.EXTRACT.getDesc();break;
+            case "FINISHED": orderState = InvestStatus.FINISHED.getDesc();break;
+            case "CANCEL": orderState = InvestStatus.CANCEL.getDesc();break;
+            case "SUBSCRIBE_VERIFY_FAIL": orderState = InvestStatus.SUBSCRIBE_VERIFY_FAIL.getDesc();break;
+            case "INVALID": orderState = InvestStatus.INVALID.getDesc();break;
+            default:;
+        }
+        resp.setOrderState(orderState);
+
+        TradeVerify record = new TradeVerify();
+        record.setVerifyOrderId(order.getOrderId());
+        TradeVerify verify = verifyService.getTradeVerify(record);
+        if (verify != null){
+            resp.setVerifyStatus(verify.getVerifyStatus());
+            resp.setVerifyDesc(verify.getVerifyDesc());
+        }
+
         return resp;
     }
 

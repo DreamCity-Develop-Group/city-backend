@@ -17,6 +17,8 @@ public interface OrderMapper {
 
     Integer updateByPrimaryKeySelective(Order record);
 
+    Integer updateOrderStateById(Order record);
+
     List<Order> getInvestOrders(Order record);
 
     int countOrdersByPayerIdPropertyId(Order record);

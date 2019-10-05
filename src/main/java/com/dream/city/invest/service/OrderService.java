@@ -5,6 +5,7 @@ import com.dream.city.invest.dto.OrderReq;
 import com.dream.city.invest.dto.OrderResp;
 import com.dream.city.invest.entity.Order;
 import com.github.pagehelper.PageInfo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -56,4 +57,12 @@ public interface OrderService {
      * @return
      */
     int countOrdersByPayerIdPropertyId(Order record);
+
+    /**
+     * 审核修改状态
+     * @param record
+     * @return
+     */
+    @Transactional
+    int updateOrderStateById(Order record);
 }

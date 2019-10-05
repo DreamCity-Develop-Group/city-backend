@@ -32,6 +32,8 @@ public interface TradeVerifyService {
      */
     TradeVerify getTradeVerifyBiId(Integer verifyId);
 
+    TradeVerify getTradeVerify(TradeVerify record);
+
     /**
      * 审核列表
      * @param record

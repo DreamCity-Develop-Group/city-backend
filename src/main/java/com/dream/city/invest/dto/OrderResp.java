@@ -31,6 +31,12 @@ public class OrderResp implements Serializable {
     /** 是否复投 */
     private int orderRepeat;
 
+    /** 审核状态(待审核wait，审核中verifying，pass审核通过，notpass审核不通过)*/
+    private String verifyStatus;
+
+    /** 审核意见 */
+    private String verifyDesc;
+
     /**  */
     private String createTime;
 

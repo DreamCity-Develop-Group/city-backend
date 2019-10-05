@@ -34,6 +34,11 @@ public class TradeVerifyServiceImpl implements TradeVerifyService {
     }
 
     @Override
+    public TradeVerify getTradeVerify(TradeVerify record) {
+        return verifyMapper.getTradeVerify(record);
+    }
+
+    @Override
     public List<TradeVerify> getTradeVerifyList(TradeVerify record) {
         return verifyMapper.getTradeVerifyList(record);
     }

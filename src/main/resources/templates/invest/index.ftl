@@ -325,7 +325,7 @@
                         field: "orderId",
                         sortable: true
                     },{
-						title: "名称",
+						title: "项目名称",
 						field: "inName"
 					},{
 						title: "玩家",
@@ -337,8 +337,17 @@
                         title: "税金",
                         field: "inTax"
                     },{
-                        title: "状态",
-                        field: "orderState"
+                        title: "投资状态",
+                        field: "orderState",
+						formatter: function (value, row, index) {
+							var operateHtml = '';
+							if (value === '预约'){
+								operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.orderId+'\')"><span class="label label-info">预约</span></a>';
+							}else {
+								operateHtml = '<span class="label label-info">'+ value +'</span>';
+							}
+							return operateHtml;
+						}
                     },{
                         title: "投资时间",
                         field: "createTime"
@@ -346,7 +355,11 @@
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            var operateHtml = '';
+							if (row.orderState === '预约') {
+								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.orderId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
+							}
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -387,7 +400,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加公告',
+                    title: '添加投资',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -400,11 +413,11 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑公告',
+                    title: '审核投资',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/edit/'  + id,
+                    content: '${ctx}/${actionPath}/verify/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
