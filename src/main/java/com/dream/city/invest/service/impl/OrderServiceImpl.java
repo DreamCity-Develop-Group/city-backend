@@ -122,6 +122,7 @@ public class OrderServiceImpl implements OrderService {
             case "SUBSCRIBED": orderState = InvestStatus.SUBSCRIBED.getDesc();break;
             case "SUBSCRIBE_PASS": orderState = InvestStatus.SUBSCRIBE_PASS.getDesc();break;
             case "INVEST": orderState = InvestStatus.INVEST.getDesc();break;
+            case "INVESTED": orderState = InvestStatus.INVESTED.getDesc();break;
             case "MANAGEMENT": orderState = InvestStatus.MANAGEMENT.getDesc();break;
             case "EXTRACT": orderState = InvestStatus.EXTRACT.getDesc();break;
             case "FINISHED": orderState = InvestStatus.FINISHED.getDesc();break;
