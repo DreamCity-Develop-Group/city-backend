@@ -90,29 +90,29 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											发送人：<input id="playerNick" name="playerNick" type="text"/>
+											项目：<input id="inName" name="inName" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											接收人：<input id="friendNick" name="friendNick" type="text"/>
+											玩家：<input id="payerName" name="payerName" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											消息内容：<input id="content" name="content" type="text"/>
+											状态：<input id="orderState" name="orderState" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											是否已读：
-											<select name="haveRead" class="form-control">
-												<option value="0" selected="selected>否</option>
+											<label class="">是否复投：</label>
+											<select id="orderRepeat" name="orderRepeat" class="">
+												<option value="0" selected="selected">否</option>
 												<option value="1" >是</option>
 											</select>
 										</div>
-										<div class="col-sm-3 form-group">
+										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
-												<input id="sendTime" name="sendTime"
+												<input id="inEnd" name="inEnd"
 													   class="laydate-icon form-control"
 													   value="">
 											</div>
-										</div>
+										</div>-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
 										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
 										<#--<@shiro.hasPermission name="system:user:add">
@@ -266,12 +266,12 @@
             $(document).ready(function () {
 
 				//外部js调用
-				laydate({
-					elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+				/*laydate({
+					elem: '#inEnd', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
 					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
 					format: 'YYYY-MM-DD hh:mm:ss',
 					istime: true
-				});
+				});*/
 
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({
@@ -280,7 +280,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/other/message/getList",
+                    url: "${ctx}/${actionPath}/getList",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -322,35 +322,31 @@
                     //数据列
                     columns: [{
                         title: "ID",
-                        field: "id",
+                        field: "orderId",
                         sortable: true
                     },{
-						title: "发送人",
-						field: "playerNick"
+						title: "名称",
+						field: "inName"
 					},{
-						title: "接收人",
-						field: "friendNick"
+						title: "玩家",
+						field: "payerName"
 					},{
-                        title: "内容",
-                        field: "content"
+						title: "投资金额",
+						field: "orderAmount"
+					},{
+                        title: "税金",
+                        field: "inTax"
                     },{
-                        title: "是否已读",
-                        field: "haveRead",
-                        formatter: function (value, row, index) {
-                            if (value == 1)
-                                return '<span class="label label-info">是</span>';
-                            return '<span class="label label-danger">否</span>';
-                        }
+                        title: "状态",
+                        field: "orderState"
                     },{
-						title: "发送时间",
-						field: "sendTime"
-					},{
+                        title: "投资时间",
+                        field: "createTime"
+                    },{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            var operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -372,21 +368,19 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"playerNick":$("#playerNick").val(),
-					"friendNick":$("#friendNick").val(),
-					"content":$("#content").val(),
-					"haveRead":$("#haveRead").val(),
-					"sendTime":$("#sendTime").val()
+					"inName":$("#inName").val(),
+					"payerName":$("#payerName").val(),
+					"orderState":$("#orderState").val(),
+					"orderRepeat":$("#orderRepeat").val()
                 }
                 return params;
             }
             function search() {
 				var params={
-					"playerNick":$("#playerNick").val(),
-					"friendNick":$("#friendNick").val(),
-					"content":$("#content").val(),
-					"haveRead":$("#haveRead").val(),
-					"sendTime":$("#sendTime").val()
+					"inName":$("#inName").val(),
+					"payerName":$("#payerName").val(),
+					"orderState":$("#orderState").val(),
+					"orderRepeat":$("#orderRepeat").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
@@ -397,7 +391,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/other/message/add/',
+                    content: '${ctx}/${actionPath}/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -410,7 +404,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/other/message/edit/'  + id,
+                    content: '${ctx}/${actionPath}/edit/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -421,7 +415,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/other/message/delete/" + id,
+                        url: "${ctx}/${actionPath}/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#helpListTable').bootstrapTable("refresh");
@@ -439,7 +433,7 @@
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/other/message/get/'  + id,
+					content: '${ctx}/${actionPath}/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

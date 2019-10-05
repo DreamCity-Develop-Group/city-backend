@@ -83,9 +83,7 @@ public class PropertyController {
      */
     @RequestMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Integer id, Model model){
-        Property recordReq = new Property();
-        recordReq.setInId(id);
-        PropertyResp result = propertyService.getInvestByIdOrName(recordReq);
+        PropertyResp result = propertyService.getInvestByIdOrName(id,null);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑物业");
         model.addAttribute("edit",Boolean.TRUE);
@@ -121,9 +119,7 @@ public class PropertyController {
         logger.info("查询物业：{}",id);
         PropertyResp result = null;
         try {
-            Property record = new Property();
-            record.setInId(id);
-            result = propertyService.getInvestByIdOrName(record);
+            result = propertyService.getInvestByIdOrName(id,null);
         }catch (Exception e){
             logger.error("查询物业异常",e);
         }

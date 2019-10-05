@@ -13,12 +13,12 @@ public interface OrderMapper {
 
     Order insertSelective(Order record);
 
-    Order selectByPrimaryKey(Order record);
+    Order selectByPrimaryKey(Integer orderId);
 
     Integer updateByPrimaryKeySelective(Order record);
 
     List<Order> getInvestOrders(Order record);
 
-    int countOrdersByPayerIdInvestId(Order record);
+    int countOrdersByPayerIdPropertyId(Order record);
 
 }

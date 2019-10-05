@@ -1,6 +1,10 @@
 package com.dream.city.invest.service;
 
+import com.dream.city.base.PageReq;
+import com.dream.city.invest.dto.OrderReq;
+import com.dream.city.invest.dto.OrderResp;
 import com.dream.city.invest.entity.Order;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -34,22 +38,22 @@ public interface OrderService {
 
     /**
      * 查询投资订单
-     * @param record
+     * @param orderId
      * @return
      */
-    Order getInvestOrderById(Order record);
+    OrderResp getInvestOrderById(Integer orderId);
 
     /**
      * 投资订单列表
      * @param record
      * @return
      */
-    List<Order> getInvestOrderList(Order record);
+    PageInfo<OrderResp> getInvestOrderList(PageReq<OrderReq> record);
 
     /**
      * 投资数量
      * @param record orderInvestId、orderPayerId、orderState
      * @return
      */
-    int countOrdersByPayerIdInvestId(Order record);
+    int countOrdersByPayerIdPropertyId(Order record);
 }

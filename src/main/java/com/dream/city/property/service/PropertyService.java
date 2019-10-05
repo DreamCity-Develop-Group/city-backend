@@ -28,10 +28,10 @@ public interface PropertyService {
 
     /**
      * 查询物业
-     * @param record: inId 、inName
+     * @param  inId 、inName
      * @return
      */
-    PropertyResp getInvestByIdOrName(Property record);
+    PropertyResp getInvestByIdOrName(Integer inId,String inName);
 
     /**
      * 更新物业
