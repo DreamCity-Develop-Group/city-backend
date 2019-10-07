@@ -6,7 +6,7 @@ import com.dream.city.other.dto.MessageReq;
 import com.dream.city.other.dto.MessageResp;
 import com.dream.city.other.entity.CityMessage;
 import com.dream.city.other.service.MessageService;
-import com.dream.city.player.entity.Player;
+import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.service.PlayerService;
 import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
@@ -80,12 +80,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private CityMessage getMessage(MessageReq messageReq){
-        Player getPlayerByName = playerService.getPlayerByName(messageReq.getPlayerNick());
+        PlayerResp getPlayerByName = playerService.getPlayerByName(messageReq.getPlayerNick());
         String playerId = null;
         if (getPlayerByName != null){
             playerId = getPlayerByName.getPlayerId();
         }
-        Player getFriendByNick = playerService.getPlayerByNick(messageReq.getFriendNick());
+        PlayerResp getFriendByNick = playerService.getPlayerByNick(messageReq.getFriendNick());
         String friendId = null;
         if (getFriendByNick != null){
             friendId = getFriendByNick.getPlayerId();
@@ -98,8 +98,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private MessageResp getMessageResp(CityMessage message){
-        Player player = playerService.getPlayerByPlayerId(message.getPlayerId());
-        Player frien = playerService.getPlayerByPlayerId(message.getFriendId());
+        PlayerResp player = playerService.getPlayerByPlayerId(message.getPlayerId());
+        PlayerResp frien = playerService.getPlayerByPlayerId(message.getFriendId());
         MessageResp messageResp = DataUtils.toJavaObject(message,MessageResp.class);
         messageResp.setPlayerName(player.getPlayerName());
         messageResp.setPlayerNick(player.getPlayerNick());

@@ -19,31 +19,23 @@ public interface VerifyCommonService {
      * @param accPlayerId
      * @return
      */
-    int playerSubtractUsdtFreeze(String accPlayerId,BigDecimal accUsdtFreeze);
-
-    /**
-     * 玩家Usdt交易流水
-     * @param playerAccount
-     * @return
-     */
-    PlayerTrade playerSubtractUsdtFreezeTrade(PlayerAccountReq playerAccount, BigDecimal accUsdtFreeze, String desc);
-
-
+    int playerSubtractAmount(String accPlayerId,BigDecimal amount,String amountType);
 
 
     /**
      * 平台账户增加金额
-     * @param accUsdt
+     * @param amount
      * @return
      */
-    PlayerAccount platformAddUsdt(BigDecimal accUsdt);
+    PlayerAccount platformAddAmount(BigDecimal amount,String amountType);
+
 
     /**
-     * 平台Usdt交易流水
+     * 生成交易流水
      * @param playerAccount
      * @return
      */
-    int platformAddUsdtTrade(PlayerAccount playerAccount, BigDecimal accUsdt);
+    PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc);
 
 
     /**

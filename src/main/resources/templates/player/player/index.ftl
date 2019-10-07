@@ -60,7 +60,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">其他页面</a></li>
+							<li><a href="#">玩家管理</a></li>
 							<li class="active">${title}</li>
 						</ul><!-- .breadcrumb -->
 
@@ -335,7 +335,10 @@
 						title: "头像",
 						field: "imgurl",
 						formatter: function (value, row, index) {
-							var operateHtml = '<img id="imgurl" class="pull-left" alt="${ctx}/assets/images/avatars/avatar5.png" src=${ctx}/'+ value +'>';
+							var operateHtml = '<img id="imgurl" class="pull-left" src="${ctx}/avatars/avatar5.png">';
+							if (value != null && value != ''){
+								operateHtml = '<img id="imgurl" class="pull-left" src="${ctx}/'+ value +'">';
+							}
 							return operateHtml;
 						}
 					},{
@@ -385,7 +388,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加公告',
+                    title: '添加'+${title},
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -398,7 +401,7 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑公告',
+                    title: '编辑'+${title},
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -427,7 +430,7 @@
 
 				layer.open({
 					type: 2,
-					title: '公告详情',
+					title: ${title}+'详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],

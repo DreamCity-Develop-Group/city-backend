@@ -7,7 +7,7 @@ import com.dream.city.invest.dto.OrderResp;
 import com.dream.city.invest.entity.Order;
 import com.dream.city.invest.enu.InvestStatus;
 import com.dream.city.invest.service.OrderService;
-import com.dream.city.player.entity.Player;
+import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.service.PlayerService;
 import com.dream.city.property.dto.PropertyResp;
 import com.dream.city.property.service.PropertyService;
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PageInfo<OrderResp> getInvestOrderList(PageReq<OrderReq> record) {
         PropertyResp property = propertyService.getInvestByIdOrName(null, record.getCondition().getInName());
-        Player player = playerService.getPlayerByName(record.getCondition().getPayerName());
+        PlayerResp player = playerService.getPlayerByName(record.getCondition().getPayerName());
         Order recordReq =  DataUtils.toJavaObject(record.getCondition(),Order.class);
         if (property != null) {
             recordReq.setOrderInvestId(property.getInId());
@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderResp getOrderResp(Order order){
         OrderResp resp = DataUtils.toJavaObject(order,OrderResp.class);
-        Player player = playerService.getPlayerByPlayerId(order.getOrderPayerId());
+        PlayerResp player = playerService.getPlayerByPlayerId(order.getOrderPayerId());
         if (player != null){
             resp.setPayerName(player.getPlayerName());
         }

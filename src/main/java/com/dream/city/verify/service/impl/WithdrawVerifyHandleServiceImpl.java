@@ -83,7 +83,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.pass.name())){
             //审核通过
             //玩家账户扣除金额 扣冻结Usdt金额
-            int updatePlayerAccount = verifyCommonService.playerSubtractUsdtFreeze(trade.getTradePlayerId(), trade.getTradeAmount());
+            int updatePlayerAccount = verifyCommonService.playerSubtractAmount(trade.getTradePlayerId(), trade.getTradeAmount(),"usdt");
 
             //玩家账户扣除Usdt金额流水
             PlayerTrade createPlayerTrade = null;
@@ -93,7 +93,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
                 createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
                 createPlayerTradeReq.setTradeType(TradeAmountType.WITHDRAW.name());
                 createPlayerTradeReq.setTradeType(AmountDynType.out.name());
-                createPlayerTrade = verifyCommonService.playerSubtractUsdtFreezeTrade(createPlayerTradeReq,trade.getTradeAmount(),"提现扣除Usdt金额");
+                createPlayerTrade = verifyCommonService.createTradeRecord(createPlayerTradeReq,trade.getTradeAmount(),"提现扣除Usdt金额");
             }
 
             //更新玩家收益为已经提取

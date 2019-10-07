@@ -23,14 +23,16 @@ public class HelpController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private CityHelpService helpService;
+    private final String modelName = "帮助";
+    private final String actionPath = "other/help";
 
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(Model model){
-        model.addAttribute("title","帮助");
-        model.addAttribute("table","帮助列表");
-        return new ModelAndView("other/help/index");
+        model.addAttribute("title",modelName);
+        model.addAttribute("table",modelName+"列表");
+        return new ModelAndView(actionPath+"/index");
     }
     @ResponseBody
     @RequestMapping(value = "/getList", method = RequestMethod.GET)
@@ -62,7 +64,7 @@ public class HelpController {
         model.addAttribute("table","帮助详情");
         model.addAttribute("edit",Boolean.FALSE);
         model.addAttribute("data",result);
-        return new ModelAndView("other/help/edit");
+        return new ModelAndView(actionPath+"/edit");
     }
 
 
@@ -91,7 +93,7 @@ public class HelpController {
         model.addAttribute("edit",Boolean.TRUE);
         CityHelp result = helpService.getCityHelpById(id);
         model.addAttribute("data",result);
-        return new ModelAndView("other/help/edit");
+        return new ModelAndView(actionPath+"/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result<Integer> update(CityHelp record){
@@ -115,7 +117,7 @@ public class HelpController {
         model.addAttribute("title","添加");
         model.addAttribute("table","添加帮助");
         model.addAttribute("data",record);
-        return new ModelAndView("other/help/add");
+        return new ModelAndView(actionPath+"/add");
     }
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result<Integer> insert(CityHelp record){

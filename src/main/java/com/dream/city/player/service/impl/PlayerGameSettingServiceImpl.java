@@ -4,7 +4,7 @@ import com.dream.city.base.PageReq;
 import com.dream.city.player.dao.PlayerGameSettingMapper;
 import com.dream.city.player.dto.PlayerGameSettingReq;
 import com.dream.city.player.dto.PlayerGameSettingResp;
-import com.dream.city.player.entity.Player;
+import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.entity.PlayerGameSetting;
 import com.dream.city.player.service.PlayerGameSettingService;
 import com.dream.city.player.service.PlayerService;
@@ -52,7 +52,7 @@ public class PlayerGameSettingServiceImpl implements PlayerGameSettingService {
 
     @Override
     public PageInfo<PlayerGameSettingResp> getGameSettingList(PageReq<PlayerGameSettingReq> record) {
-        Player getPlayer = playerService.getPlayerByNameOrNick(record.getCondition().getPlayerNick());
+        PlayerResp getPlayer = playerService.getPlayerByNameOrNick(record.getCondition().getPlayerNick());
         PlayerGameSetting playerGameSettingReq = DataUtils.getData(record.getCondition(),PlayerGameSetting.class);
 
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());

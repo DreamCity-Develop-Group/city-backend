@@ -372,7 +372,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加帮助',
+                    title: '添加${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -385,7 +385,7 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑帮助',
+                    title: '编辑${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -413,7 +413,7 @@
 			function detail(id) {
 				layer.open({
 					type: 2,
-					title: '帮助详情',
+					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],

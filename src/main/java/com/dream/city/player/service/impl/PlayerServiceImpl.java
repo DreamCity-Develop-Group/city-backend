@@ -4,6 +4,7 @@ import com.dream.city.base.PageReq;
 import com.dream.city.player.dao.PlayerGradeMapper;
 import com.dream.city.player.dao.PlayerMapper;
 import com.dream.city.player.dto.PlayerReq;
+import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.entity.PlayerGrade;
 import com.dream.city.player.service.FriendsService;
@@ -36,12 +37,12 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public Player getPlayer(Player player) {
+    public PlayerResp getPlayer(Player player) {
         return playerMapper.getPlayerById(player);
     }
 
     @Override
-    public Player getPlayerByrId(Long id) {
+    public PlayerResp getPlayerByrId(Long id) {
         if (id == null){
             return null;
         }
@@ -55,7 +56,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public Player getPlayerByPlayerId(String playerId) {
+    public PlayerResp getPlayerByPlayerId(String playerId) {
         Player player = new Player();
         if (StringUtils.isBlank(playerId)){
             return null;
@@ -69,13 +70,13 @@ public class PlayerServiceImpl implements PlayerService {
     public PageInfo getPlayers(PageReq<PlayerReq> pageReq) {
         Player playerReq = DataUtils.getData(pageReq.getCondition(),Player.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        List<Map> players = playerMapper.getPlayers(playerReq);
+        List<PlayerResp> players = playerMapper.getPlayers(playerReq);
         return new PageInfo<>(players);
     }
 
     @Override
-    public Player getPlayerByName(String playerName) {
-        Player playerResp = null;
+    public PlayerResp getPlayerByName(String playerName) {
+        PlayerResp playerResp = null;
         if (StringUtils.isNotBlank(playerName)) {
             Player playerReq = new Player();
             playerReq.setPlayerName(playerName);
@@ -86,8 +87,8 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public Player getPlayerByNick(String playerNick) {
-        Player playerResp = null;
+    public PlayerResp getPlayerByNick(String playerNick) {
+        PlayerResp playerResp = null;
         if (StringUtils.isNotBlank(playerNick)) {
             Player playerReq = new Player();
             playerReq.setPlayerNick(playerNick);
@@ -97,8 +98,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player getPlayerByNameOrNick(String nameOrNick) {
-        Player playerResp = null;
+    public PlayerResp getPlayerByNameOrNick(String nameOrNick) {
+        PlayerResp playerResp = null;
         if (StringUtils.isNotBlank(nameOrNick)) {
             Player nameReq = new Player();
             nameReq.setPlayerName(nameOrNick);
@@ -120,7 +121,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String getPlayerNickByPlayerId(String playerId) {
-        Player player = getPlayerByPlayerId(playerId);
+        PlayerResp player = getPlayerByPlayerId(playerId);
         if (player == null) {
             return null;
         }

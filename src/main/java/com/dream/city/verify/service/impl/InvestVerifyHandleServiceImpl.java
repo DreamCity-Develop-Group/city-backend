@@ -1,6 +1,7 @@
 package com.dream.city.verify.service.impl;
 
 import com.dream.city.base.Result;
+import com.dream.city.invest.dto.OrderResp;
 import com.dream.city.invest.entity.Order;
 import com.dream.city.invest.enu.InvestStatus;
 import com.dream.city.invest.service.OrderService;
@@ -28,13 +29,23 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
     public Result subscribeOrderVerify(VerifyReq verifyReq) {
         boolean success = Boolean.FALSE;
         String descr = "预约审核失败";
+        OrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
         //审核将状态改成投资
-        int i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.INVEST.name());
-        if (i > 0){
-            success = Boolean.TRUE;
-            descr = "预约审核成功";
-            //生成审核记录
-            this.insertTradeVerify(verifyReq);
+        int i = 0;
+        if (order == null){
+            descr = "没找到预约记录";
+        }else {
+            if (InvestStatus.SUBSCRIBE.name().equalsIgnoreCase(order.getOrderState())){
+                i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.INVEST.name());
+                if (i > 0){
+                    success = Boolean.TRUE;
+                    descr = "预约审核成功";
+                    //生成审核记录
+                    this.insertTradeVerify(verifyReq);
+                }
+            }else {
+                descr = "预约投资状态不对，当前状态是：" + order.getOrderState();
+            }
         }
         return new Result(success,descr,i);
     }
@@ -43,8 +54,24 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
     public Result investOrderVerify(VerifyReq verifyReq) {
         boolean success = Boolean.FALSE;
         String descr = "投资审核失败";
-        //审核成功，将状态改成经营中
-        int i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.MANAGEMENT.name());
+        OrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
+        int i = 0;
+        if (order == null){
+            descr = "没找到预约记录";
+        }else {
+            if (InvestStatus.INVESTED.name().equalsIgnoreCase(order.getOrderState())){
+                //审核成功，将状态改成经营中
+                i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.MANAGEMENT.name());
+                if (i > 0){
+                    success = Boolean.TRUE;
+                    descr = "预约审核成功";
+                    //生成审核记录
+                    this.insertTradeVerify(verifyReq);
+                }
+            }else {
+                descr = "预约投资状态不对，当前状态是：" + order.getOrderState();
+            }
+        }
         if (i > 0){
             success = Boolean.TRUE;
             descr = "投资审核成功";
@@ -52,17 +79,17 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
             this.insertTradeVerify(verifyReq);
 
             String tradeType = VerifyType.INVEST.name();
-            //玩家账户扣除投资金额
+            //玩家账户扣除usdt投资金额
 
 
-            //玩家账户扣除投资金额流水
+            //玩家账户扣除usdt投资金额流水
 
 
 
-            //平台账户增加投资金额
+            //平台usdt账户增加投资金额
 
 
-            //平台账户增加投资金额流水
+            //平台usdt账户增加投资金额流水
 
         }
         return new Result(success,descr,i);

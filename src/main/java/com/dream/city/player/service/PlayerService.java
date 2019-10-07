@@ -2,6 +2,7 @@ package com.dream.city.player.service;
 
 import com.dream.city.base.PageReq;
 import com.dream.city.player.dto.PlayerReq;
+import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.entity.Player;
 import com.dream.city.player.entity.PlayerGrade;
 import com.github.pagehelper.Page;
@@ -16,11 +17,11 @@ import org.springframework.stereotype.Repository;
 public interface PlayerService {
 
 
-    Player getPlayer(Player player);
+    PlayerResp getPlayer(Player player);
 
-    Player getPlayerByrId(Long id);
+    PlayerResp getPlayerByrId(Long id);
 
-    Player getPlayerByPlayerId(String playerId);
+    PlayerResp getPlayerByPlayerId(String playerId);
 
     /**
      * 玩家列表
@@ -29,11 +30,11 @@ public interface PlayerService {
      */
     PageInfo getPlayers(PageReq<PlayerReq> pageReq);
 
-    Player getPlayerByName(String playerName);
+    PlayerResp getPlayerByName(String playerName);
 
-    Player getPlayerByNick(String playerNick);
+    PlayerResp getPlayerByNick(String playerNick);
 
-    Player getPlayerByNameOrNick(String nameOrNick);
+    PlayerResp getPlayerByNameOrNick(String nameOrNick);
 
     Player getPlayerByInvite(String invite);
 

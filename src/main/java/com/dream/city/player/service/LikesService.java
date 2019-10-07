@@ -31,7 +31,7 @@ public interface LikesService {
     int playerLikesCount(PlayerLikes record);
 
     /**
-     * 点赞项目
+     * 点赞项目列表
      * @param record
      * @return
      */

@@ -1,11 +1,11 @@
 package com.dream.city.player.dao;
 
 
+import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.entity.Player;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface PlayerMapper {
@@ -14,9 +14,9 @@ public interface PlayerMapper {
 
     Integer insertSelective(Player record);
 
-    Player getPlayerById(Player record);
+    PlayerResp getPlayerById(Player record);
 
-    List<Map> getPlayers(Player record);
+    List<PlayerResp> getPlayers(Player record);
 
     Integer updateByPlayerId(Player record);
 

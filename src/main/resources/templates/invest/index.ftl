@@ -356,7 +356,7 @@
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '';
-							if (row.orderState === '预约') {
+							if (row.orderState === '预约' || row.orderState === '已投资') {
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.orderId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
 							}
 							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
@@ -400,7 +400,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加投资',
+                    title: '添加${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -413,7 +413,7 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '审核投资',
+                    title: '审核${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -442,7 +442,7 @@
 
 				layer.open({
 					type: 2,
-					title: '公告详情',
+					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],

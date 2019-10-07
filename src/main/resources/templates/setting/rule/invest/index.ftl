@@ -60,7 +60,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">其他页面</a></li>
+							<li><a href="#">设置管理</a></li>
 							<li class="active">${title}</li>
 						</ul><!-- .breadcrumb -->
 
@@ -381,7 +381,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加公告',
+                    title: '添加${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -394,7 +394,7 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑公告',
+                    title: '编辑${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -423,7 +423,7 @@
 
 				layer.open({
 					type: 2,
-					title: '公告详情',
+					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],

@@ -2,6 +2,7 @@ package com.dream.city.invest.enu;
 
 public enum InvestStatus {
 
+    //待审核
     SUBSCRIBE(0,"预约"),
 
     SUBSCRIBED(1,"预约中"),
@@ -10,6 +11,7 @@ public enum InvestStatus {
 
     INVEST(3,"投资"),
 
+    //待审核
     INVESTED(4,"已投资"),
 
     MANAGEMENT(5,"经营中"),

@@ -65,7 +65,11 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">头像：</label>
                             <div class="col-sm-8">
-                                <img id="imgurl" class="pull-left" alt="Alex Doe's avatar" src="${data.imgurl}">
+                                <#if data.imgur? exists>
+                                    <img id="imgurl" class="pull-left" src="${data.imgurl}">
+                                <#else>
+                                    <img id="imgurl" class="pull-left" src="${ctx}/avatars/avatar5.png">
+                                </#if>
                             </div>
                         </div>
                         <div class="form-group">

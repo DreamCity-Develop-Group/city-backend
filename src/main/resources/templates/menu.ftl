@@ -295,7 +295,7 @@
             </a>
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/player/index">
+                    <a href="${ctx}/player/player/index">
                         <i class="icon-double-angle-right"></i>
                         玩家
                     </a>
