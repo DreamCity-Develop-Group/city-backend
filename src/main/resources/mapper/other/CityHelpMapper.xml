@@ -16,7 +16,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, name, type, is_valid, descr, create_time, update_time
+    id, name, type, is_valid, descr, DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time, DATE_FORMAT(update_time,'%Y-%m-%d %h:%m:%s') update_time
   </sql>
 
   <sql id="Blob_Column_List" >

@@ -10,7 +10,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    item_id, item_name, item_desc, item_state, create_time, update_time
+    item_id, item_name, item_desc, item_state, DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time, DATE_FORMAT(update_time,'%Y-%m-%d %h:%m:%s') update_time
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

@@ -13,7 +13,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, name, key, val, is_valid, descr, create_time, update_time
+    id, name, key, val, is_valid, descr, DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time, DATE_FORMAT(update_time,'%Y-%m-%d %h:%m:%s') update_time
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

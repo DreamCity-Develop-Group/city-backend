@@ -13,7 +13,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    rule_id, rule_name, rule_desc, rule_item, rule_rate, rale_level, create_time, update_time
+    rule_id, rule_name, rule_desc, rule_item, rule_rate, rale_level, DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time, DATE_FORMAT(update_time,'%Y-%m-%d %h:%m:%s') update_time
   </sql>
 
   <select id="getInvestRuleList" resultMap="BaseResultMap" parameterType="com.dream.city.setting.dto.RuleReq" >

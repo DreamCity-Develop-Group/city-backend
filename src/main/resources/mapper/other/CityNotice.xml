@@ -10,7 +10,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    notice_id, notice_content, notice_state, send_time, create_time
+    notice_id, notice_content, notice_state, send_time, DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time
   </sql>
 
   <select id="getNoticeList" resultMap="NoticeBaseResultMap" parameterType="com.dream.city.other.entity.Notice" >

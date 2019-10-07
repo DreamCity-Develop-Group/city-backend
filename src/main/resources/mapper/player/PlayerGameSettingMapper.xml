@@ -11,7 +11,7 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, player_id, type, val, status,create_date, update_date
+    id, player_id, type, val, status,DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time, DATE_FORMAT(update_time,'%Y-%m-%d %h:%m:%s') update_time
   </sql>
 
   <select id="getGameSettingList" resultMap="BaseResultMap" parameterType="java.lang.Long" >

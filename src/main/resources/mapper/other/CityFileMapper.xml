@@ -14,7 +14,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, file_url, file_type, is_valid, from_id, descr,create_time, update_time
+    id, file_url, file_type, is_valid, from_id, descr,DATE_FORMAT(create_time,'%Y-%m-%d %h:%m:%s') create_time, DATE_FORMAT(update_time,'%Y-%m-%d %h:%m:%s') update_time
   </sql>
 
   <select id="getFileById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
