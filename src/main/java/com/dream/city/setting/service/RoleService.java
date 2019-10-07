@@ -1,7 +1,7 @@
 package com.dream.city.setting.service;
 
-import com.dream.city.setting.dto.RoleDto;
-import com.dream.city.setting.entity.Role;
+import com.dream.city.base.model.dto.RoleDto;
+import com.dream.city.base.model.entity.Role;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

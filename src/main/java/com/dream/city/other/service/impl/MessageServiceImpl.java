@@ -1,14 +1,14 @@
 package com.dream.city.other.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.other.dao.MessageMapper;
-import com.dream.city.other.dto.MessageReq;
-import com.dream.city.other.dto.MessageResp;
-import com.dream.city.other.entity.CityMessage;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityMessage;
+import com.dream.city.base.model.mapper.MessageMapper;
+import com.dream.city.base.model.req.MessageReq;
+import com.dream.city.base.model.resp.MessageResp;
+import com.dream.city.base.model.resp.PlayerResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.other.service.MessageService;
-import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.service.PlayerService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +63,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public PageInfo<MessageResp> getCityMessageList(PageReq<MessageReq> record) {
-        CityMessage getCityMessageListReq = this.getMessage(record.getCondition());
+    public PageInfo<MessageResp> getCityMessageList(Page record) {
+        MessageReq messageReq = DataUtils.toJavaObject(record.getCondition(),MessageReq.class);
+        CityMessage getCityMessageListReq = this.getMessage(messageReq);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         List<CityMessage> messageList = messageMapper.getCityMessageList(getCityMessageListReq);
         List<MessageResp> messageListResp = null;

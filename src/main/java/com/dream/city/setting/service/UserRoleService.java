@@ -1,7 +1,8 @@
 package com.dream.city.setting.service;
 
-import com.dream.city.setting.dto.UserRoleDto;
-import com.dream.city.setting.entity.UserRole;
+
+import com.dream.city.base.model.dto.UserRoleDto;
+import com.dream.city.base.model.entity.UserRole;
 
 import java.util.List;
 import java.util.Map;

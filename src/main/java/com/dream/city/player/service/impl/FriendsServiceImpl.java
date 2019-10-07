@@ -1,20 +1,18 @@
 package com.dream.city.player.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.player.dao.FriendsMapper;
-import com.dream.city.player.dto.FriendsReq;
-import com.dream.city.player.dto.FriendsResp;
-import com.dream.city.player.dto.PlayerReq;
-import com.dream.city.player.entity.Friends;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.Friends;
+import com.dream.city.base.model.mapper.FriendsMapper;
+import com.dream.city.base.model.req.FriendsReq;
+import com.dream.city.base.model.resp.FriendsResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.player.service.FriendsService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class FriendsServiceImpl implements FriendsService {
@@ -35,18 +33,20 @@ public class FriendsServiceImpl implements FriendsService {
     }
 
     @Override
-    public PageInfo friendList(PageReq<FriendsReq> pageReq) {// TODO
+    public PageInfo friendList(Page pageReq) {// TODO
+        FriendsReq friendsReq = DataUtils.toJavaObject(pageReq.getCondition(),FriendsReq.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
-        List<FriendsResp> friendList = friendsMapper.friendList(pageReq.getCondition());
+        List<FriendsResp> friendList = friendsMapper.friendList(friendsReq);
         return new PageInfo(friendList);
     }
 
-    @Override
-    public PageInfo applyFriendList(PageReq<FriendsReq> pageReq) {// TODO
+    /*@Override
+    public PageInfo applyFriendList(Page  pageReq) {// TODO
+        FriendsReq friendsReq = DataUtils.toJavaObject(pageReq.getCondition(),FriendsReq.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
-        List<FriendsResp> friendList = friendsMapper.applyFriendList(pageReq.getCondition());
+        List<FriendsResp> friendList = friendsMapper.applyFriendList(friendsReq);
         return new PageInfo(friendList);
-    }
+    }*/
 
     @Override
     public FriendsResp getFriendById(Long id) {

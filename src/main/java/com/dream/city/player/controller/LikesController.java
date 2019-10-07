@@ -1,7 +1,8 @@
 package com.dream.city.player.controller;
 
-import com.dream.city.player.dao.PlayerLikesLogMapper;
-import com.dream.city.player.entity.PlayerLikes;
+import com.dream.city.base.model.entity.PlayerLikes;
+import com.dream.city.base.model.mapper.PlayerLikesLogMapper;
+import com.dream.city.base.model.req.PlayerLikesReq;
 import com.dream.city.player.service.LikesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +34,9 @@ public class LikesController {
      * @return
      */
     @RequestMapping("/playerLikesCount")
-    public int playerLikesCount(@RequestBody String playerId){
+    public int playerLikesCount(String playerId){
         logger.info("获取玩家点赞总数，{}",playerId);
-        PlayerLikes record = new PlayerLikes();
+        PlayerLikesReq record = new PlayerLikesReq();
         record.setLikedPlayerId(playerId);
         int i = likesService.playerLikesCount(record);
         return i;
@@ -47,7 +48,7 @@ public class LikesController {
      * @return
      */
     @RequestMapping("/playerLikesList")
-    public List<PlayerLikes> playerLikesList(@RequestBody PlayerLikes like){
+    public List<PlayerLikes> playerLikesList(PlayerLikesReq like){
         logger.info("获取点赞项目，{}",like);
         List<PlayerLikes> likesList = null;
         try {

@@ -1,11 +1,11 @@
 package com.dream.city.property.controller;
 
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.property.dto.PropertyReq;
-import com.dream.city.property.dto.PropertyResp;
-import com.dream.city.property.entity.Property;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityInvest;
+import com.dream.city.base.model.req.PropertyReq;
+import com.dream.city.base.model.resp.PropertyResp;
 import com.dream.city.property.service.PropertyService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class PropertyController {
 
 
     @RequestMapping("/add")
-    public ModelAndView add(Property record,Model model){
+    public ModelAndView add(CityInvest record,Model model){
         model.addAttribute("title","添加");
         model.addAttribute("table","添加物业");
         model.addAttribute("actionPath","property");
@@ -44,7 +44,7 @@ public class PropertyController {
      * @return
      */
     @RequestMapping("/insert")
-    public Result insert(Property record){
+    public Result insert(CityInvest record){
         logger.info("新增物业，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -92,7 +92,7 @@ public class PropertyController {
         return new ModelAndView("property/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> update(@RequestBody Property record){
+    public Result<Integer> update(@RequestBody CityInvest record){
         logger.info("修改物业，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -146,7 +146,7 @@ public class PropertyController {
         return new ModelAndView("property/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo<PropertyResp>> getList(PageReq page, PropertyReq record){
+    public Result<PageInfo<PropertyResp>> getList(Page page, PropertyReq record){
         logger.info("物业列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<PropertyResp> result = null;

@@ -1,14 +1,10 @@
 package com.dream.city.property.service;
 
 
-import com.dream.city.base.PageReq;
-import com.dream.city.property.dto.PropertyReq;
-import com.dream.city.property.dto.PropertyResp;
-import com.dream.city.property.entity.Property;
-import com.github.pagehelper.Page;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityInvest;
+import com.dream.city.base.model.resp.PropertyResp;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 /**
  * 物业/投资项
@@ -20,7 +16,7 @@ public interface PropertyService {
      * @param record
      * @return
      */
-    int insertInvest(Property record);
+    int insertInvest(CityInvest record);
 
 
     int deletePropertyById(Integer inId);
@@ -31,21 +27,21 @@ public interface PropertyService {
      * @param  inId 、inName
      * @return
      */
-    PropertyResp getInvestByIdOrName(Integer inId,String inName);
+    PropertyResp getInvestByIdOrName(Integer inId, String inName);
 
     /**
      * 更新物业
      * @param record
      * @return
      */
-    int updateInvest(Property record);
+    int updateInvest(CityInvest record);
 
     /**
      * 物业列表
      * @param pageReq
      * @return
      */
-    PageInfo<PropertyResp> getInvestLsit(PageReq<PropertyReq> pageReq);
+    PageInfo<PropertyResp> getInvestLsit(Page pageReq);
 
 
 

@@ -1,10 +1,10 @@
 package com.dream.city.verify.service;
 
 
-import com.dream.city.account.entity.PlayerAccount;
-import com.dream.city.trade.dto.PlayerAccountReq;
-import com.dream.city.trade.entity.PlayerTrade;
-import com.dream.city.verify.dto.VerifyReq;
+import com.dream.city.base.model.entity.PlayerAccount;
+import com.dream.city.base.model.entity.PlayerTrade;
+import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.req.VerifyReq;
 
 import java.math.BigDecimal;
 
@@ -27,7 +27,7 @@ public interface VerifyCommonService {
      * @param amount
      * @return
      */
-    PlayerAccount platformAddAmount(BigDecimal amount,String amountType);
+    PlayerAccount platformAddAmount(BigDecimal amount, String amountType);
 
 
     /**

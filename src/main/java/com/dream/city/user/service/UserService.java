@@ -1,7 +1,7 @@
 package com.dream.city.user.service;
 
-import com.dream.city.user.dto.UserDto;
-import com.dream.city.user.entity.User;
+import com.dream.city.base.model.dto.UserDto;
+import com.dream.city.base.model.entity.User;
 
 import java.util.List;
 import java.util.Map;

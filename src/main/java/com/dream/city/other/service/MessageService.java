@@ -1,13 +1,11 @@
 package com.dream.city.other.service;
 
 
-import com.dream.city.base.PageReq;
-import com.dream.city.other.dto.MessageReq;
-import com.dream.city.other.dto.MessageResp;
-import com.dream.city.other.entity.CityMessage;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityMessage;
+import com.dream.city.base.model.req.MessageReq;
+import com.dream.city.base.model.resp.MessageResp;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 public interface MessageService {
 
@@ -21,5 +19,5 @@ public interface MessageService {
 
     MessageResp getMessageById(Long id);
 
-    PageInfo<MessageResp> getCityMessageList(PageReq<MessageReq> record);
+    PageInfo<MessageResp> getCityMessageList(Page record);
 }

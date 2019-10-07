@@ -1,9 +1,9 @@
 package com.dream.city.setting.service.impl;
 
-import com.dream.city.setting.dao.MenuMapper;
-import com.dream.city.setting.dao.RoleMenuMapper;
+import com.dream.city.base.model.entity.Menu;
+import com.dream.city.base.model.mapper.MenuMapper;
+import com.dream.city.base.model.mapper.RoleMenuMapper;
 import com.dream.city.setting.service.MenuService;
-import com.dream.city.setting.entity.Menu;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
 package com.dream.city.player.controller;
 
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.player.dto.FriendsReq;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.req.FriendsReq;
 import com.dream.city.player.service.FriendsService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class FriendsController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result friendList(PageReq pageReq, FriendsReq record){
+    public Result friendList(Page pageReq, FriendsReq record){
         logger.info(modelName + "列表，：{}", record);
         boolean success = Boolean.TRUE;
         PageInfo result = null;

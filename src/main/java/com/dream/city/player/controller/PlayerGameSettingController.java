@@ -1,9 +1,9 @@
 package com.dream.city.player.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.player.dto.PlayerGameSettingReq;
-import com.dream.city.player.dto.PlayerGameSettingResp;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.req.PlayerGameSettingReq;
+import com.dream.city.base.model.resp.PlayerGameSettingResp;
 import com.dream.city.player.service.PlayerGameSettingService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -130,7 +130,7 @@ public class PlayerGameSettingController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> getList(PageReq pageReq, PlayerGameSettingReq record){
+    public Result<PageInfo> getList(Page pageReq, PlayerGameSettingReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<PlayerGameSettingResp> result = null;

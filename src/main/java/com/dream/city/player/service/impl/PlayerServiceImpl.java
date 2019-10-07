@@ -1,15 +1,14 @@
 package com.dream.city.player.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.player.dao.PlayerGradeMapper;
-import com.dream.city.player.dao.PlayerMapper;
-import com.dream.city.player.dto.PlayerReq;
-import com.dream.city.player.dto.PlayerResp;
-import com.dream.city.player.entity.Player;
-import com.dream.city.player.entity.PlayerGrade;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.Player;
+import com.dream.city.base.model.entity.PlayerGrade;
+import com.dream.city.base.model.mapper.PlayerGradeMapper;
+import com.dream.city.base.model.mapper.PlayerMapper;
+import com.dream.city.base.model.resp.PlayerResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.player.service.FriendsService;
 import com.dream.city.player.service.PlayerService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -67,10 +66,10 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public PageInfo getPlayers(PageReq<PlayerReq> pageReq) {
+    public PageInfo getPlayers(Page pageReq) {
         Player playerReq = DataUtils.getData(pageReq.getCondition(),Player.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        List<PlayerResp> players = playerMapper.getPlayers(playerReq);
+        List<PlayerResp> players = playerMapper.getPlayerList(playerReq);
         return new PageInfo<>(players);
     }
 

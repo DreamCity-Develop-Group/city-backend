@@ -1,8 +1,8 @@
 package com.dream.city.setting.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.setting.entity.RuleItem;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.RuleItem;
 import com.dream.city.setting.service.RuleItemService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -129,7 +129,7 @@ public class RuleItemController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result getList(PageReq pageReq, RuleItem record){
+    public Result getList(Page pageReq, RuleItem record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo result = null;

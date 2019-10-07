@@ -1,15 +1,15 @@
 package com.dream.city.setting.service.impl;
 
-import com.dream.city.setting.entity.Role;
-import com.dream.city.setting.dao.MenuMapper;
-import com.dream.city.util.DataUtils;
-import com.dream.city.setting.dto.MenuDto;
-import com.dream.city.setting.dto.RoleDto;
-import com.dream.city.setting.entity.Menu;
-import com.dream.city.setting.entity.RoleMenu;
-import com.dream.city.setting.dao.RoleMapper;
-import com.dream.city.setting.dao.RoleMenuMapper;
-import com.dream.city.setting.dao.UserRoleMapper;
+import com.dream.city.base.model.dto.MenuDto;
+import com.dream.city.base.model.dto.RoleDto;
+import com.dream.city.base.model.entity.Menu;
+import com.dream.city.base.model.entity.Role;
+import com.dream.city.base.model.entity.RoleMenu;
+import com.dream.city.base.model.mapper.MenuMapper;
+import com.dream.city.base.model.mapper.RoleMapper;
+import com.dream.city.base.model.mapper.RoleMenuMapper;
+import com.dream.city.base.model.mapper.UserRoleMapper;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.setting.service.RoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

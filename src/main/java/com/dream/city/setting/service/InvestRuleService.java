@@ -1,11 +1,11 @@
 package com.dream.city.setting.service;
 
 
-import com.dream.city.base.PageReq;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.InvestRule;
+import com.dream.city.base.model.req.RuleReq;
+import com.dream.city.base.model.resp.RuleResp;
 import com.dream.city.exception.OperationException;
-import com.dream.city.setting.dto.RuleReq;
-import com.dream.city.setting.dto.RuleResp;
-import com.dream.city.setting.entity.InvestRule;
 import com.github.pagehelper.PageInfo;
 
 
@@ -17,7 +17,7 @@ public interface InvestRuleService {
 
     RuleResp getInvestRuleById(Integer id);
 
-    PageInfo getInvestRuleList(PageReq<RuleReq> record);
+    PageInfo getInvestRuleList(Page record);
 
     Integer updateInvestRuleById(RuleReq record) throws OperationException;
 

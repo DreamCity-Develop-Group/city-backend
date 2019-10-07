@@ -1,8 +1,8 @@
 package com.dream.city.player.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.player.dto.PlayerReq;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.req.PlayerReq;
 import com.dream.city.player.service.PlayerService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class PlayerController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result getList(PageReq pageReq, PlayerReq record){
+    public Result getList(Page pageReq, PlayerReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo result = null;

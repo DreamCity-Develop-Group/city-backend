@@ -1,8 +1,8 @@
 package com.dream.city.setting.service;
 
 
-import com.dream.city.base.PageReq;
-import com.dream.city.setting.entity.RuleItem;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.RuleItem;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface RuleItemService {
 
     List<RuleItem> getRuleItemListByName(String itemName);
 
-    PageInfo<RuleItem> getRuleItemList(PageReq<RuleItem> record);
+    PageInfo<RuleItem> getRuleItemList(Page record);
 
 
 }

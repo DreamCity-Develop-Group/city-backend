@@ -1,7 +1,7 @@
 package com.dream.city.player.service.impl;
 
-import com.dream.city.player.dao.PlayerExtMapper;
-import com.dream.city.player.entity.PlayerExt;
+import com.dream.city.base.model.entity.PlayerExt;
+import com.dream.city.base.model.mapper.PlayerExtMapper;
 import com.dream.city.player.service.PlayerExtService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

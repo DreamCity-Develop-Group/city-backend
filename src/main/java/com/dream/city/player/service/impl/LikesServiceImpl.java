@@ -1,9 +1,10 @@
 package com.dream.city.player.service.impl;
 
-import com.dream.city.player.dao.PlayerLikesLogMapper;
-import com.dream.city.player.dao.PlayerLikesMapper;
-import com.dream.city.player.entity.PlayerLikes;
-import com.dream.city.player.entity.PlayerLikesLog;
+import com.dream.city.base.model.entity.PlayerLikes;
+import com.dream.city.base.model.entity.PlayerLikesLog;
+import com.dream.city.base.model.mapper.PlayerLikesLogMapper;
+import com.dream.city.base.model.mapper.PlayerLikesMapper;
+import com.dream.city.base.model.req.PlayerLikesReq;
 import com.dream.city.player.service.LikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class LikesServiceImpl implements LikesService {
 
 
     @Override
-    public int playerLike(PlayerLikes record) {
+    public int playerLike(PlayerLikesReq record) {
         Integer i = 0;
         if (record.getLikedId() == null){
             record.setCreateTime(new Date());
@@ -30,7 +31,7 @@ public class LikesServiceImpl implements LikesService {
         }else {
             int count = getLikeCount(record.getLikedId());
             record.setUpdateTime(new Date());
-            record.setLikedInvestTotal(count + record.getLikedInvestTotal());
+            record.setLikedSetTotal(count + record.getLikedSetTotal());
             i = playerLikesMapper.updateByPrimaryKeySelective(record);
         }
         if(i>0){
@@ -41,10 +42,10 @@ public class LikesServiceImpl implements LikesService {
 
 
     @Override
-    public int cancelLike(PlayerLikes record) {
+    public int cancelLike(PlayerLikesReq record) {
         int count = getLikeCount(record.getLikedId());
         record.setUpdateTime(new Date());
-        record.setLikedInvestTotal(count > 0? (count - 1): count);
+        record.setLikedSetTotal(count > 0? (count - 1): count);
         Integer i = playerLikesMapper.updateByPrimaryKeySelective(record);
         if(i>0){
             savePlayerLikesLog(record);
@@ -53,13 +54,13 @@ public class LikesServiceImpl implements LikesService {
     }
 
     @Override
-    public int playerLikesCount(PlayerLikes record) {
+    public int playerLikesCount(PlayerLikesReq record) {
         Integer likesCount = playerLikesMapper.playerLikesCount(record);
         return likesCount == null? 0: likesCount;
     }
 
     @Override
-    public List<PlayerLikes> playerLikesList(PlayerLikes record) {
+    public List<PlayerLikes> playerLikesList(PlayerLikesReq record) {
         return playerLikesMapper.playerLikesList(record);
     }
 
@@ -83,17 +84,17 @@ public class LikesServiceImpl implements LikesService {
 
     private int getLikeCount(Integer likedId){
         PlayerLikes likes = playerLikesMapper.selectByPrimaryKey(likedId);
-        Integer count =likes.getLikedInvestTotal();
+        Integer count =likes.getLikedGetTotal();
         return count == null?0:count;
     }
 
 
-    private void savePlayerLikesLog(PlayerLikes playerLikes){
+    private void savePlayerLikesLog(PlayerLikesReq playerLikes){
         PlayerLikesLog record = new PlayerLikesLog();
         record.setCreateTime(new Date());
         record.setLikeInvestId(playerLikes.getLikedInvestId());
         record.setLikeLikedId(playerLikes.getLikedPlayerId());
-        //record.setLikePlayerId(playerLikes.getLikePlayerId());
+        record.setLikePlayerId(playerLikes.getLikePlayerId());
         likesLogMapper.insertSelective(record);
     }
 

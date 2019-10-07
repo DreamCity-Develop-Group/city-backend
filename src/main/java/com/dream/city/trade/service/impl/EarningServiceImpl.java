@@ -1,7 +1,7 @@
 package com.dream.city.trade.service.impl;
 
-import com.dream.city.trade.dao.PlayerEarningMapper;
-import com.dream.city.trade.entity.PlayerEarning;
+import com.dream.city.base.model.entity.PlayerEarning;
+import com.dream.city.base.model.mapper.PlayerEarningMapper;
 import com.dream.city.trade.service.EarningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class EarningServiceImpl implements EarningService {
 
     @Override
     public PlayerEarning getEarning(PlayerEarning record) {
-        return earningMapper.getPlayerEarningByPlayerId(record);
+        return earningMapper.getPlayerEarning(record);
     }
 
     @Override

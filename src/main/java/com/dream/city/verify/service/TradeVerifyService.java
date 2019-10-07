@@ -1,7 +1,7 @@
 package com.dream.city.verify.service;
 
 
-import com.dream.city.verify.entity.TradeVerify;
+import com.dream.city.base.model.entity.TradeVerify;
 
 import java.util.List;
 

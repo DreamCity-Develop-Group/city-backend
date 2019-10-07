@@ -1,8 +1,9 @@
 package com.dream.city.other.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.other.dao.CityHelpMapper;
-import com.dream.city.other.entity.CityHelp;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityHelp;
+import com.dream.city.base.model.mapper.CityHelpMapper;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.other.service.CityHelpService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,9 +36,10 @@ public class CityHelpServiceImpl implements CityHelpService {
     }
 
     @Override
-    public PageInfo<CityHelp> getCityHelpList(PageReq<CityHelp> record) {
+    public PageInfo<CityHelp> getCityHelpList(Page record) {
+        CityHelp help = DataUtils.toJavaObject(record.getCondition(),CityHelp.class);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
-        return new PageInfo<>(helpMapper.selectCityHelpList(record.getCondition()));
+        return new PageInfo<>(helpMapper.selectCityHelpList(help));
     }
 
     @Override

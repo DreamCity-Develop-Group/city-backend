@@ -1,7 +1,7 @@
 package com.dream.city.trade.service;
 
 
-import com.dream.city.trade.entity.PlayerTrade;
+import com.dream.city.base.model.entity.PlayerTrade;
 
 import java.util.List;
 

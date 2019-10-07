@@ -1,8 +1,8 @@
 package com.dream.city.setting.service.impl;
 
-import com.dream.city.setting.dto.UserRoleDto;
-import com.dream.city.setting.dao.UserRoleMapper;
-import com.dream.city.setting.entity.UserRole;
+import com.dream.city.base.model.dto.UserRoleDto;
+import com.dream.city.base.model.entity.UserRole;
+import com.dream.city.base.model.mapper.UserRoleMapper;
 import com.dream.city.setting.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

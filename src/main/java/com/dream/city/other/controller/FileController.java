@@ -1,6 +1,6 @@
 package com.dream.city.other.controller;
 
-import com.dream.city.other.entity.CityFile;
+import com.dream.city.base.model.entity.CityFile;
 import com.dream.city.other.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

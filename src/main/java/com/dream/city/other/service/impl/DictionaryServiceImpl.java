@@ -1,7 +1,7 @@
 package com.dream.city.other.service.impl;
 
-import com.dream.city.other.dao.DictionaryMapper;
-import com.dream.city.other.entity.Dictionary;
+import com.dream.city.base.model.entity.Dictionary;
+import com.dream.city.base.model.mapper.DictionaryMapper;
 import com.dream.city.other.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

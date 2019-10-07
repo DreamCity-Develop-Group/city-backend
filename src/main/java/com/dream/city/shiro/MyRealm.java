@@ -1,12 +1,12 @@
 package com.dream.city.shiro;
 
-import com.dream.city.user.entity.User;
+import com.dream.city.base.model.entity.Menu;
+import com.dream.city.base.model.entity.Role;
+import com.dream.city.base.model.entity.User;
+import com.dream.city.base.utils.EncryptUtils;
 import com.dream.city.user.service.UserService;
-import com.dream.city.setting.entity.Menu;
-import com.dream.city.setting.entity.Role;
 import com.dream.city.setting.service.MenuService;
 import com.dream.city.setting.service.RoleService;
-import com.dream.city.util.EncryptUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;

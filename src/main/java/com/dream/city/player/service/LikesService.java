@@ -1,8 +1,8 @@
 package com.dream.city.player.service;
 
 
-
-import com.dream.city.player.entity.PlayerLikes;
+import com.dream.city.base.model.entity.PlayerLikes;
+import com.dream.city.base.model.req.PlayerLikesReq;
 
 import java.util.List;
 
@@ -14,28 +14,28 @@ public interface LikesService {
      * @param record
      * @return
      */
-    int playerLike(PlayerLikes record);
+    int playerLike(PlayerLikesReq record);
 
     /**
      * 取消点赞
      * @param record
      * @return
      */
-    int cancelLike(PlayerLikes record);
+    int cancelLike(PlayerLikesReq record);
 
     /**
      * 玩家点赞总数
      * @param record
      * @return
      */
-    int playerLikesCount(PlayerLikes record);
+    int playerLikesCount(PlayerLikesReq record);
 
     /**
      * 点赞项目列表
      * @param record
      * @return
      */
-    List<PlayerLikes> playerLikesList(PlayerLikes record);
+    List<PlayerLikes> playerLikesList(PlayerLikesReq record);
 
 
     /**

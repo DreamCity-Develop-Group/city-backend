@@ -1,7 +1,8 @@
 package com.dream.city.account.service;
 
 
-import com.dream.city.account.entity.PlayerAccount;
+import com.dream.city.base.model.entity.PlayerAccount;
+import com.dream.city.base.model.req.PlayerAccountReq;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public interface AccountService {
      * @param record
      * @return
      */
-    List<PlayerAccount> getPlatformAccounts(PlayerAccount record);
+    List<PlayerAccount> getPlatformAccounts(PlayerAccountReq record);
 
 
 }

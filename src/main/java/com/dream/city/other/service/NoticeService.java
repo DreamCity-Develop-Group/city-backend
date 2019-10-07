@@ -1,8 +1,8 @@
 package com.dream.city.other.service;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.other.dto.NoticeResp;
-import com.dream.city.other.entity.Notice;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.Notice;
+import com.dream.city.base.model.resp.NoticeResp;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +17,7 @@ public interface NoticeService {
 
     List<Notice> getGameNotices(int state);
 
-    PageInfo<NoticeResp> getNoticeList(PageReq<Notice> record);
+    PageInfo<NoticeResp> getNoticeList(Page record);
 
     NoticeResp getNoticeById(Integer noticeId);
 

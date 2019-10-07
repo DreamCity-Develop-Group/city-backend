@@ -1,6 +1,7 @@
 package com.dream.city.setting.service;
 
-import com.dream.city.setting.entity.Menu;
+
+import com.dream.city.base.model.entity.Menu;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

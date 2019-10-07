@@ -1,16 +1,16 @@
 package com.dream.city.setting.service.impl;
 
 import com.dream.city.base.Codes;
-import com.dream.city.base.PageReq;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.InvestRule;
+import com.dream.city.base.model.entity.RuleItem;
+import com.dream.city.base.model.mapper.InvestRuleMapper;
+import com.dream.city.base.model.req.RuleReq;
+import com.dream.city.base.model.resp.RuleResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.exception.OperationException;
-import com.dream.city.setting.dao.InvestRuleMapper;
-import com.dream.city.setting.dto.RuleReq;
-import com.dream.city.setting.dto.RuleResp;
-import com.dream.city.setting.entity.InvestRule;
-import com.dream.city.setting.entity.RuleItem;
 import com.dream.city.setting.service.InvestRuleService;
 import com.dream.city.setting.service.RuleItemService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +54,10 @@ public class InvestRuleServiceImpl implements InvestRuleService {
     }
 
     @Override
-    public PageInfo<RuleResp> getInvestRuleList(PageReq<RuleReq> record) {
+    public PageInfo<RuleResp> getInvestRuleList(Page record) {
+        RuleReq ruleReq = DataUtils.toJavaObject(record.getCondition(),RuleReq.class);
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
-        List<InvestRule> ruleList = ruleMapper.getInvestRuleList(record.getCondition());
+        List<InvestRule> ruleList = ruleMapper.getInvestRuleList(ruleReq);
         List<RuleResp> ruleListResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(ruleList)){
             RuleItem item = null;

@@ -1,8 +1,8 @@
 package com.dream.city.other.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.other.entity.CityHelp;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityHelp;
 import com.dream.city.other.service.CityHelpService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class HelpController {
     }
     @ResponseBody
     @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public Result<PageInfo> getList(PageReq<CityHelp> page,CityHelp record){
+    public Result<PageInfo> getList(Page page, CityHelp record){
         logger.info("查詢幫助列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<CityHelp> result = null;

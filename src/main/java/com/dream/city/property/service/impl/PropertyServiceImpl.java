@@ -1,13 +1,12 @@
 package com.dream.city.property.service.impl;
 
 
-import com.dream.city.base.PageReq;
-import com.dream.city.property.dao.PropertyMapper;
-import com.dream.city.property.dto.PropertyReq;
-import com.dream.city.property.dto.PropertyResp;
-import com.dream.city.property.entity.Property;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityInvest;
+import com.dream.city.base.model.mapper.CityInvestMapper;
+import com.dream.city.base.model.resp.PropertyResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.property.service.PropertyService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -26,12 +25,12 @@ import java.util.List;
 public class PropertyServiceImpl implements PropertyService {
 
     @Autowired
-    private PropertyMapper investMapper;
+    private CityInvestMapper investMapper;
 
 
 
     @Override
-    public int insertInvest(Property record) {
+    public int insertInvest(CityInvest record) {
         Integer integer = investMapper.insertSelective(record);
         return integer ==null?0:integer;
     }
@@ -43,33 +42,34 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyResp getInvestByIdOrName(Integer inId,String inName) {
+    public PropertyResp getInvestByIdOrName(Integer inId, String inName) {
         if (inId == null && StringUtils.isBlank(inName)){
             return null;
         }
-        Property record = new Property();
+        CityInvest record = new CityInvest();
         record.setInId(inId);
         record.setInName(inName);
-        Property property = investMapper.selectByPrimaryKey(record);
+        CityInvest property = investMapper.selectByPrimaryKey(record);
         return DataUtils.toJavaObject(property,PropertyResp.class);
     }
 
     @Override
-    public int updateInvest(Property record) {
+    public int updateInvest(CityInvest record) {
         Integer integer = investMapper.updateByPrimaryKeySelective(record);
         return integer ==null?0:integer;
     }
 
     @Override
-    public PageInfo<PropertyResp> getInvestLsit(PageReq<PropertyReq> pageReq) {
+    public PageInfo<PropertyResp> getInvestLsit(Page pageReq) {
+        CityInvest invest = DataUtils.toJavaObject(pageReq.getCondition(),CityInvest.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        List<Property> investLsit = investMapper.getInvestLsit(pageReq.getCondition());
+        List<CityInvest> investLsit = investMapper.getInvestLsit(invest);
 
         List<PropertyResp> lsit = null;
         if (!CollectionUtils.isEmpty(investLsit)){
             lsit = new ArrayList<>();
             PropertyResp propertyResp = null;
-            for (Property property : investLsit){
+            for (CityInvest property : investLsit){
                 propertyResp = DataUtils.toJavaObject(property,PropertyResp.class);
                 lsit.add(propertyResp);
             }

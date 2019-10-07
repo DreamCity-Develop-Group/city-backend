@@ -1,6 +1,6 @@
 package com.dream.city.other.service;
 
-import com.dream.city.other.entity.Dictionary;
+import com.dream.city.base.model.entity.Dictionary;
 
 import java.util.List;
 

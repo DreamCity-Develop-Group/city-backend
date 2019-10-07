@@ -1,11 +1,11 @@
 package com.dream.city.setting.controller;
 
 import com.dream.city.base.Codes;
+import com.dream.city.base.model.entity.Menu;
+import com.dream.city.base.model.vo.ZtreeView;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.setting.service.MenuService;
-import com.dream.city.setting.vo.ZtreeView;
-import com.dream.city.util.DataUtils;
 import com.dream.city.base.ResponseResult;
-import com.dream.city.setting.entity.Menu;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,10 +1,10 @@
 package com.dream.city.invest.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.invest.dto.OrderReq;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.req.InvestOrderReq;
+import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.invest.service.OrderService;
-import com.dream.city.verify.dto.VerifyReq;
 import com.dream.city.verify.service.InvestVerifyHandleService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -67,7 +67,7 @@ public class InvestOrderController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result getList(PageReq pageReq, OrderReq record){
+    public Result getList(Page pageReq, InvestOrderReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo pageInfo = null;

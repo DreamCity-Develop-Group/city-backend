@@ -1,13 +1,13 @@
 package com.dream.city.other.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.other.dto.NoticeReq;
-import com.dream.city.other.dto.NoticeResp;
-import com.dream.city.other.entity.CityHelp;
-import com.dream.city.other.entity.Notice;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityHelp;
+import com.dream.city.base.model.entity.Notice;
+import com.dream.city.base.model.req.NoticeReq;
+import com.dream.city.base.model.resp.NoticeResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.other.service.NoticeService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class NoticeController {
         return new ModelAndView("other/notice/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> getList(PageReq page, NoticeReq record){
+    public Result<PageInfo> getList(Page page, NoticeReq record){
         logger.info("获取公告列表:{}",record);
         boolean success = Boolean.TRUE;
         PageInfo<NoticeResp> result = null;
@@ -90,7 +90,7 @@ public class NoticeController {
 
 
     @RequestMapping("/add")
-    public ModelAndView add(CityHelp record,Model model){
+    public ModelAndView add(CityHelp record, Model model){
         model.addAttribute("title","添加");
         model.addAttribute("table","添加公告");
         model.addAttribute("data",record);

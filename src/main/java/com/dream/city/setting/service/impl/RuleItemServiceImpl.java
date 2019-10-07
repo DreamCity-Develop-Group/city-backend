@@ -1,8 +1,9 @@
 package com.dream.city.setting.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.setting.dao.RuleItemMapper;
-import com.dream.city.setting.entity.RuleItem;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.RuleItem;
+import com.dream.city.base.model.mapper.RuleItemMapper;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.setting.service.RuleItemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -50,8 +51,9 @@ public class RuleItemServiceImpl implements RuleItemService {
     }
 
     @Override
-    public PageInfo<RuleItem> getRuleItemList(PageReq<RuleItem> record) {
+    public PageInfo<RuleItem> getRuleItemList(Page record) {
+        RuleItem item = DataUtils.toJavaObject(record.getCondition(),RuleItem.class);
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
-        return new PageInfo<>(ruleItemMapper.getRuleItemList(record.getCondition()));
+        return new PageInfo<>(ruleItemMapper.getRuleItemList(item));
     }
 }

@@ -1,13 +1,13 @@
 package com.dream.city.verify.service.impl;
 
-import com.dream.city.account.entity.PlayerAccount;
 import com.dream.city.account.service.AccountService;
-import com.dream.city.trade.dto.PlayerAccountReq;
-import com.dream.city.trade.entity.PlayerTrade;
+import com.dream.city.base.model.entity.PlayerAccount;
+import com.dream.city.base.model.entity.PlayerTrade;
+import com.dream.city.base.model.entity.TradeVerify;
+import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.trade.service.EarningService;
 import com.dream.city.trade.service.PlayerTradeService;
-import com.dream.city.verify.dto.VerifyReq;
-import com.dream.city.verify.entity.TradeVerify;
 import com.dream.city.verify.service.TradeVerifyService;
 import com.dream.city.verify.service.VerifyCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +95,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
      * @return
      */
     @Override
-    public PlayerTrade createTradeRecord(PlayerAccountReq playerAccount,BigDecimal amount,String desc) {
+    public PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc) {
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeType(playerAccount.getTradeType());
         tradeReq.setTradeAmountType(playerAccount.getTradeAmountType());

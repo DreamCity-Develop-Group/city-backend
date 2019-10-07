@@ -1,8 +1,8 @@
 package com.dream.city.trade.service.impl;
 
 
-import com.dream.city.trade.dao.PlayerTradeMapper;
-import com.dream.city.trade.entity.PlayerTrade;
+import com.dream.city.base.model.entity.PlayerTrade;
+import com.dream.city.base.model.mapper.PlayerTradeMapper;
 import com.dream.city.trade.service.PlayerTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

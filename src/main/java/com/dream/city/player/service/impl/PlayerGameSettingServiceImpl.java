@@ -1,14 +1,14 @@
 package com.dream.city.player.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.player.dao.PlayerGameSettingMapper;
-import com.dream.city.player.dto.PlayerGameSettingReq;
-import com.dream.city.player.dto.PlayerGameSettingResp;
-import com.dream.city.player.dto.PlayerResp;
-import com.dream.city.player.entity.PlayerGameSetting;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.PlayerGameSetting;
+import com.dream.city.base.model.mapper.PlayerGameSettingMapper;
+import com.dream.city.base.model.req.PlayerGameSettingReq;
+import com.dream.city.base.model.resp.PlayerGameSettingResp;
+import com.dream.city.base.model.resp.PlayerResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.player.service.PlayerGameSettingService;
 import com.dream.city.player.service.PlayerService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,9 @@ public class PlayerGameSettingServiceImpl implements PlayerGameSettingService {
     }
 
     @Override
-    public PageInfo<PlayerGameSettingResp> getGameSettingList(PageReq<PlayerGameSettingReq> record) {
-        PlayerResp getPlayer = playerService.getPlayerByNameOrNick(record.getCondition().getPlayerNick());
+    public PageInfo<PlayerGameSettingResp> getGameSettingList(Page record) {
+        PlayerGameSettingReq settingReq = DataUtils.toJavaObject(record.getCondition(),PlayerGameSettingReq.class);
+        PlayerResp getPlayer = playerService.getPlayerByNameOrNick(settingReq.getPlayerNick());
         PlayerGameSetting playerGameSettingReq = DataUtils.getData(record.getCondition(),PlayerGameSetting.class);
 
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());

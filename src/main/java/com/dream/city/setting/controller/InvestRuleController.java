@@ -1,9 +1,9 @@
 package com.dream.city.setting.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.setting.dto.RuleReq;
-import com.dream.city.setting.entity.InvestRule;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.InvestRule;
+import com.dream.city.base.model.req.RuleReq;
 import com.dream.city.setting.service.InvestRuleService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -133,7 +133,7 @@ public class InvestRuleController {
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
-    public Result getList(PageReq pageReq, RuleReq record){
+    public Result getList(Page pageReq, RuleReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo result = null;

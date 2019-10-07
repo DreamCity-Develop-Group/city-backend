@@ -1,12 +1,11 @@
 package com.dream.city.other.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.dream.city.base.PageReq;
-import com.dream.city.other.dao.NoticeMapper;
-import com.dream.city.other.dto.NoticeResp;
-import com.dream.city.other.entity.Notice;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.Notice;
+import com.dream.city.base.model.mapper.NoticeMapper;
+import com.dream.city.base.model.resp.NoticeResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.other.service.NoticeService;
-import com.dream.city.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,10 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public PageInfo<NoticeResp> getNoticeList(PageReq<Notice> record) {
+    public PageInfo<NoticeResp> getNoticeList(Page record) {
+        Notice noticeReq = DataUtils.toJavaObject(record.getCondition(),Notice.class);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
-        List<Notice> noticeList = noticeMapper.getNoticeList(record.getCondition());
+        List<Notice> noticeList = noticeMapper.getNoticeList(noticeReq);
         List<NoticeResp> noticeListResp = null;
         if (!CollectionUtils.isEmpty(noticeList)){
             noticeListResp = new ArrayList<>();

@@ -1,7 +1,7 @@
 package com.dream.city.other.service.impl;
 
-import com.dream.city.other.dao.CityFileMapper;
-import com.dream.city.other.entity.CityFile;
+import com.dream.city.base.model.entity.CityFile;
+import com.dream.city.base.model.mapper.CityFileMapper;
 import com.dream.city.other.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

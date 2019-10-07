@@ -1,10 +1,10 @@
 package com.dream.city.other.controller;
 
-import com.dream.city.base.PageReq;
 import com.dream.city.base.Result;
-import com.dream.city.other.dto.MessageReq;
-import com.dream.city.other.dto.MessageResp;
-import com.dream.city.other.entity.CityHelp;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.CityHelp;
+import com.dream.city.base.model.req.MessageReq;
+import com.dream.city.base.model.resp.MessageResp;
 import com.dream.city.other.service.MessageService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -116,7 +116,7 @@ public class MassegeController {
         return new ModelAndView("other/msg/index");
     }
     @RequestMapping("/getList")
-    public Result<PageInfo> getList(PageReq page, MessageReq record){
+    public Result<PageInfo> getList(Page page, MessageReq record){
         boolean success = Boolean.TRUE;
         PageInfo<MessageResp> result = null;
         try {

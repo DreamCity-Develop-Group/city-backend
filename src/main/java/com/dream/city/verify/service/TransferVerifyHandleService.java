@@ -2,8 +2,8 @@ package com.dream.city.verify.service;
 
 
 import com.dream.city.base.Result;
+import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.exception.OperationException;
-import com.dream.city.verify.dto.VerifyReq;
 
 /**
  *  转账审核

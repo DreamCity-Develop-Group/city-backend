@@ -1,7 +1,7 @@
 package com.dream.city.other.service;
 
 
-import com.dream.city.other.entity.CityFile;
+import com.dream.city.base.model.entity.CityFile;
 
 import java.util.List;
 

@@ -1,17 +1,17 @@
 package com.dream.city.verify.service.impl;
 
-import com.dream.city.account.entity.PlayerAccount;
 import com.dream.city.account.service.AccountService;
 import com.dream.city.base.Codes;
 import com.dream.city.base.Result;
+import com.dream.city.base.model.entity.PlayerAccount;
+import com.dream.city.base.model.entity.PlayerEarning;
+import com.dream.city.base.model.entity.PlayerTrade;
+import com.dream.city.base.model.enu.AmountDynType;
+import com.dream.city.base.model.enu.TradeAmountType;
+import com.dream.city.base.model.enu.VerifyStatus;
+import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.exception.OperationException;
-import com.dream.city.trade.dto.PlayerAccountReq;
-import com.dream.city.verify.dto.VerifyReq;
-import com.dream.city.trade.entity.PlayerEarning;
-import com.dream.city.trade.entity.PlayerTrade;
-import com.dream.city.trade.enu.AmountDynType;
-import com.dream.city.trade.enu.TradeAmountType;
-import com.dream.city.verify.enu.VerifyStatus;
 import com.dream.city.trade.service.EarningService;
 import com.dream.city.trade.service.PlayerTradeService;
 import com.dream.city.verify.service.TradeVerifyService;
@@ -70,7 +70,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         PlayerAccount playerAccount = accountService.getPlayerAccount(accountReq);
 
         //校验金额
-        Result<Boolean> checkWithdrawAmountResult = this.checkWithdrawAmount(trade.getTradeAmount(),earning.getEarnTax(),playerAccount);
+        Result<Boolean> checkWithdrawAmountResult = this.checkWithdrawAmount(trade.getTradeAmount(),earning.getEarnPersonalTax(),playerAccount);
         success = checkWithdrawAmountResult.getSuccess();
         msg = checkWithdrawAmountResult.getMsg();
         if (StringUtils.isNotBlank(msg)){
@@ -209,8 +209,8 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         int updatePlayerAccount = 0;
         if (platformAccount != null){
             //把玩家账户扣除税金 加到平台mt账户
-            platformAccount.setAccMt(platformAccount.getAccMtAvailable().add(earning.getEarnTax()));
-            platformAccount.setAccMtAvailable(platformAccount.getAccMtAvailable().add(earning.getEarnTax()));
+            platformAccount.setAccMt(platformAccount.getAccMtAvailable().add(earning.getEarnPersonalTax()));
+            platformAccount.setAccMtAvailable(platformAccount.getAccMtAvailable().add(earning.getEarnPersonalTax()));
             try {
                 //更新平台mt账户
                 updatePlayerAccount = accountService.updatePlayerAccount(platformAccount);
@@ -244,7 +244,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         PlayerTrade createPlayerTrade = null;
         try {
             //新增扣除税金流水
-            createPlayerTradeResult = this.createPlayerTrade(createPlayerTradeReq, earning.getEarnTax(), "审核扣除mt税金");
+            createPlayerTradeResult = this.createPlayerTrade(createPlayerTradeReq, earning.getEarnPersonalTax(), "审核扣除mt税金");
             if (createPlayerTradeResult.getSuccess()){
                 createPlayerTrade = createPlayerTradeResult.getData();
             }
@@ -268,7 +268,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         PlayerAccount updateAccountReq = new PlayerAccount();
         updateAccountReq.setAccId(playerAccount.getAccId());
         updateAccountReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(earning.getEarnTax()));
+        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(earning.getEarnPersonalTax()));
         int updatePlayerAccount = 0;
         try {
             //更新玩家账户
@@ -352,9 +352,9 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         updateAccountReq.setAccUsdtFreeze(playerAccount.getAccUsdtFreeze().subtract(earning.getEarnMax()));
         updateAccountReq.setAccUsdtAvailable(playerAccount.getAccUsdtAvailable().add(earning.getEarnMax()));
         updateAccountReq.setAccUsdt(playerAccount.getAccUsdt().add(earning.getEarnMax()));
-        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(earning.getEarnTax()));
-        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().add(earning.getEarnTax()));
-        updateAccountReq.setAccMt(playerAccount.getAccMt().add(earning.getEarnTax()));
+        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(earning.getEarnPersonalTax()));
+        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().add(earning.getEarnPersonalTax()));
+        updateAccountReq.setAccMt(playerAccount.getAccMt().add(earning.getEarnPersonalTax()));
         int updatePlayerAccount = 0;
         try {
             //更新玩家账户

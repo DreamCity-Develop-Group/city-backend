@@ -2,7 +2,7 @@ package com.dream.city.verify.service;
 
 
 import com.dream.city.base.Result;
-import com.dream.city.verify.dto.VerifyReq;
+import com.dream.city.base.model.req.VerifyReq;
 
 /**
  *  投资审核

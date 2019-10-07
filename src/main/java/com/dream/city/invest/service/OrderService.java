@@ -1,13 +1,10 @@
 package com.dream.city.invest.service;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.invest.dto.OrderReq;
-import com.dream.city.invest.dto.OrderResp;
-import com.dream.city.invest.entity.Order;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.InvestOrder;
+import com.dream.city.base.model.resp.InvestOrderResp;
 import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * 投资订单
@@ -21,42 +18,42 @@ public interface OrderService {
      * @param record
      * @return
      */
-    Order insertInvestOrder(Order record);
+    InvestOrder insertInvestOrder(InvestOrder record);
 
     /**
      * 投资订单作废
      * @param record
      * @return
      */
-    int investOrderInvalid(Order record);
+    int investOrderInvalid(InvestOrder record);
 
     /**
      * 投资订单取消
      * @param record
      * @return
      */
-    int investOrderCancel(Order record);
+    int investOrderCancel(InvestOrder record);
 
     /**
      * 查询投资订单
      * @param orderId
      * @return
      */
-    OrderResp getInvestOrderById(Integer orderId);
+    InvestOrderResp getInvestOrderById(Integer orderId);
 
     /**
      * 投资订单列表
      * @param record
      * @return
      */
-    PageInfo<OrderResp> getInvestOrderList(PageReq<OrderReq> record);
+    PageInfo<InvestOrderResp> getInvestOrderList(Page record);
 
     /**
      * 投资数量
      * @param record orderInvestId、orderPayerId、orderState
      * @return
      */
-    int countOrdersByPayerIdPropertyId(Order record);
+    int countOrdersByPayerIdPropertyId(InvestOrder record);
 
     /**
      * 审核修改状态
@@ -64,5 +61,5 @@ public interface OrderService {
      * @return
      */
     @Transactional
-    int updateOrderStateById(Order record);
+    int updateOrderStateById(InvestOrder record);
 }

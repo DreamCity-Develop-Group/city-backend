@@ -1,12 +1,12 @@
 package com.dream.city.user.service.impl;
 
-import com.dream.city.user.dao.UserMapper;
-import com.dream.city.user.dto.UserDto;
-import com.dream.city.user.entity.User;
+import com.dream.city.base.model.dto.UserDto;
+import com.dream.city.base.model.entity.User;
+import com.dream.city.base.model.entity.UserRole;
+import com.dream.city.base.model.mapper.UserMapper;
+import com.dream.city.base.model.mapper.UserRoleMapper;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.user.service.UserService;
-import com.dream.city.setting.dao.UserRoleMapper;
-import com.dream.city.setting.entity.UserRole;
-import com.dream.city.util.DataUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

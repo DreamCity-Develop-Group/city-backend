@@ -1,13 +1,13 @@
 package com.dream.city.verify.service.impl;
 
 import com.dream.city.base.Result;
-import com.dream.city.invest.dto.OrderResp;
-import com.dream.city.invest.entity.Order;
-import com.dream.city.invest.enu.InvestStatus;
+import com.dream.city.base.model.entity.InvestOrder;
+import com.dream.city.base.model.entity.TradeVerify;
+import com.dream.city.base.model.enu.InvestStatus;
+import com.dream.city.base.model.enu.VerifyType;
+import com.dream.city.base.model.req.VerifyReq;
+import com.dream.city.base.model.resp.InvestOrderResp;
 import com.dream.city.invest.service.OrderService;
-import com.dream.city.verify.dto.VerifyReq;
-import com.dream.city.verify.entity.TradeVerify;
-import com.dream.city.verify.enu.VerifyType;
 import com.dream.city.verify.service.InvestVerifyHandleService;
 import com.dream.city.verify.service.TradeVerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
     public Result subscribeOrderVerify(VerifyReq verifyReq) {
         boolean success = Boolean.FALSE;
         String descr = "预约审核失败";
-        OrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
+        InvestOrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
         //审核将状态改成投资
         int i = 0;
         if (order == null){
@@ -54,7 +54,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
     public Result investOrderVerify(VerifyReq verifyReq) {
         boolean success = Boolean.FALSE;
         String descr = "投资审核失败";
-        OrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
+        InvestOrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
         int i = 0;
         if (order == null){
             descr = "没找到预约记录";
@@ -108,7 +108,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
 
 
     private int updateOrderState(Integer orderId,String orderState){
-        Order orderReq = new Order();
+        InvestOrder orderReq = new InvestOrder();
         orderReq.setOrderId(orderId);
         orderReq.setOrderState(orderState);
         return orderService.updateOrderStateById(orderReq);

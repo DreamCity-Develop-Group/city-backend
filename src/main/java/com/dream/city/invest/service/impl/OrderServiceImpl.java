@@ -1,18 +1,18 @@
 package com.dream.city.invest.service.impl;
 
-import com.dream.city.base.PageReq;
-import com.dream.city.invest.dao.OrderMapper;
-import com.dream.city.invest.dto.OrderReq;
-import com.dream.city.invest.dto.OrderResp;
-import com.dream.city.invest.entity.Order;
-import com.dream.city.invest.enu.InvestStatus;
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.entity.InvestOrder;
+import com.dream.city.base.model.entity.TradeVerify;
+import com.dream.city.base.model.enu.InvestStatus;
+import com.dream.city.base.model.mapper.InvestOrderMapper;
+import com.dream.city.base.model.req.InvestOrderReq;
+import com.dream.city.base.model.resp.InvestOrderResp;
+import com.dream.city.base.model.resp.PlayerResp;
+import com.dream.city.base.model.resp.PropertyResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.invest.service.OrderService;
-import com.dream.city.player.dto.PlayerResp;
 import com.dream.city.player.service.PlayerService;
-import com.dream.city.property.dto.PropertyResp;
 import com.dream.city.property.service.PropertyService;
-import com.dream.city.util.DataUtils;
-import com.dream.city.verify.entity.TradeVerify;
 import com.dream.city.verify.service.TradeVerifyService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Autowired
-    private OrderMapper orderMapper;
+    private InvestOrderMapper orderMapper;
 
     @Autowired
     private PropertyService propertyService;
@@ -43,13 +43,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order insertInvestOrder(Order record) {
+    public InvestOrder insertInvestOrder(InvestOrder record) {
         return orderMapper.insertSelective(record);
     }
 
     @Override
     @Transactional
-    public int investOrderInvalid(Order record) {
+    public int investOrderInvalid(InvestOrder record) {
         record.setOrderState(InvestStatus.INVALID.name());
         Integer integer = orderMapper.updateByPrimaryKeySelective(record);
         return integer ==null?0:integer;
@@ -57,26 +57,27 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public int investOrderCancel(Order record) {
+    public int investOrderCancel(InvestOrder record) {
         record.setOrderState(InvestStatus.CANCEL.name());
         Integer integer = orderMapper.updateByPrimaryKeySelective(record);
         return integer ==null?0:integer;
     }
 
     @Override
-    public OrderResp getInvestOrderById(Integer orderId) {
+    public InvestOrderResp getInvestOrderById(Integer orderId) {
         if (orderId == null){
             return null;
         }
-        Order order = orderMapper.selectByPrimaryKey(orderId);
+        InvestOrder order = orderMapper.selectByPrimaryKey(orderId);
         return this.getOrderResp(order);
     }
 
     @Override
-    public PageInfo<OrderResp> getInvestOrderList(PageReq<OrderReq> record) {
-        PropertyResp property = propertyService.getInvestByIdOrName(null, record.getCondition().getInName());
-        PlayerResp player = playerService.getPlayerByName(record.getCondition().getPayerName());
-        Order recordReq =  DataUtils.toJavaObject(record.getCondition(),Order.class);
+    public PageInfo<InvestOrderResp> getInvestOrderList(Page record) {
+        InvestOrderReq invest = DataUtils.toJavaObject(record.getCondition(),InvestOrderReq.class);
+        PropertyResp property = propertyService.getInvestByIdOrName(null, invest.getInName());
+        PlayerResp player = playerService.getPlayerByName(invest.getPayerName());
+        InvestOrder recordReq =  DataUtils.toJavaObject(record.getCondition(),InvestOrder.class);
         if (property != null) {
             recordReq.setOrderInvestId(property.getInId());
         }
@@ -84,10 +85,10 @@ public class OrderServiceImpl implements OrderService {
             recordReq.setOrderPayerId(player.getPlayerId());
         }
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
-        List<Order> orders = orderMapper.getInvestOrders(recordReq);
-        List<OrderResp> ordersResp = new ArrayList<>();
+        List<InvestOrder> orders = orderMapper.getInvestOrders(recordReq);
+        List<InvestOrderResp> ordersResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(orders)){
-            for (Order order : orders){
+            for (InvestOrder order : orders){
                 ordersResp.add(this.getOrderResp(order));
             }
         }
@@ -95,21 +96,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int countOrdersByPayerIdPropertyId(Order record) {
-        return orderMapper.countOrdersByPayerIdPropertyId(record);
+    public int countOrdersByPayerIdPropertyId(InvestOrder record) {
+        return orderMapper.countOrdersByPayerIdInvestId(record);
     }
 
     @Override
-    public int updateOrderStateById(Order record) {
+    public int updateOrderStateById(InvestOrder record) {
         Integer integer = orderMapper.updateOrderStateById(record);
         return integer ==null?0:integer;
     }
 
-    private OrderResp getOrderResp(Order order){
-        OrderResp resp = DataUtils.toJavaObject(order,OrderResp.class);
+    private InvestOrderResp getOrderResp(InvestOrder order){
+        InvestOrderResp resp = DataUtils.toJavaObject(order,InvestOrderResp.class);
         PlayerResp player = playerService.getPlayerByPlayerId(order.getOrderPayerId());
         if (player != null){
-            resp.setPayerName(player.getPlayerName());
+            resp.setPlayerName(player.getPlayerName());
         }
         PropertyResp propertyResp = propertyService.getInvestByIdOrName(order.getOrderInvestId(), null);
         if (propertyResp != null){
