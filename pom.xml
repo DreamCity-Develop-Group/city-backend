@@ -166,6 +166,12 @@
 				<scope>compile</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>com.dream.city</groupId>
+				<artifactId>city-base</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -180,5 +186,15 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>maven-repo-master</id>
+			<url>https://raw.github.com/aoswce/base-dep/master/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 
 </project>
