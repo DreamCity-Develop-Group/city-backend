@@ -70,6 +70,7 @@ public class PlayerController {
             result = playerService.getPlayers(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
+            logger.error("查询"+modelName+"列表异常",e);
         }
         return new Result(success,modelName + "列表",result);
     }

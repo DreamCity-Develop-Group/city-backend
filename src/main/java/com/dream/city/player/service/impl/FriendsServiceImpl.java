@@ -1,9 +1,15 @@
 package com.dream.city.player.service.impl;
 
+import com.dream.city.base.PageReq;
 import com.dream.city.player.dao.FriendsMapper;
+import com.dream.city.player.dto.FriendsReq;
+import com.dream.city.player.dto.FriendsResp;
+import com.dream.city.player.dto.PlayerReq;
 import com.dream.city.player.entity.Friends;
 import com.dream.city.player.service.FriendsService;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,26 +35,24 @@ public class FriendsServiceImpl implements FriendsService {
     }
 
     @Override
-    public Page friendList(Page pageReq) {// TODO
-        Page<Map> page = new Page<>();
-
-        Integer count = friendsMapper.friendCount(pageReq);
-        List<Map> friendList = friendsMapper.friendList(pageReq);
-        return page;
+    public PageInfo friendList(PageReq<FriendsReq> pageReq) {// TODO
+        PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
+        List<FriendsResp> friendList = friendsMapper.friendList(pageReq.getCondition());
+        return new PageInfo(friendList);
     }
 
     @Override
-    public Page applyFriendList(Page pageReq) {// TODO
-        Page<Map> page = new Page<>();
-
-        Integer count = friendsMapper.applyFriendCount(pageReq);
-        List<Map> friendList = friendsMapper.applyFriendList(pageReq);
-        return page;
+    public PageInfo applyFriendList(PageReq<FriendsReq> pageReq) {// TODO
+        PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
+        List<FriendsResp> friendList = friendsMapper.applyFriendList(pageReq.getCondition());
+        return new PageInfo(friendList);
     }
 
     @Override
-    public Friends selectByPlayerIdFriendId(Friends record) {
-        return friendsMapper.selectByPlayerIdFriendId(record);
+    public FriendsResp getFriendById(Long id) {
+        Friends friend = new Friends();
+        friend.setId(id);
+        return friendsMapper.getFriend(friend);
     }
 
     @Override

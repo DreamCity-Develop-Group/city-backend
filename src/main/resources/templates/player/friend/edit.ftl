@@ -26,55 +26,56 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="ruleId" name="ruleId" value="${data.ruleId}">
+                        <input type="hidden" id="id" name="id" value="${data.id}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则项目名称：</label>
+                            <label class="col-sm-3 control-label">玩家：</label>
                             <div class="col-sm-8">
-                                <input id="itemName" name="itemName" class="form-control" type="text" value="${data.itemName}">
+                                <input id="playerName" name="playerName" class="form-control" type="text" value="${data.playerName}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则名称：</label>
+                            <label class="col-sm-3 control-label">好友：</label>
                             <div class="col-sm-8">
-                                <input id="ruleName" name="ruleName" class="form-control" type="text" value="${data.ruleName}">
+                                <input id="friendName" name="friendName" class="form-control" type="text" value="${data.friendName}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则税率：</label>
+                            <label class="col-sm-3 control-label">好友审核：</label>
                             <div class="col-sm-8">
-                                <input id="ruleRate" name="ruleRate" class="form-control" type="text" value="${data.ruleRate}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">规则优先级别：</label>
-                            <div class="col-sm-8">
-                                <input id="raleLevel" name="raleLevel" class="form-control" type="text" value="${data.raleLevel}">
-                            </div>
-                        </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">可用状态：</label>
-                            <div class="col-sm-8">
-                                <select name="itemState" class="form-control">
-                                    <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
+                                <select name="agree" class="form-control">
+                                    <option value="0" <#if data.agree == 0>selected="selected"</#if>>否</option>
+                                    <option value="1" <#if data.agree == 1>selected="selected"</#if>>是</option>
                                 </select>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则描述：</label>
+                            <label class="col-sm-3 control-label">邀请码：</label>
                             <div class="col-sm-8">
-                                <input id="ruleDesc" name="ruleDesc" class="form-control" value="${data.ruleDesc}">
+                                <input id="invite" name="invite" class="form-control" type="text" value="${data.invite}">
                             </div>
                         </div>
-                        <#--
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">投资结束时间：</label>
+                            <label class="col-sm-3 control-label">添加时间：</label>
                             <div class="col-sm-8">
-                                <input id="sendTime" name="inEnd"
-                                       class="laydate-icon form-control"
-                                       value="${data.inEnd}">
+                                <input id="createTime" name="createTime" class="form-control" type="text" value="${data.createTime}">
                             </div>
-                        </div>-->
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">好友审核时间：</label>
+                            <div class="col-sm-8">
+                                <input id="updateTime" name="updateTime" class="form-control" value="${data.updateTime}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">好友头像：</label>
+                            <div class="col-sm-8">
+                                <#if data.friendImgurl? exists>
+                                    <img id="friendImgurl" class="pull-left" src="${ctx}/${data.friendImgurl}">
+                                <#else>
+                                    <img id="friendImgurl" class="pull-left" src="${ctx}/avatars/avatar5.png">
+                                </#if>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

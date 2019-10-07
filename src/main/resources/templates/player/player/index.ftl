@@ -335,9 +335,9 @@
 						title: "头像",
 						field: "imgurl",
 						formatter: function (value, row, index) {
-							var operateHtml = '<img id="imgurl" class="pull-left" src="${ctx}/avatars/avatar5.png">';
-							if (value != null && value != ''){
-								operateHtml = '<img id="imgurl" class="pull-left" src="${ctx}/'+ value +'">';
+							var operateHtml = '<img class="pull-left" src="${ctx}/avatars/avatar5.png">';
+							if (value != null){
+								operateHtml = '<img class="pull-left" src="${ctx}/'+ value +'">';
 							}
 							return operateHtml;
 						}
@@ -349,9 +349,9 @@
                         field: "empty",
                         formatter: function (value, row, index) {
 							var operateHtml = '';
-                            //operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            //operateHtml = '<button class="btn btn-danger btn-primary btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
                             //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn label-info btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]

@@ -342,7 +342,9 @@
 						formatter: function (value, row, index) {
 							var operateHtml = '';
 							if (value === '预约'){
-								operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.orderId+'\')"><span class="label label-info">预约</span></a>';
+								operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.orderId+'\')"><span class="label label-danger">'+ value +'</span></a>';
+							}else if (value === '已投资'){
+								operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.orderId+'\')"><span class="label label-danger">'+ value +'</span></a>';
 							}else {
 								operateHtml = '<span class="label label-info">'+ value +'</span>';
 							}
@@ -359,7 +361,7 @@
 							if (row.orderState === '预约' || row.orderState === '已投资') {
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.orderId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
 							}
-							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn label-info btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]

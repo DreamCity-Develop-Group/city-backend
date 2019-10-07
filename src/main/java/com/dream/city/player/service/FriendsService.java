@@ -1,8 +1,11 @@
 package com.dream.city.player.service;
 
 
+import com.dream.city.base.PageReq;
+import com.dream.city.player.dto.FriendsReq;
+import com.dream.city.player.dto.FriendsResp;
 import com.dream.city.player.entity.Friends;
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 好友
@@ -28,16 +31,16 @@ public interface FriendsService {
      * @param pageReq
      * @return
      */
-    Page friendList(Page pageReq);
+    PageInfo friendList(PageReq<FriendsReq> pageReq);
 
     /**
      * 申请列表
      * @param pageReq
      * @return
      */
-    Page applyFriendList(Page pageReq);
+    PageInfo applyFriendList(PageReq<FriendsReq> pageReq);
 
-    Friends selectByPlayerIdFriendId(Friends record);
+    FriendsResp getFriendById(Long id);
 
     Integer getFriendAgree(Friends record);
 }

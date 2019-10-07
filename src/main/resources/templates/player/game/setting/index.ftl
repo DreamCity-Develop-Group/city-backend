@@ -339,9 +339,9 @@
                         field: "empty",
                         formatter: function (value, row, index) {
 							var operateHtml = '';
-                            //operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            //operateHtml = '<button class="btn btn-danger btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
                             //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn label-info btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]

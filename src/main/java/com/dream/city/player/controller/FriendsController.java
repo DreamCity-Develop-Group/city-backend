@@ -1,21 +1,29 @@
 package com.dream.city.player.controller;
 
 
+import com.dream.city.base.PageReq;
+import com.dream.city.base.Result;
+import com.dream.city.player.dto.FriendsReq;
 import com.dream.city.player.service.FriendsService;
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @RestController
-@RequestMapping("/friends")
+@RequestMapping("/player/friend")
 public class FriendsController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private final String modelName = "好友";
+    private final String actionPath = "player/friend";
 
     @Autowired
     private FriendsService friendsService;
@@ -23,29 +31,45 @@ public class FriendsController {
 
     /**
      * 好友列表
-     * @param pageReq
      * @return
      */
-    @RequestMapping("/friendList")
-    public Page friendList(@RequestBody Page pageReq){
-        logger.info("friendList，pageReq：{}",pageReq);
-        Page page = friendsService.friendList(pageReq);
-        return page;
+    @RequestMapping("/index")
+    public ModelAndView index(Model model){
+        model.addAttribute("title",modelName);
+        model.addAttribute("table", modelName + "列表");
+        model.addAttribute("actionPath",actionPath);
+        return new ModelAndView(actionPath + "/index");
+    }
+    @RequestMapping("/getList")
+    public Result friendList(PageReq pageReq, FriendsReq record){
+        logger.info(modelName + "列表，：{}", record);
+        boolean success = Boolean.TRUE;
+        PageInfo result = null;
+        try{
+            pageReq.setCondition(record);
+            result = friendsService.friendList(pageReq);
+        }catch (Exception e){
+            success = Boolean.FALSE;
+            logger.error("查询"+modelName+"列表异常",e);
+        }
+        return new Result(success,modelName + "列表",result);
     }
 
 
-    /**
-     * 好友申请列表
-     * @param pageReq
-     * @return
-     */
-    @RequestMapping("/applyFriendList")
-    public Page applyFriendList(@RequestBody Page pageReq){
-        logger.info("applyFriendList，pageReq：{}",pageReq);
-        Page page = friendsService.applyFriendList(pageReq);
-        return page;
+    @RequestMapping("/get/{id}")
+    public ModelAndView get(@PathVariable("id") Long id, Model model){
+        logger.info("查询"+ modelName +"：{}",id);
+        Object result = null;
+        try {
+            result = friendsService.getFriendById(id);
+        }catch (Exception e){
+            logger.error("查询"+ modelName +"异常",e);
+        }
+        model.addAttribute("title","详情");
+        model.addAttribute("table", modelName + "详情");
+        model.addAttribute("edit",Boolean.FALSE);
+        model.addAttribute("data",result);
+        return new ModelAndView(actionPath + "/edit");
     }
-
-
 
 }

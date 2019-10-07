@@ -1,12 +1,12 @@
 package com.dream.city.player.dao;
 
 
+import com.dream.city.player.dto.FriendsReq;
+import com.dream.city.player.dto.FriendsResp;
 import com.dream.city.player.entity.Friends;
-import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface FriendsMapper {
@@ -18,7 +18,7 @@ public interface FriendsMapper {
 
     Friends selectByPrimaryKey(Long id);
 
-    Friends selectByPlayerIdFriendId(Friends record);
+    FriendsResp getFriend(Friends record);
 
     int updateByPrimaryKeySelective(Friends record);
 
@@ -34,8 +34,7 @@ public interface FriendsMapper {
      * @param page
      * @return
      */
-    List<Map> friendList(Page page);
-    Integer friendCount(Page page);
+    List<FriendsResp> friendList(FriendsReq page);
 
 
     /**
@@ -43,8 +42,7 @@ public interface FriendsMapper {
      * @param page
      * @return
      */
-    List<Map> applyFriendList(Page page);
-    Integer applyFriendCount(Page page);
+    List<FriendsResp> applyFriendList(FriendsReq page);
 
     Integer getFriendAgree(Friends record);
 }
