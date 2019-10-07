@@ -45,7 +45,7 @@
   <!-- 好友列表  -->
   <select id="friendList" parameterType="com.dream.city.player.dto.FriendsReq" resultType="com.dream.city.player.dto.FriendsResp">
     select b.* FROM (
-      select f.id,
+      select f.id,f.player_id,f.friend_id,
         (SELECT player_name FROM city_player a1 WHERE a1.player_id = f.player_id) playerName,
         (SELECT player_nick FROM city_player a2 WHERE a2.player_id = f.player_id) playerNick,
         (SELECT player_name FROM city_player a3 WHERE a3.player_id = f.friend_id) friendName,
@@ -68,7 +68,7 @@
     <if test="friendNick != null and friendNick != ''">
       and b.friendNick = #{friendNick,jdbcType=VARCHAR}
     </if>
-    ORDER BY b.updateTime DESC
+    ORDER BY b.updateTime DESC,b.player_id desc
   </select>
 
   <!-- 申请列表  -->
