@@ -15,9 +15,9 @@ spring:
     ssl: false
     jedis:
       pool:
-        max-active: 300
+        max-active: 200
         max-wait: -1
-        max-idle: 300
+        max-idle: 100
         min-idle: 1
 
 
@@ -70,3 +70,8 @@ dreamcity:
   platform:
     account:
       accIds: 888888888,999999999
+
+  #注册密码salt
+  register:
+    password:
+      salt: DREAM_CITY_890@#$%

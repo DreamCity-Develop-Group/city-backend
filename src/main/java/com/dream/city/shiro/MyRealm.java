@@ -92,4 +92,15 @@ public class MyRealm extends AuthorizingRealm {
 		return info;
 	}
 
+	/**
+	 * 清除当前用户的权限认证缓存
+	 *
+	 * @param principals 权限信息 身份集合
+	 */
+	@Override
+	public void clearCache(PrincipalCollection principals) {
+		super.clearCache(principals);
+	}
+
+
 }

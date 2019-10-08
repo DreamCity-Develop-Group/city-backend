@@ -9,16 +9,15 @@ server:
   servlet:
     context-path: /
 
-#mybatis:
-#  config-location: classpath:log4j2.xml
-#  type-aliases-package: com.dream.city.*.dao
-#  mapper-locations: classpath:mapper/*/*.xml
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis:
+  type-aliases-package: com.dream.city.base.model.mapper
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #pagehelper分页插件
-#pagehelper:
-#  reasonable: false
-#  support-methods-arguments: true
-#  params: countSql
-#  helper-dialect: mysql
+pagehelper:
+  reasonable: false
+  support-methods-arguments: true
+  params: countSql
+  helper-dialect: mysql
