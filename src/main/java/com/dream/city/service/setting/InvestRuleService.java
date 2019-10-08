@@ -8,6 +8,8 @@ import com.dream.city.base.model.resp.RuleResp;
 import com.dream.city.exception.OperationException;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 
 public interface InvestRuleService {
 
@@ -20,5 +22,7 @@ public interface InvestRuleService {
     PageInfo getInvestRuleList(Page record);
 
     Integer updateInvestRuleById(RuleReq record) throws OperationException;
+
+    List<InvestRule> getRuleFlagList(InvestRule record);
 
 }

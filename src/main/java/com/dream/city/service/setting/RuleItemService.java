@@ -29,4 +29,6 @@ public interface RuleItemService {
     PageInfo<RuleItem> getRuleItemList(Page record);
 
 
+    List<RuleItem> getRuleItemFlagList(String itemFlag);
+
 }

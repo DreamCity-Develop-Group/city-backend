@@ -30,7 +30,24 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则项目名称：</label>
                             <div class="col-sm-8">
-                                <input id="itemName" name="itemName" class="form-control" type="text" value="${data.itemName}">
+                                <input id="itemName" name="itemName" class="form-control" type="text" value="">
+                                <#--<select id="itemName" name="itemName" class="form-control">
+                                    <#list items as item>
+                                        <option value="${item.itemName}" <#if item.itemId == data.ruleItem>selected="selected"</#if>>${item.itemName}</option>
+                                    </#list>
+                                </select>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属类型：</label>
+                            <div class="col-sm-8">
+                                <select id="itemFlag" name="itemFlag" class="form-control" readonly="readonly">
+                                    <<#list items as item>
+                                        <#if '${item.itemFlag}' == '${data.itemFlag}'>
+                                            <option value="${item.itemFlag}" <#if item.itemId == data.itemId>selected="selected"</#if>>${data.itemName}(${data.itemFlag})</option>
+                                        </#if>
+                                    </#list>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">

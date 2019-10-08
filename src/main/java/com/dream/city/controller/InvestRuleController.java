@@ -46,8 +46,10 @@ public class InvestRuleController {
 
     @RequestMapping("/add")
     public ModelAndView add(Model model){
-        List<RuleItem> items = itemService.getRuleItemListByType(null);
+        List<RuleItem> items = itemService.getRuleItemFlagList(null);
+        List<InvestRule> rules = ruleService.getRuleFlagList(null);
         model.addAttribute("items",items);
+        model.addAttribute("rules",rules);
         model.addAttribute("title","添加");
         model.addAttribute("table","添加" + modelName);
         model.addAttribute("actionPath",actionPath);
@@ -91,15 +93,19 @@ public class InvestRuleController {
 
     @RequestMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Integer id,Model model){
-        RuleResp rule = ruleService.getInvestRuleById(id);
+        RuleResp result = ruleService.getInvestRuleById(id);
         List<RuleItem> items = new ArrayList<>();
-        if (rule != null && rule.getRuleItem() != null && rule.getRuleItem() > 0){
-            RuleItem item = itemService.getRuleItemById(rule.getRuleItem());
-            items = itemService.getRuleItemListByType(item.getItemType());
+        List<InvestRule> rules = null;
+        if (result != null && result.getRuleItem() != null && result.getRuleItem() > 0){
+            RuleItem item = itemService.getRuleItemById(result.getRuleItem());
+            items = itemService.getRuleItemFlagList(item.getItemFlag());
+            InvestRule record = new InvestRule();
+            record.setRuleFlag(result.getItemFlag());
+            rules = ruleService.getRuleFlagList(record);
         }
-        model.addAttribute("data",rule);
+        model.addAttribute("data",result);
         model.addAttribute("items",items);
-        model.addAttribute("itemTypes", TradeAmountType.values());
+        model.addAttribute("rules",rules);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
         model.addAttribute("edit",Boolean.TRUE);
@@ -130,11 +136,15 @@ public class InvestRuleController {
         logger.info("查询"+ modelName +"：{}",id);
         RuleResp result = null;
         List<RuleItem> items = new ArrayList<>();
+        List<InvestRule> rules = null;
         try {
             result = ruleService.getInvestRuleById(id);
             if (result != null && result.getRuleItem() != null && result.getRuleItem() > 0){
                 RuleItem item = itemService.getRuleItemById(result.getRuleItem());
-                items = itemService.getRuleItemListByType(item.getItemType());
+                items = itemService.getRuleItemFlagList(item.getItemFlag());
+                InvestRule record = new InvestRule();
+                record.setRuleFlag(result.getItemFlag());
+                rules = ruleService.getRuleFlagList(record);
             }
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
@@ -144,7 +154,7 @@ public class InvestRuleController {
         model.addAttribute("edit",Boolean.FALSE);
         model.addAttribute("data",result);
         model.addAttribute("items",items);
-        model.addAttribute("itemTypes", TradeAmountType.values());
+        model.addAttribute("rules",rules);
         return new ModelAndView(actionPath + "/edit");
     }
 
@@ -153,10 +163,13 @@ public class InvestRuleController {
 
     @RequestMapping("/index")
     public ModelAndView index(Model model){
+        List<RuleItem> items = itemService.getRuleItemFlagList(null);
+        List<InvestRule> rules = ruleService.getRuleFlagList(null);
+        model.addAttribute("items",items);
+        model.addAttribute("rules",rules);
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
-        model.addAttribute("itemTypes", TradeAmountType.values());
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")

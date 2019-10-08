@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 
 /**
  * @author
@@ -33,6 +35,8 @@ public class RuleItemController {
 
     @RequestMapping("/add")
     public ModelAndView add(RuleItem record, Model model){
+        List<RuleItem> itemTypes = itemService.getRuleItemFlagList(null);
+        model.addAttribute("items", itemTypes);
         model.addAttribute("title","添加");
         model.addAttribute("table","添加" + modelName);
         model.addAttribute("actionPath",actionPath);
@@ -76,7 +80,13 @@ public class RuleItemController {
 
     @RequestMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("data",itemService.getRuleItemById(id));
+        RuleItem result = itemService.getRuleItemById(id);
+        List<RuleItem> items = null;
+        if (result != null){
+            items = itemService.getRuleItemFlagList(result.getItemFlag());
+        }
+        model.addAttribute("data",result);
+        model.addAttribute("items",items);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
         model.addAttribute("edit",Boolean.TRUE);
@@ -105,12 +115,17 @@ public class RuleItemController {
     @RequestMapping("/get/{id}")
     public ModelAndView get(@PathVariable("id") Integer id,Model model){
         logger.info("查询"+ modelName +"：{}",id);
-        Object result = null;
+        RuleItem result = null;
         try {
             result = itemService.getRuleItemById(id);
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
         }
+        List<RuleItem> items = null;
+        if (result != null){
+            items = itemService.getRuleItemFlagList(result.getItemFlag());
+        }
+        model.addAttribute("items",items);
         model.addAttribute("title","详情");
         model.addAttribute("table",modelName + "详情");
         model.addAttribute("edit",Boolean.FALSE);
@@ -123,6 +138,8 @@ public class RuleItemController {
 
     @RequestMapping("/index")
     public ModelAndView index(Model model){
+        List<RuleItem> items = itemService.getRuleItemFlagList(null);
+        model.addAttribute("items",items);
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);

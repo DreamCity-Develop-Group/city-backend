@@ -90,7 +90,12 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											规则项目名称：<input id="itemName" name="itemName" type="text"/>
+											规则项目名称：
+											<select id="itemName" name="itemName" class="">
+												<#list items as item>
+													<option value="${item.itemName}">${item.itemName}</option>
+												</#list>
+											</select>
 										</div>
 										<div class="col-sm-3 form-group">
 											规则名称：<input id="ruleName" name="ruleName" type="text"/>
@@ -329,13 +334,25 @@
 							return '<span class="label label-danger">否</span>';
 						}
 					},*/{
-						title: "所属类型",
-						field: "itemType",
+						title: "规则项类型",
+						field: "itemFlag",
 						formatter: function (value, row, index) {
 							var operateHtml = '';
-							<#list itemTypes as type>
-								if (value === '${type.getCode()}'){
-									operateHtml = '${type.getDesc()}';
+							<#list items as item>
+								if (value === '${item.itemFlag}'){
+									operateHtml = '${item.itemName()}';
+								}
+							</#list>
+							return operateHtml;
+						}
+					},{
+						title: "规则类型",
+						field: "ruleFlag",
+						formatter: function (value, row, index) {
+							var operateHtml = '';
+							<#list rules as item>
+								if (value === '${item.ruleFlag}'){
+									operateHtml = '${item.ruleName}';
 								}
 							</#list>
 							return operateHtml;
@@ -345,7 +362,7 @@
 						field: "ruleRate"
 					},{
 						title: "规则优先级别",
-						field: "raleLevel"
+						field: "ruleLevel"
 					},{
 						title: "规则描述",
 						field: "ruleDesc"

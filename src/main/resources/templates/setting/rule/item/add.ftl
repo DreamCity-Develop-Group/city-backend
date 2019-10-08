@@ -31,6 +31,21 @@
                                 <label class="col-sm-3 control-label">规则项目名称：</label>
                                 <div class="col-sm-8">
                                     <input id="itemName" name="itemName" class="form-control" type="text" value="">
+                                    <#--<select id="itemName" name="itemName" class="form-control">
+                                        <#list items as item>
+                                            <option value="${item.itemName}">${item.itemName}</option>
+                                        </#list>
+                                    </select>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">所属类型：</label>
+                                <div class="col-sm-8">
+                                    <select id="itemFlag" name="itemFlag" class="form-control">
+                                        <#list items as item>
+                                            <option value="${item.itemFlag}">${item.itemName}(${item.itemFlag})</option>
+                                        </#list>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">

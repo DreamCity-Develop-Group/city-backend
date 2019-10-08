@@ -53,7 +53,7 @@ public class RuleItemServiceImpl implements RuleItemService {
     @Override
     public List<RuleItem> getRuleItemListByType(String itemType) {
         RuleItem record = new RuleItem();
-        record.setItemType(itemType);
+        record.setItemFlag(itemType);
         record.setItemState(1);
         return ruleItemMapper.getRuleItemList(record);
     }
@@ -63,5 +63,10 @@ public class RuleItemServiceImpl implements RuleItemService {
         RuleItem item = DataUtils.toJavaObject(record.getCondition(),RuleItem.class);
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
         return new PageInfo<>(ruleItemMapper.getRuleItemList(item));
+    }
+
+    @Override
+    public List<RuleItem> getRuleItemFlagList(String itemFlag) {
+        return ruleItemMapper.getRuleItemFlagList(itemFlag);
     }
 }

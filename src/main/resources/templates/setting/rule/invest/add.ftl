@@ -30,9 +30,10 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">规则项目名称：</label>
                                 <div class="col-sm-8">
-                                    <select name="itemName" class="form-control">
+                                    <select id="itemName" name="itemName" class="form-control">
+                                        <option value=""></option>
                                         <#list items as item>
-                                            <option value="${item_index}">${item.itemName}</option>
+                                            <option value="${item.itemName}">${item.itemName}</option>
                                         </#list>
                                     </select>
                                 </div>
@@ -46,9 +47,9 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">所属类型：</label>
                                 <div class="col-sm-8">
-                                    <select name="itemType" class="form-control">
+                                    <select id="itemType" name="itemType" class="form-control">
                                         <#list itemTypes as type>
-                                            <option value="${type_index}">${type.getDesc()}</option>
+                                            <option value="${type.getCode()}">${type.getDesc()}</option>
                                         </#list>
                                     </select>
                                 </div>
@@ -62,7 +63,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">规则优先级别：</label>
                                 <div class="col-sm-8">
-                                    <input id="raleLevel" name="raleLevel" class="form-control" type="text" value="">
+                                    <input id="ruleLevel" name="ruleLevel" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <#--<div class="form-group">

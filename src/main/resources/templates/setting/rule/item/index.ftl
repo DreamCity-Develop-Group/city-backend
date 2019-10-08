@@ -90,7 +90,13 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											规则项目名称：<input id="itemName" name="itemName" type="text"/>
+											规则项目名称：
+											<select id="itemName" name="itemName" class="">
+												<option value=""></option>
+												<#list items as item>
+													<option value="${item.itemName}">${item.itemName}</option>
+												</#list>
+											</select>
 										</div>
 										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
@@ -315,12 +321,24 @@
 						title: "规则项目名称",
 						field: "itemName"
 					},{
+						title: "所属类型",
+						field: "itemFlag",
+						formatter: function (value, row, index) {
+							var operateHtml = '';
+							<#list items as item>
+							if (value === '${item.itemFlag}'){
+								operateHtml = '${data.itemName()}';
+							}
+							</#list>
+							return operateHtml;
+						}
+					},{
 						title: "可用状态",
 						field: "itemState",
 						formatter: function (value, row, index) {
 							if (value === 1)
-								return '<span class="label label-info">是</span>';
-							return '<span class="label label-danger">否</span>';
+								return '是';
+							return '否';
 						}
 					},{
 						title: "规则项目描述",

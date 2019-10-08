@@ -30,9 +30,21 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则项目名称：</label>
                             <div class="col-sm-8">
-                                <select name="itemName" class="form-control">
+                                <select id="itemName" name="itemName" class="form-control">
                                     <#list items as item>
-                                        <option value="${item_index}" <#if item.itemId == data.ruleItem>selected="selected"</#if>>${item.itemName}</option>
+                                        <option value="${item.itemName}" <#if item.itemId == data.ruleItem>selected="selected"</#if>>${item.itemName}</option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">规则项类型：</label>
+                            <div class="col-sm-8">
+                                <select id="itemType" name="itemType" class="form-control" readonly="readonly">
+                                    <#list items as item>
+                                        <#if '${item.itemFlag}' == '${data.itemFlag}'>
+                                            <option value="${item.itemFlag}" <#if item.itemId == data.itemId>selected="selected"</#if>>${data.itemName}(${data.itemFlag})</option>
+                                        </#if>
                                     </#list>
                                 </select>
                             </div>
@@ -44,12 +56,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">所属类型：</label>
+                            <label class="col-sm-3 control-label">规则类型：</label>
                             <div class="col-sm-8">
-                                <select name="itemType" class="form-control" readonly="readonly">
-                                <#list itemTypes as type>
-                                    <#if type.getCode() == data.itemType>
-                                        <option value="${type_index}" <#if type.getCode() == data.itemType>selected="selected"</#if>>${type.getDesc()}</option>
+                                <select id="itemType" name="itemType" class="form-control" readonly="readonly">
+                                <#list rules as item>
+                                    <#if '${item.ruleFlag}' == '${data.ruleFlag}'>
+                                        <option value="${item.ruleFlag}" <#if item.ruleFlag == data.ruleFlag>selected="selected"</#if>>${data.ruleName}</option>
                                     </#if>
                                 </#list>
                                 </select>
@@ -64,7 +76,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则优先级别：</label>
                             <div class="col-sm-8">
-                                <input id="raleLevel" name="raleLevel" class="form-control" type="text" value="${data.raleLevel}">
+                                <input id="ruleLevel" name="ruleLevel" class="form-control" type="text" value="${data.ruleLevel}">
                             </div>
                         </div>
                         <#--<div class="form-group">

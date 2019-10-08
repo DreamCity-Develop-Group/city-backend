@@ -56,7 +56,7 @@ public class InvestRuleServiceImpl implements InvestRuleService {
         RuleItem item = itemService.getRuleItemById(rule.getRuleItem());
         if (item != null){
             ruleResp.setItemName(item.getItemName());
-            ruleResp.setItemType(item.getItemType());
+            ruleResp.setItemFlag(item.getItemFlag());
         }
         return ruleResp;
     }
@@ -75,7 +75,7 @@ public class InvestRuleServiceImpl implements InvestRuleService {
                 item = itemService.getRuleItemById(rule.getRuleItem());
                 if (item != null){
                     ruleResp.setItemName(item.getItemName());
-                    ruleResp.setItemType(item.getItemType());
+                    ruleResp.setItemFlag(item.getItemFlag());
                 }
                 ruleListResp.add(ruleResp);
             }
@@ -93,5 +93,10 @@ public class InvestRuleServiceImpl implements InvestRuleService {
             throw new OperationException(Codes.PARAM_ERROR.getCode(),"根据名称[" + record.getItemName()+ "]找不到对于的规则项");
         }
         return ruleMapper.updateByPrimaryKeySelective(recordReq);
+    }
+
+    @Override
+    public List<InvestRule> getRuleFlagList(InvestRule record) {
+        return ruleMapper.getRuleFlagList(record);
     }
 }
