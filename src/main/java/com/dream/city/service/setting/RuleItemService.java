@@ -24,6 +24,8 @@ public interface RuleItemService {
 
     List<RuleItem> getRuleItemListByName(String itemName);
 
+    List<RuleItem> getRuleItemListByType(String itemType);
+
     PageInfo<RuleItem> getRuleItemList(Page record);
 
 

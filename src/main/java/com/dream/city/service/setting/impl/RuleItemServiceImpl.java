@@ -42,11 +42,19 @@ public class RuleItemServiceImpl implements RuleItemService {
 
     @Override
     public List<RuleItem> getRuleItemListByName(String itemName) {
-        if (StringUtils.isNotBlank(itemName)){
+        if (StringUtils.isBlank(itemName)){
             return null;
         }
         RuleItem record = new RuleItem();
         record.setItemName(itemName);
+        return ruleItemMapper.getRuleItemList(record);
+    }
+
+    @Override
+    public List<RuleItem> getRuleItemListByType(String itemType) {
+        RuleItem record = new RuleItem();
+        record.setItemType(itemType);
+        record.setItemState(1);
         return ruleItemMapper.getRuleItemList(record);
     }
 

@@ -30,13 +30,29 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则项目名称：</label>
                             <div class="col-sm-8">
-                                <input id="itemName" name="itemName" class="form-control" type="text" value="${data.itemName}">
+                                <select name="itemName" class="form-control">
+                                    <#list items as item>
+                                        <option value="${item_index}" <#if item.itemId == data.ruleItem>selected="selected"</#if>>${item.itemName}</option>
+                                    </#list>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则名称：</label>
                             <div class="col-sm-8">
                                 <input id="ruleName" name="ruleName" class="form-control" type="text" value="${data.ruleName}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属类型：</label>
+                            <div class="col-sm-8">
+                                <select name="itemType" class="form-control" readonly="readonly">
+                                <#list itemTypes as type>
+                                    <#if type.getCode() == data.itemType>
+                                        <option value="${type_index}" <#if type.getCode() == data.itemType>selected="selected"</#if>>${type.getDesc()}</option>
+                                    </#if>
+                                </#list>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">

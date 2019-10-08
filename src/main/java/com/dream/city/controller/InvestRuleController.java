@@ -3,9 +3,14 @@ package com.dream.city.controller;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.InvestRule;
+import com.dream.city.base.model.entity.RuleItem;
+import com.dream.city.base.model.enu.TradeAmountType;
 import com.dream.city.base.model.req.RuleReq;
+import com.dream.city.base.model.resp.RuleResp;
 import com.dream.city.service.setting.InvestRuleService;
+import com.dream.city.service.setting.RuleItemService;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -32,19 +40,22 @@ public class InvestRuleController {
 
     @Autowired
     private InvestRuleService ruleService;
-
+    @Autowired
+    private RuleItemService itemService;
 
 
     @RequestMapping("/add")
-    public ModelAndView add(InvestRule record, Model model){
+    public ModelAndView add(Model model){
+        List<RuleItem> items = itemService.getRuleItemListByType(null);
+        model.addAttribute("items",items);
         model.addAttribute("title","添加");
         model.addAttribute("table","添加" + modelName);
         model.addAttribute("actionPath",actionPath);
-        model.addAttribute("data",record);
+        model.addAttribute("itemTypes", TradeAmountType.values());
         return new ModelAndView(actionPath + "/add");
     }
     @RequestMapping("/insert")
-    public Result insert(InvestRule record){
+    public Result insert(RuleReq record){
         logger.info("新增"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
@@ -79,8 +90,16 @@ public class InvestRuleController {
 
 
     @RequestMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("data",ruleService.getInvestRuleById(id));
+    public ModelAndView edit(@PathVariable("id") Integer id,Model model){
+        RuleResp rule = ruleService.getInvestRuleById(id);
+        List<RuleItem> items = new ArrayList<>();
+        if (rule != null && rule.getRuleItem() != null && rule.getRuleItem() > 0){
+            RuleItem item = itemService.getRuleItemById(rule.getRuleItem());
+            items = itemService.getRuleItemListByType(item.getItemType());
+        }
+        model.addAttribute("data",rule);
+        model.addAttribute("items",items);
+        model.addAttribute("itemTypes", TradeAmountType.values());
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
         model.addAttribute("edit",Boolean.TRUE);
@@ -109,9 +128,14 @@ public class InvestRuleController {
     @RequestMapping("/get/{id}")
     public ModelAndView get(@PathVariable("id") Integer id,Model model){
         logger.info("查询"+ modelName +"：{}",id);
-        Object result = null;
+        RuleResp result = null;
+        List<RuleItem> items = new ArrayList<>();
         try {
             result = ruleService.getInvestRuleById(id);
+            if (result != null && result.getRuleItem() != null && result.getRuleItem() > 0){
+                RuleItem item = itemService.getRuleItemById(result.getRuleItem());
+                items = itemService.getRuleItemListByType(item.getItemType());
+            }
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
         }
@@ -119,6 +143,8 @@ public class InvestRuleController {
         model.addAttribute("table", modelName + "详情");
         model.addAttribute("edit",Boolean.FALSE);
         model.addAttribute("data",result);
+        model.addAttribute("items",items);
+        model.addAttribute("itemTypes", TradeAmountType.values());
         return new ModelAndView(actionPath + "/edit");
     }
 
@@ -130,6 +156,7 @@ public class InvestRuleController {
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
+        model.addAttribute("itemTypes", TradeAmountType.values());
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")

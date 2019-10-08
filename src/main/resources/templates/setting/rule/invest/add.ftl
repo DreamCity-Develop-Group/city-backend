@@ -30,13 +30,27 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">规则项目名称：</label>
                                 <div class="col-sm-8">
-                                    <input id="itemName" name="itemName" class="form-control" type="text" value="">
+                                    <select name="itemName" class="form-control">
+                                        <#list items as item>
+                                            <option value="${item_index}">${item.itemName}</option>
+                                        </#list>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">规则名称：</label>
                                 <div class="col-sm-8">
                                     <input id="ruleName" name="ruleName" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">所属类型：</label>
+                                <div class="col-sm-8">
+                                    <select name="itemType" class="form-control">
+                                        <#list itemTypes as type>
+                                            <option value="${type_index}">${type.getDesc()}</option>
+                                        </#list>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">

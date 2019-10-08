@@ -38,8 +38,15 @@ public class InvestRuleServiceImpl implements InvestRuleService {
     }
 
     @Override
-    public Integer insertInvestRule(InvestRule record) {
-        return ruleMapper.insertSelective(record);
+    public Integer insertInvestRule(RuleReq record) throws OperationException {
+        List<RuleItem> items = itemService.getRuleItemListByName(record.getItemName());
+        InvestRule ruleReq = DataUtils.getData(record,InvestRule.class);
+        if (!CollectionUtils.isEmpty(items)){
+            ruleReq.setRuleItem(items.get(0).getItemId());
+        } else {
+            throw new OperationException(Codes.PARAM_ERROR.getCode(),"根据名称[" + record.getItemName()+ "]找不到对于的规则项");
+        }
+        return ruleMapper.insertSelective(ruleReq);
     }
 
     @Override
@@ -49,6 +56,7 @@ public class InvestRuleServiceImpl implements InvestRuleService {
         RuleItem item = itemService.getRuleItemById(rule.getRuleItem());
         if (item != null){
             ruleResp.setItemName(item.getItemName());
+            ruleResp.setItemType(item.getItemType());
         }
         return ruleResp;
     }
@@ -67,6 +75,7 @@ public class InvestRuleServiceImpl implements InvestRuleService {
                 item = itemService.getRuleItemById(rule.getRuleItem());
                 if (item != null){
                     ruleResp.setItemName(item.getItemName());
+                    ruleResp.setItemType(item.getItemType());
                 }
                 ruleListResp.add(ruleResp);
             }

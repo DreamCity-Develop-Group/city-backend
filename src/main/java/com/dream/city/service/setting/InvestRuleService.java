@@ -13,7 +13,7 @@ public interface InvestRuleService {
 
     Integer deleteInvestRuleById(Integer id);
 
-    Integer insertInvestRule(InvestRule record);
+    Integer insertInvestRule(RuleReq record) throws OperationException ;
 
     RuleResp getInvestRuleById(Integer id);
 

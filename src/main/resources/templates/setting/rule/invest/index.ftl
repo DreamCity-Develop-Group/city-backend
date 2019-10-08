@@ -329,6 +329,18 @@
 							return '<span class="label label-danger">否</span>';
 						}
 					},*/{
+						title: "所属类型",
+						field: "itemType",
+						formatter: function (value, row, index) {
+							var operateHtml = '';
+							<#list itemTypes as type>
+								if (value === '${type.getCode()}'){
+									operateHtml = '${type.getDesc()}';
+								}
+							</#list>
+							return operateHtml;
+						}
+					},{
 						title: "规则税率",
 						field: "ruleRate"
 					},{
