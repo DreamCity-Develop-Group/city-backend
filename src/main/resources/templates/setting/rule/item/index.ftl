@@ -291,7 +291,7 @@
                     //表示服务端请求
                     sidePagination: "server",
                     //设置为undefined可以获取pageNum，pageSize，searchText，sortName，sortOrder
-                    //设置为limit可以获取limit, offset, search, sort, order
+                    //设置为limit可以获取limit, offset, search, sort, other
                     queryParams:getQueryParams,
                     queryParamsType: "",
                     //json数据解析
