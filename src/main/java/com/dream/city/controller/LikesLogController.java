@@ -4,33 +4,33 @@ import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.req.PlayerLikesReq;
 import com.dream.city.base.model.resp.PlayerLikesResp;
-import com.dream.city.service.player.LikesService;
+import com.dream.city.service.player.LikesLogService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 
 /**
- * 玩家获赞
+ * 玩家点赞
  */
 @RestController
-@RequestMapping("/player/like")
-public class LikesController {
+@RequestMapping("/player/likelog")
+public class LikesLogController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final String modelName = "玩家获赞";
-    private final String actionPath = "player/like";
+    private final String modelName = "玩家点赞";
+    private final String actionPath = "player/likelog";
 
     @Autowired
-    LikesService likesService;
+    LikesLogService logService;
 
 
     @RequestMapping("/index")
@@ -47,7 +47,7 @@ public class LikesController {
         PageInfo<PlayerLikesResp> result = null;
         try{
             pageReq.setCondition(record);
-            result = likesService.playerLikesList(pageReq);
+            result = logService.getLikesLogList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
             logger.error("查询"+ modelName +"列表异常",e);
@@ -56,20 +56,12 @@ public class LikesController {
     }
 
 
-    @RequestMapping("/get/{id}")
-    public ModelAndView get(@PathVariable("id") Integer id, Model model){
-        logger.info("查询"+ modelName +"：{}",id);
+    @RequestMapping("/get/{logId}")
+    public ModelAndView get(@PathVariable("logId") Integer logId, Model model){
+        logger.info("查询"+ modelName +"：{}",logId);
         PlayerLikesResp result = null;
         try {
-            PlayerLikesReq record = new PlayerLikesReq();
-            record.setLikedId(id);
-            Page pageReq = new Page();
-            pageReq.setCondition(record);
-            PageInfo<PlayerLikesResp> pageInfo = likesService.playerLikesList(pageReq);
-            List<PlayerLikesResp> list = pageInfo.getList();
-            if (!CollectionUtils.isEmpty(list)){
-                result = list.get(0);
-            }
+            result = logService.getLikesLogById(logId);
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
         }

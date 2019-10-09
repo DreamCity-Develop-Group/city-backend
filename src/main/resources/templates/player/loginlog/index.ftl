@@ -60,7 +60,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">其他页面</a></li>
+							<li><a href="#">玩家管理</a></li>
 							<li class="active">${title}</li>
 						</ul><!-- .breadcrumb -->
 

@@ -28,6 +28,12 @@
                     <form class="form-horizontal m-t" id="updateForm">
                         <input type="hidden" id="likedId" name="likedId" value="${data.likedId}">
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">点赞玩家：</label>
+                            <div class="col-sm-8">
+                                <input id="playerName" name="playerName" class="form-control" type="text" value="${data.playerName}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">获赞玩家：</label>
                             <div class="col-sm-8">
                                 <input id="friendName" name="friendName" class="form-control" type="text" value="${data.friendName}">
@@ -37,18 +43,6 @@
                             <label class="col-sm-3 control-label">获赞物业：</label>
                             <div class="col-sm-8">
                                 <input id="inName" name="inName" class="form-control" type="text" value="${data.inName}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">玩家获赞数：</label>
-                            <div class="col-sm-8">
-                                <input id="likedGetTotal" name="likedGetTotal" class="form-control" type="text" value="${data.likedGetTotal}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">玩家点赞数：</label>
-                            <div class="col-sm-8">
-                                <input id="likedSetTotal" name="likedSetTotal" class="form-control" type="text" value="${data.likedSetTotal}">
                             </div>
                         </div>
                         <#--<div class="form-group">
@@ -61,7 +55,7 @@
                             </div>
                         </div>-->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">获赞时间：</label>
+                            <label class="col-sm-3 control-label">点赞时间：</label>
                             <div class="col-sm-8">
                                 <input id="createTime" name="createTime"
                                        class="laydate-icon form-control"

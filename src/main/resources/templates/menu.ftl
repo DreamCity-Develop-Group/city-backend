@@ -309,7 +309,13 @@
                 <li>
                     <a href="${ctx}/player/like/index">
                         <i class="icon-double-angle-right"></i>
-                        点赞
+                        玩家获赞
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/player/likelog/index">
+                        <i class="icon-double-angle-right"></i>
+                        点赞记录
                     </a>
                 </li>
                 <li>

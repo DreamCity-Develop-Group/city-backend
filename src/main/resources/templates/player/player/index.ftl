@@ -90,7 +90,7 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											昵称用户名：<input id="playerName" name="playerName" type="text"/>
+											玩家：<input id="playerName" name="playerName" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
 											昵称：<input id="playerNick" name="playerNick" type="text"/>

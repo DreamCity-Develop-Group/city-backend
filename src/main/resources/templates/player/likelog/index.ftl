@@ -90,7 +90,10 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											玩家：<input id="friendName" name="friendName" type="text"/>
+											点赞玩家：<input id="playerName" name="playerName" type="text"/>
+										</div>
+										<div class="col-sm-3 form-group">
+											获赞玩家：<input id="friendName" name="friendName" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
 											物业：<input id="inName" name="inName" type="text"/>
@@ -312,8 +315,11 @@
                     //数据列
 					columns: [{
 						title: "ID",
-						field: "likedId",
+						field: "logId",
 						sortable: true
+					},{
+						title: "点赞玩家",
+						field: "playerName"
 					},{
 						title: "获赞玩家",
 						field: "friendName"
@@ -329,13 +335,7 @@
 							return '<span class="label label-danger">否</span>';
 						}
 					},*/{
-						title: "玩家获赞数",
-						field: "likedGetTotal"
-					},{
-						title: "玩家点赞数",
-						field: "likedSetTotal"
-					},{
-						title: "获赞时间",
+						title: "点赞时间",
 						field: "createTime"
 					},{
                         title: "操作",
@@ -344,7 +344,7 @@
 							var operateHtml = '';
                             /*operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
                             operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';*/
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.likedId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.logId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -366,12 +366,14 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
+					"playerName":$("#playerName").val(),
 					"friendName":$("#friendName").val()
                 }
                 return params;
             }
             function search() {
 				var params={
+					"playerName":$("#playerName").val(),
 					"friendName":$("#friendName").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
