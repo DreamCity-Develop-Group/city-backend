@@ -2,6 +2,8 @@ package com.dream.city.service.trade;
 
 
 import com.dream.city.base.model.entity.PlayerTrade;
+import com.dream.city.base.model.req.PlayerTradeReq;
+import com.dream.city.base.model.resp.PlayerTradeResp;
 
 import java.util.List;
 
@@ -14,10 +16,10 @@ public interface PlayerTradeService {
 
     int updatePlayerTrade(PlayerTrade record);
 
-    PlayerTrade getPlayerTradeById(Integer tradeId);
+    PlayerTradeResp getPlayerTradeById(Integer tradeId);
 
     PlayerTrade getPlayerTrade(PlayerTrade record);
 
-    List<PlayerTrade> getPlayerTradeList(PlayerTrade record);
+    List<PlayerTradeResp> getPlayerTradeList(PlayerTradeReq record);
 
 }

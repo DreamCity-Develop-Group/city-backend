@@ -1,5 +1,6 @@
 package com.dream.city.service.verify.impl;
 
+import com.dream.city.base.model.resp.PlayerTradeResp;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.Codes;
 import com.dream.city.base.Result;
@@ -59,14 +60,14 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
             msg = "交易id不能为空";
         }
         //提现收益
-        PlayerTrade trade = tradeService.getPlayerTradeById(record.getTradeId());
+        PlayerTradeResp trade = tradeService.getPlayerTradeById(record.getTradeId());
         PlayerEarning earningReq = new PlayerEarning();
-        earningReq.setEarnPlayerId(trade.getTradePlayerId());
+        earningReq.setEarnPlayerId(trade.getPlayerId());
         PlayerEarning earning = earningService.getEarning(earningReq);
 
         //玩家账户信息
         PlayerAccount accountReq = new PlayerAccount();
-        accountReq.setAccPlayerId(trade.getTradePlayerId());
+        accountReq.setAccPlayerId(trade.getPlayerId());
         PlayerAccount playerAccount = accountService.getPlayerAccount(accountReq);
 
         //校验金额
@@ -83,7 +84,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.pass.name())){
             //审核通过
             //玩家账户扣除金额 扣冻结Usdt金额
-            int updatePlayerAccount = verifyCommonService.playerSubtractAmount(trade.getTradePlayerId(), trade.getTradeAmount(),"usdt");
+            int updatePlayerAccount = verifyCommonService.playerSubtractAmount(trade.getPlayerId(), trade.getTradeAmount(),"usdt");
 
             //玩家账户扣除Usdt金额流水
             PlayerTrade createPlayerTrade = null;

@@ -3,6 +3,8 @@ package com.dream.city.service.trade.impl;
 
 import com.dream.city.base.model.entity.PlayerTrade;
 import com.dream.city.base.model.mapper.PlayerTradeMapper;
+import com.dream.city.base.model.req.PlayerTradeReq;
+import com.dream.city.base.model.resp.PlayerTradeResp;
 import com.dream.city.service.trade.PlayerTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,7 @@ public class PlayerTradeServiceImpl implements PlayerTradeService {
     }
 
     @Override
-    public PlayerTrade getPlayerTradeById(Integer dynId) {
+    public PlayerTradeResp getPlayerTradeById(Integer dynId) {
         if (dynId == null){
             return null;
         }
@@ -51,7 +53,9 @@ public class PlayerTradeServiceImpl implements PlayerTradeService {
     }
 
     @Override
-    public List<PlayerTrade> getPlayerTradeList(PlayerTrade record) {
+    public List<PlayerTradeResp> getPlayerTradeList(PlayerTradeReq record) {
         return tradeMapper.getPlayerTradeList(record);
     }
+
+
 }
