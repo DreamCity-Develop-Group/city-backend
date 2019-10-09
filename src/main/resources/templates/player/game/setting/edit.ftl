@@ -51,6 +51,12 @@
                                 <input id="status" name="status" class="form-control" type="text" value="${data.status}">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">玩家头像：</label>
+                            <div class="col-sm-8">
+                                <img class="pull-left" src="${ctx}/${data.imgurl}">
+                            </div>
+                        </div>
                         <#--<div class="form-group">
                             <label class="col-sm-3 control-label">是否可投：</label>
                             <div class="col-sm-8">

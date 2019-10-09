@@ -321,6 +321,16 @@
 						title: "玩家",
 						field: "playerNick"
 					},{
+						title: "玩家头像",
+						field: "imgurl",
+						formatter: function (value, row, index) {
+							var operateHtml = '<img class="pull-left" src="${ctx}/avatars/avatar5.png">';
+							if (value != null){
+								operateHtml = '<img class="pull-left" src="${ctx}/'+ value +'">';
+							}
+							return operateHtml;
+						}
+					},{
 						title: "设置类型",
 						field: "type"
 					},{
@@ -380,7 +390,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '添加'+${title},
+                    title: '添加${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -393,7 +403,7 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑'+${title}',
+                    title: '编辑${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -422,7 +432,7 @@
 
 				layer.open({
 					type: 2,
-					title: ${title}+'详情',
+					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],

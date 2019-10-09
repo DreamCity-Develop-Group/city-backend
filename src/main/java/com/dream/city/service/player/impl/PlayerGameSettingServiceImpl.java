@@ -73,9 +73,10 @@ public class PlayerGameSettingServiceImpl implements PlayerGameSettingService {
     }
 
     private PlayerGameSettingResp geSettingResp(PlayerGameSetting setting){
-        String nick = playerService.getPlayerNickByPlayerId(setting.getPlayerId());
+        PlayerResp player = playerService.getPlayerByPlayerId(setting.getPlayerId());
         PlayerGameSettingResp settingResp = DataUtils.getData(setting,PlayerGameSettingResp.class);
-        settingResp.setPlayerNick(nick);
+        settingResp.setPlayerNick(player.getPlayerNick());
+        settingResp.setImgurl(player.getImgurl());
         return settingResp;
     }
 }
