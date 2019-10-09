@@ -28,25 +28,15 @@
                     <form class="form-horizontal m-t" id="updateForm">
                         <input type="hidden" id="ruleId" name="ruleId" value="${data.ruleId}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则项目名称：</label>
+                            <label class="col-sm-3 control-label">规则项名称：</label>
                             <div class="col-sm-8">
-                                <select id="itemName" name="itemName" class="form-control">
-                                    <#list items as item>
-                                        <option value="${item.itemName}" <#if item.itemId == data.ruleItem>selected="selected"</#if>>${item.itemName}</option>
-                                    </#list>
-                                </select>
+                                <input id="itemName" name="itemName" class="form-control" type="text" value="${data.itemName}" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则项类型：</label>
                             <div class="col-sm-8">
-                                <select id="itemType" name="itemType" class="form-control" readonly="readonly">
-                                    <#list items as item>
-                                        <#if '${item.itemFlag}' == '${data.itemFlag}'>
-                                            <option value="${item.itemFlag}" <#if item.itemId == data.itemId>selected="selected"</#if>>${data.itemName}(${data.itemFlag})</option>
-                                        </#if>
-                                    </#list>
-                                </select>
+                                <input id="itemFlag" name="itemFlag" class="form-control" type="text" value="${data.itemFlag}" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
@@ -58,17 +48,29 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则类型：</label>
                             <div class="col-sm-8">
-                                <select id="itemType" name="itemType" class="form-control" readonly="readonly">
-                                <#list rules as item>
-                                    <#if '${item.ruleFlag}' == '${data.ruleFlag}'>
-                                        <option value="${item.ruleFlag}" <#if item.ruleFlag == data.ruleFlag>selected="selected"</#if>>${data.ruleName}</option>
-                                    </#if>
-                                </#list>
-                                </select>
+                                <input id="ruleFlag" name="ruleFlag" class="form-control" type="text" value="${data.ruleFlag}" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">规则税率：</label>
+                            <label class="col-sm-3 control-label">前置条件：</label>
+                            <div class="col-sm-8">
+                                <input id="ruleOptPre" name="ruleOptPre" class="form-control" type="text" value="${data.ruleOptPre}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">后置条件：</label>
+                            <div class="col-sm-8">
+                                <input id="ruleOpt" name="ruleOpt" class="form-control" type="text" value="${data.ruleOpt}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">前置税率：</label>
+                            <div class="col-sm-8">
+                                <input id="ruleRatePre" name="ruleRatePre" class="form-control" type="text" value="${data.ruleRatePre}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">后置税率：</label>
                             <div class="col-sm-8">
                                 <input id="ruleRate" name="ruleRate" class="form-control" type="text" value="${data.ruleRate}">
                             </div>
@@ -79,30 +81,20 @@
                                 <input id="ruleLevel" name="ruleLevel" class="form-control" type="text" value="${data.ruleLevel}">
                             </div>
                         </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">可用状态：</label>
-                            <div class="col-sm-8">
-                                <select name="itemState" class="form-control">
-                                    <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
-                                </select>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则描述：</label>
                             <div class="col-sm-8">
                                 <input id="ruleDesc" name="ruleDesc" class="form-control" value="${data.ruleDesc}">
                             </div>
                         </div>
-                        <#--
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">投资结束时间：</label>
+                            <label class="col-sm-3 control-label">创建时间：</label>
                             <div class="col-sm-8">
-                                <input id="sendTime" name="inEnd"
+                                <input id="createTime" name="" readonly="readonly"
                                        class="laydate-icon form-control"
-                                       value="${data.inEnd}">
+                                       value="${data.createTime}">
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">
@@ -135,10 +127,40 @@
                     itemName: {
                         required: true,
                         minlength: 1,
-                        maxlength: 60
-                    },itemState: {
-                        required: true
-                    },itemDesc: {
+                        maxlength: 30
+                    },itemFlag: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 30
+                    },ruleName: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 30
+                    },ruleFlag: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 30
+                    },ruleOptPre: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 30
+                    },ruleOpt: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 30
+                    },ruleRatePre: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 11
+                    },ruleRate: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 11
+                    },ruleLevel: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 2
+                    },ruleDesc: {
                         required: true,
                         minlength: 1,
                         maxlength: 600

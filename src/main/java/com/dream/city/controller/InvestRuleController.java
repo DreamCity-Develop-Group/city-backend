@@ -7,6 +7,7 @@ import com.dream.city.base.model.entity.RuleItem;
 import com.dream.city.base.model.enu.TradeAmountType;
 import com.dream.city.base.model.req.RuleReq;
 import com.dream.city.base.model.resp.RuleResp;
+import com.dream.city.base.utils.DateUtils;
 import com.dream.city.service.setting.InvestRuleService;
 import com.dream.city.service.setting.RuleItemService;
 import com.github.pagehelper.PageInfo;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,7 +50,10 @@ public class InvestRuleController {
     public ModelAndView add(Model model){
         List<RuleItem> items = itemService.getRuleItemFlagList(null);
         List<InvestRule> rules = ruleService.getRuleFlagList(null);
+        RuleResp result = new RuleResp();
+        result.setCreateTime(DateUtils.getFormatDatetime());
         model.addAttribute("items",items);
+        model.addAttribute("data",result);
         model.addAttribute("rules",rules);
         model.addAttribute("title","添加");
         model.addAttribute("table","添加" + modelName);
@@ -70,6 +75,21 @@ public class InvestRuleController {
             logger.error("新增"+ modelName +"异常",e);
         }
         return new Result(success,"新增" + modelName,result);
+    }
+    @RequestMapping("/getRules/{ruleFlag}")
+    public Result getRules(@PathVariable("ruleFlag") String ruleFlag){
+        logger.info("查询rules ruleFlag ：{}",ruleFlag);
+        boolean success = Boolean.TRUE;
+        List<InvestRule> rules = null;
+        try {
+            InvestRule record = new InvestRule();
+            record.setRuleFlag(ruleFlag);
+            rules = ruleService.getRuleFlagList(record);
+        }catch (Exception e){
+            success = Boolean.FALSE;
+            logger.error("查询rules"+ modelName +"异常",e);
+        }
+        return new Result(success,"查询rules"+ modelName,rules);
     }
 
 
@@ -182,9 +202,11 @@ public class InvestRuleController {
             result = ruleService.getInvestRuleList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
+            logger.error(modelName + "列表异常",e);
         }
         return new Result(success,modelName + "列表",result);
     }
+
 
 
 }

@@ -90,7 +90,7 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											规则项目名称：
+											规则项名称：
 											<select id="itemName" name="itemName" class="">
 												<option value=""></option>
 												<#list items as item>
@@ -318,20 +318,11 @@
 						field: "itemId",
 						sortable: true
 					},{
-						title: "规则项目名称",
+						title: "规则项名称",
 						field: "itemName"
 					},{
-						title: "所属类型",
-						field: "itemFlag",
-						formatter: function (value, row, index) {
-							var operateHtml = '';
-							<#list items as item>
-							if (value === '${item.itemFlag}'){
-								operateHtml = '${data.itemName()}';
-							}
-							</#list>
-							return operateHtml;
-						}
+						title: "规则项类型",
+						field: "itemFlag"
 					},{
 						title: "可用状态",
 						field: "itemState",
@@ -341,7 +332,7 @@
 							return '否';
 						}
 					},{
-						title: "规则项目描述",
+						title: "规则项描述",
 						field: "itemDesc"
 					},{
 						title: "创建时间",

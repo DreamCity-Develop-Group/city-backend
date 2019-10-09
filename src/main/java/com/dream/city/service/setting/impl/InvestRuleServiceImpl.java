@@ -40,7 +40,7 @@ public class InvestRuleServiceImpl implements InvestRuleService {
     @Override
     public Integer insertInvestRule(RuleReq record) throws OperationException {
         List<RuleItem> items = itemService.getRuleItemListByName(record.getItemName());
-        InvestRule ruleReq = DataUtils.getData(record,InvestRule.class);
+        InvestRule ruleReq = DataUtils.toJavaObject(record,InvestRule.class);
         if (!CollectionUtils.isEmpty(items)){
             ruleReq.setRuleItem(items.get(0).getItemId());
         } else {
@@ -52,7 +52,7 @@ public class InvestRuleServiceImpl implements InvestRuleService {
     @Override
     public RuleResp getInvestRuleById(Integer id) {
         InvestRule rule = ruleMapper.selectByPrimaryKey(id);
-        RuleResp ruleResp = DataUtils.getData(rule,RuleResp.class);
+        RuleResp ruleResp = DataUtils.toJavaObject(rule,RuleResp.class);
         RuleItem item = itemService.getRuleItemById(rule.getRuleItem());
         if (item != null){
             ruleResp.setItemName(item.getItemName());
@@ -65,22 +65,8 @@ public class InvestRuleServiceImpl implements InvestRuleService {
     public PageInfo<RuleResp> getInvestRuleList(Page record) {
         RuleReq ruleReq = DataUtils.toJavaObject(record.getCondition(),RuleReq.class);
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
-        List<InvestRule> ruleList = ruleMapper.getInvestRuleList(ruleReq);
-        List<RuleResp> ruleListResp = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(ruleList)){
-            RuleItem item = null;
-            RuleResp ruleResp = null;
-            for (InvestRule rule:ruleList){
-                ruleResp = DataUtils.getData(rule,RuleResp.class);
-                item = itemService.getRuleItemById(rule.getRuleItem());
-                if (item != null){
-                    ruleResp.setItemName(item.getItemName());
-                    ruleResp.setItemFlag(item.getItemFlag());
-                }
-                ruleListResp.add(ruleResp);
-            }
-        }
-        return new PageInfo(ruleListResp);
+        List<RuleResp> ruleList = ruleMapper.getInvestRuleList(ruleReq);
+        return new PageInfo(ruleList);
     }
 
     @Override

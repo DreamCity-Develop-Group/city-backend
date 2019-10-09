@@ -90,8 +90,9 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											规则项目名称：
+											规则项名称：
 											<select id="itemName" name="itemName" class="">
+												<option value=""></option>
 												<#list items as item>
 													<option value="${item.itemName}">${item.itemName}</option>
 												</#list>
@@ -320,45 +321,28 @@
 						field: "ruleId",
 						sortable: true
 					},{
-						title: "规则项目名称",
+						title: "规则项名称",
 						field: "itemName"
+					},{
+						title: "规则项类型",
+						field: "itemFlag"
 					},{
 						title: "规则名称",
 						field: "ruleName"
-					},/*{
-						title: "可用状态",
-						field: "itemState",
-						formatter: function (value, row, index) {
-							if (value === 1)
-								return '<span class="label label-info">是</span>';
-							return '<span class="label label-danger">否</span>';
-						}
-					},*/{
-						title: "规则项类型",
-						field: "itemFlag",
-						formatter: function (value, row, index) {
-							var operateHtml = '';
-							<#list items as item>
-								if (value === '${item.itemFlag}'){
-									operateHtml = '${item.itemName()}';
-								}
-							</#list>
-							return operateHtml;
-						}
 					},{
 						title: "规则类型",
-						field: "ruleFlag",
-						formatter: function (value, row, index) {
-							var operateHtml = '';
-							<#list rules as item>
-								if (value === '${item.ruleFlag}'){
-									operateHtml = '${item.ruleName}';
-								}
-							</#list>
-							return operateHtml;
-						}
+						field: "ruleFlag"
 					},{
-						title: "规则税率",
+						title: "前置条件",
+						field: "ruleOptPre"
+					},{
+						title: "后置条件",
+						field: "ruleOpt"
+					},{
+						title: "前置税率",
+						field: "ruleRatePre"
+					},{
+						title: "后置税率",
 						field: "ruleRate"
 					},{
 						title: "规则优先级别",
@@ -366,7 +350,10 @@
 					},{
 						title: "规则描述",
 						field: "ruleDesc"
-					},{
+					},/*{
+						title: "创建时间",
+						field: "createTime"
+					},*/{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
@@ -413,7 +400,7 @@
                     title: '添加${title}',
                     shadeClose: true,
                     shade: false,
-                    area: ['800px', '600px'],
+                    area: ['800px', '700px'],
                     content: '${ctx}/${actionPath}/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
@@ -426,7 +413,7 @@
                     title: '编辑${title}',
                     shadeClose: true,
                     shade: false,
-                    area: ['800px', '600px'],
+                    area: ['800px', '700px'],
                     content: '${ctx}/${actionPath}/edit/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
@@ -455,7 +442,7 @@
 					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
-					area: ['800px', '600px'],
+					area: ['800px', '700px'],
 					content: '${ctx}/${actionPath}/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");

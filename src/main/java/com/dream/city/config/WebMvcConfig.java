@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	private CommonInterceptor commonInterceptor;
 
@@ -70,8 +73,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(commonInterceptor).addPathPatterns("/**");
-		super.addInterceptors(registry);
 	}
+
+	@Override
+	public void addFormatters(FormatterRegistry registry) {
+		// 配置Date类型接收参数的格式，这里前端传参的格式必须为yyyy/MM/dd,否则无法入参
+		//registry.addFormatter(new DateFormatter("yyyy-MM-dd"));
+		// 前端传入的字符串格式要满足yyyy/MM/dd才能把参数写入到指定的时间参数中
+	}
+
+
 
 //    @Bean
 //    public FilterRegistrationBean registFilter() {
