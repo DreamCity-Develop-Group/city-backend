@@ -90,10 +90,7 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											规则项目名称：<input id="itemName" name="itemName" type="text"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											规则名称：<input id="ruleName" name="ruleName" type="text"/>
+											玩家：<input id="playerName" name="playerName" type="text"/>
 										</div>
 										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
@@ -104,7 +101,7 @@
 											</div>
 										</div>-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+										<#--<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>-->
 										<#--<@shiro.hasPermission name="system:user:add">
                                         </@shiro.hasPermission>-->
                                     </div>
@@ -312,14 +309,14 @@
                     //数据列
 					columns: [{
 						title: "ID",
-						field: "ruleId",
+						field: "id",
 						sortable: true
 					},{
-						title: "规则项目名称",
-						field: "itemName"
+						title: "玩家",
+						field: "playerName"
 					},{
-						title: "规则名称",
-						field: "ruleName"
+						title: "登陆机器",
+						field: "imei"
 					},/*{
 						title: "可用状态",
 						field: "itemState",
@@ -329,22 +326,25 @@
 							return '<span class="label label-danger">否</span>';
 						}
 					},*/{
-						title: "规则税率",
-						field: "ruleRate"
+						title: "登陆ip",
+						field: "ip"
 					},{
-						title: "规则优先级别",
-						field: "raleLevel"
+						title: "描述",
+						field: "descr"
 					},{
-						title: "规则描述",
-						field: "ruleDesc"
+						title: "日志类型",
+						field: "type"
+					},{
+						title: "登陆时间",
+						field: "createTime"
 					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
 							var operateHtml = '';
-                            operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.ruleId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            /*operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';*/
+                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -366,15 +366,13 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"itemName":$("#itemName").val(),
-					"ruleName":$("#ruleName").val()
+					"playerName":$("#playerName").val()
                 }
                 return params;
             }
             function search() {
 				var params={
-					"itemName":$("#itemName").val(),
-					"ruleName":$("#ruleName").val()
+					"playerName":$("#playerName").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
