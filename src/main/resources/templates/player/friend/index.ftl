@@ -90,10 +90,10 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											玩家名称：<input id="playerName" name="playerName" type="text"/>
+											玩家：<input id="playerName" name="playerName" type="text"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											好友名称：<input id="friendName" name="friendName" type="text"/>
+											好友：<input id="friendName" name="friendName" type="text"/>
 										</div>
 										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
@@ -104,7 +104,7 @@
 											</div>
 										</div>-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+										<#--<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>-->
 										<#--<@shiro.hasPermission name="system:user:add">
                                         </@shiro.hasPermission>-->
                                     </div>
@@ -334,10 +334,10 @@
 						title: "好友审核",
 						field: "agree",
 						formatter: function (value, row, index) {
-							var operateHtml = '<span class="label label-info">未同意</span>';
+							var operateHtml = '<span class="label label-warning">未同意</span>';
 							if (value === 1){
 								operateHtml = '<span class="label label-info">同意</span>';
-							}else {
+							}else if (value === 2){
 								operateHtml = '<span class="label label-danger">不同意</span>';
 							}
 							return operateHtml;

@@ -43,8 +43,9 @@
                             <label class="col-sm-3 control-label">好友审核：</label>
                             <div class="col-sm-8">
                                 <select name="agree" class="form-control">
-                                    <option value="0" <#if data.agree == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.agree == 1>selected="selected"</#if>>是</option>
+                                    <option value="0" <#if data.agree == 0>selected="selected"</#if>>未同意</option>
+                                    <option value="1" <#if data.agree == 1>selected="selected"</#if>>同意</option>
+                                    <option value="1" <#if data.agree == 2>selected="selected"</#if>>不同意</option>
                                 </select>
                             </div>
                         </div>

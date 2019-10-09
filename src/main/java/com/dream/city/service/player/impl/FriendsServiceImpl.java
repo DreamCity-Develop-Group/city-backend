@@ -59,4 +59,12 @@ public class FriendsServiceImpl implements FriendsService {
     public Integer getFriendAgree(Friends record) {
         return friendsMapper.getFriendAgree(record);
     }
+
+    @Override
+    public PageInfo<FriendsResp> getFriendsAll(Page pageReq) {
+        FriendsReq friendsReq = DataUtils.toJavaObject(pageReq.getCondition(),FriendsReq.class);
+        PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
+        List<FriendsResp> friendsAll = friendsMapper.getFriendsAll(friendsReq);
+        return new PageInfo<>(friendsAll);
+    }
 }

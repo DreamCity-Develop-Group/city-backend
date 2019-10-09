@@ -47,7 +47,7 @@ public class FriendsController {
         PageInfo result = null;
         try{
             pageReq.setCondition(record);
-            result = friendsService.friendList(pageReq);
+            result = friendsService.getFriendsAll(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
             logger.error("查询"+modelName+"列表异常",e);

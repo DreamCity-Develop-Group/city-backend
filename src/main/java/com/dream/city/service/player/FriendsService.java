@@ -3,8 +3,11 @@ package com.dream.city.service.player;
 
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.Friends;
+import com.dream.city.base.model.req.FriendsReq;
 import com.dream.city.base.model.resp.FriendsResp;
 import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
  * 好友
@@ -32,14 +35,11 @@ public interface FriendsService {
      */
     PageInfo friendList(Page pageReq);
 
-    /**
-     * 申请列表
-     * @param pageReq
-     * @return
-     */
     //PageInfo applyFriendList(Page pageReq);
 
     FriendsResp getFriendById(Long id);
 
     Integer getFriendAgree(Friends record);
+
+    PageInfo<FriendsResp> getFriendsAll(Page pageReq);
 }
