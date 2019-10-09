@@ -35,7 +35,7 @@ public class NoticeServiceImpl implements NoticeService {
         Notice noticeReq = DataUtils.toJavaObject(record.getCondition(),Notice.class);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         List<Notice> noticeList = noticeMapper.getNoticeList(noticeReq);
-        List<NoticeResp> noticeListResp = null;
+        List<NoticeResp> noticeListResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(noticeList)){
             noticeListResp = new ArrayList<>();
             NoticeResp noticeResp = null;

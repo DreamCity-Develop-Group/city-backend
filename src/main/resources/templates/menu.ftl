@@ -41,14 +41,14 @@
             </a>
         </li>
 
-        <li>
+        <#--<li>
             <a href="typography.html">
                 <i class="icon-text-width"></i>
                 <span class="menu-text"> 文字排版 </span>
             </a>
-        </li>
+        </li>-->
 
-        <li>
+        <#--<li>
             <a href="#" class="dropdown-toggle">
                 <i class="icon-desktop"></i>
                 <span class="menu-text"> UI 组件 </span>
@@ -135,7 +135,7 @@
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li>-->
 
         <li>
             <a href="#" class="dropdown-toggle">
@@ -166,7 +166,7 @@
             </ul>
         </li>
 
-        <li>
+        <#--<li>
             <a href="#" class="dropdown-toggle">
                 <i class="icon-edit"></i>
                 <span class="menu-text"> 表单 </span>
@@ -283,7 +283,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>-->
 
         <li>
             <a href="#" class="dropdown-toggle">
@@ -297,31 +297,31 @@
                 <li>
                     <a href="${ctx}/player/player/index">
                         <i class="icon-double-angle-right"></i>
-                        玩家
+                        玩家列表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/player/friend/index">
                         <i class="icon-double-angle-right"></i>
-                        好友
+                        好友列表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/player/like/index">
                         <i class="icon-double-angle-right"></i>
-                        玩家获赞
+                        玩家获赞列表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/player/likelog/index">
                         <i class="icon-double-angle-right"></i>
-                        点赞记录
+                        点赞记录列表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/player/game/setting/index">
                         <i class="icon-double-angle-right"></i>
-                        玩家游戏设置
+                        玩家游戏设置列表
                     </a>
                 </li>
                 <li>
@@ -345,7 +345,7 @@
                 <li>
                     <a href="${ctx}/property/index">
                         <i class="icon-double-angle-right"></i>
-                        物业
+                        物业列表
                     </a>
                 </li>
             </ul>
@@ -361,9 +361,75 @@
             </a>
             <ul class="submenu">
                 <li>
+                    <a href="${ctx}/invest/index?verify=0">
+                        <i class="icon-double-angle-right"></i>
+                        投资列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index?verify=1&orderState=SUBSCRIBE">
+                        <i class="icon-double-angle-right"></i>
+                        预约待审核列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index?verify=1&orderState=INVESTED">
+                        <i class="icon-double-angle-right"></i>
+                        投资待审核列表
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-file-alt"></i>
+                <span class="menu-text">
+					交易管理
+				</span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
                     <a href="${ctx}/invest/index">
                         <i class="icon-double-angle-right"></i>
-                        投资
+                        充值列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        提现列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        提现预约待审核列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        提现待审核列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        转账列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        转账待审核列表（外部）
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/invest/index">
+                        <i class="icon-double-angle-right"></i>
+                        购买MT列表
                     </a>
                 </li>
             </ul>
@@ -406,19 +472,19 @@
                 <li>
                     <a href="${ctx}/other/help/index">
                         <i class="icon-double-angle-right"></i>
-                        帮助
+                        帮助列表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/other/message/index">
                         <i class="icon-double-angle-right"></i>
-                        通知
+                        通知列表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/other/notice/index">
                         <i class="icon-double-angle-right"></i>
-                        公告
+                        公告列表
                     </a>
                 </li>
 

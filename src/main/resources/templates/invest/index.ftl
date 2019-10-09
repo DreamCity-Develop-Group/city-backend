@@ -60,7 +60,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">其他页面</a></li>
+							<li><a href="#">投资管理</a></li>
 							<li class="active">${title}</li>
 						</ul><!-- .breadcrumb -->
 
@@ -90,19 +90,20 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											项目：<input id="inName" name="inName" type="text"/>
+											项目：<input id="inName" name="inName" type="text" value="${data.inName}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											玩家：<input id="payerName" name="payerName" type="text"/>
+											玩家：<input id="payerName" name="payerName" type="text" value="${data.payerName}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											状态：<input id="orderState" name="orderState" type="text"/>
+											状态：<input id="orderState" name="orderState" type="text" value="${data.orderState}" <#if '${verify}'=='1'>readonly="readonly"</#if>/>
 										</div>
 										<div class="col-sm-3 form-group">
 											<label class="">是否复投：</label>
 											<select id="orderRepeat" name="orderRepeat" class="">
-												<option value="0" selected="selected">否</option>
-												<option value="1" >是</option>
+												<option value="" ></option>
+												<option value="0" <#if data.orderRepeat == 0>selected="selected"</#if>>否</option>
+												<option value="1" <#if data.orderRepeat == 1>selected="selected"</#if>>是</option>
 											</select>
 										</div>
 										<#--<div class="col-sm-3 form-group">
@@ -114,7 +115,7 @@
 											</div>
 										</div>-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+										<#--<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>-->
 										<#--<@shiro.hasPermission name="system:user:add">
                                         </@shiro.hasPermission>-->
                                     </div>

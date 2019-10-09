@@ -344,7 +344,7 @@
 							var operateHtml = '';
                             /*operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
                             operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';*/
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.logId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+                            /*operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.logId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';*/
                             return operateHtml;
                         }
                     }]

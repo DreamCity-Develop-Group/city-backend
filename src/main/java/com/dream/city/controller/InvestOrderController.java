@@ -29,7 +29,7 @@ public class InvestOrderController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final String modelName = "投资订单";
+    private final String modelName = "投资";
     private final String actionPath = "invest";
 
     @Autowired
@@ -60,7 +60,10 @@ public class InvestOrderController {
 
 
     @RequestMapping("/index")
-    public ModelAndView index(Model model){
+    public ModelAndView index(InvestOrderReq record,Integer verify,Model model){
+        verify = verify == null?0:verify;
+        model.addAttribute("data",record);
+        model.addAttribute("verify",verify);
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
@@ -76,6 +79,7 @@ public class InvestOrderController {
             pageInfo = orderService.getInvestOrderList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
+            logger.error("投查询"+ modelName +"列表异常",e);
         }
         return new Result(success,modelName + "列表",pageInfo);
     }

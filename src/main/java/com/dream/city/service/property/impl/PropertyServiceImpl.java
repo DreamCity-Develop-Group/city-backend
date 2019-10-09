@@ -65,7 +65,7 @@ public class PropertyServiceImpl implements PropertyService {
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
         List<CityInvest> investLsit = investMapper.getInvestLsit(invest);
 
-        List<PropertyResp> lsit = null;
+        List<PropertyResp> lsit = new ArrayList<>();
         if (!CollectionUtils.isEmpty(investLsit)){
             lsit = new ArrayList<>();
             PropertyResp propertyResp = null;

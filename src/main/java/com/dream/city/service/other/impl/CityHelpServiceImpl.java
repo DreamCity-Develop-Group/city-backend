@@ -10,6 +10,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * @author
@@ -39,7 +41,8 @@ public class CityHelpServiceImpl implements CityHelpService {
     public PageInfo<CityHelp> getCityHelpList(Page record) {
         CityHelp help = DataUtils.toJavaObject(record.getCondition(),CityHelp.class);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
-        return new PageInfo<>(helpMapper.selectCityHelpList(help));
+        List<CityHelp> cityHelps = helpMapper.selectCityHelpList(help);
+        return new PageInfo<>(cityHelps);
     }
 
     @Override

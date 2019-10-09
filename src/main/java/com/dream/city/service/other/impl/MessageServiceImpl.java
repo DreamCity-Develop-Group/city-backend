@@ -68,7 +68,7 @@ public class MessageServiceImpl implements MessageService {
         CityMessage getCityMessageListReq = this.getMessage(messageReq);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         List<CityMessage> messageList = messageMapper.getCityMessageList(getCityMessageListReq);
-        List<MessageResp> messageListResp = null;
+        List<MessageResp> messageListResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(messageList)){
             messageListResp = new ArrayList<>();
             MessageResp messageResp = null;
