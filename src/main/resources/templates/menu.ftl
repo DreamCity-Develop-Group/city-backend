@@ -391,43 +391,49 @@
             </a>
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
+                        <i class="icon-double-angle-right"></i>
+                        交易列表
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         充值列表
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         提现列表
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         提现预约待审核列表
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         提现待审核列表
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         转账列表
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         转账待审核列表（外部）
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index">
+                    <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         购买MT列表
                     </a>

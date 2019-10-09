@@ -1,11 +1,14 @@
 package com.dream.city.service.trade.impl;
 
 
+import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.PlayerTrade;
 import com.dream.city.base.model.mapper.PlayerTradeMapper;
 import com.dream.city.base.model.req.PlayerTradeReq;
 import com.dream.city.base.model.resp.PlayerTradeResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.service.trade.PlayerTradeService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,8 +56,10 @@ public class PlayerTradeServiceImpl implements PlayerTradeService {
     }
 
     @Override
-    public List<PlayerTradeResp> getPlayerTradeList(PlayerTradeReq record) {
-        return tradeMapper.getPlayerTradeList(record);
+    public PageInfo<PlayerTradeResp> getPlayerTradeList(Page page) {
+        PlayerTradeReq record = DataUtils.toJavaObject(page.getCondition(),PlayerTradeReq.class);
+        List<PlayerTradeResp> tradeList = tradeMapper.getPlayerTradeList(record);
+        return new PageInfo<>(tradeList);
     }
 
 
