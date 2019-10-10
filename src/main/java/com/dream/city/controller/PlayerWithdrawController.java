@@ -2,9 +2,12 @@ package com.dream.city.controller;
 
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
-import com.dream.city.base.model.enu.*;
+import com.dream.city.base.model.enu.AmountDynType;
+import com.dream.city.base.model.enu.TradeStatus;
+import com.dream.city.base.model.enu.TradeType;
+import com.dream.city.base.model.enu.VerifyStatus;
 import com.dream.city.base.model.req.PlayerTradeReq;
-import com.dream.city.service.trade.TradeDetailService;
+import com.dream.city.service.trade.PlayerTradeService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,19 +21,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author
- * 玩家交易明细
+ * 玩家交易记录
  */
 @RestController
-@RequestMapping("/trade/detail")
-public class TradeDetailController {
+@RequestMapping("/trade/withdraw")
+public class PlayerWithdrawController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final String modelName = "玩家交易明细";
-    private final String actionPath = "trade/detail";
+    private final String modelName = "玩家提现记录";
+    private final String actionPath = "trade/withdraw";
 
     @Autowired
-    private TradeDetailService detailService;
+    private PlayerTradeService tradeService;
 
 
 
@@ -40,17 +43,16 @@ public class TradeDetailController {
         logger.info("查询"+ modelName +"：{}",id);
         Object result = null;
         try {
-            result = detailService.getTradeDetailById(id);
+            result = tradeService.getPlayerTradeById(id);
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
         }
         model.addAttribute("tradeStatuss", TradeStatus.values());
-        model.addAttribute("dynTypes", AmountDynType.values());
         model.addAttribute("tradeTypes", TradeType.values());
-        model.addAttribute("detailTypes", TradeDetailType.values());
+        model.addAttribute("dynTypes", AmountDynType.values());
         model.addAttribute("verifyStatuss", VerifyStatus.values());
-        model.addAttribute("title","详情");
         model.addAttribute("table", modelName + "详情");
+        model.addAttribute("title","详情");
         model.addAttribute("edit",Boolean.FALSE);
         model.addAttribute("data",result);
         return new ModelAndView(actionPath + "/edit");
@@ -61,25 +63,26 @@ public class TradeDetailController {
 
     @RequestMapping("/index")
     public ModelAndView index(PlayerTradeReq record,Model model){
+        record.setTradeType(TradeType.WITHDRAW.getCode());
         model.addAttribute("data",record);
         model.addAttribute("tradeStatuss", TradeStatus.values());
-        model.addAttribute("dynTypes", AmountDynType.values());
         model.addAttribute("tradeTypes", TradeType.values());
-        model.addAttribute("detailTypes", TradeDetailType.values());
+        model.addAttribute("dynTypes", AmountDynType.values());
         model.addAttribute("verifyStatuss", VerifyStatus.values());
         model.addAttribute("title",modelName);
-        model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
+        model.addAttribute("table", modelName + "列表");
         return new ModelAndView(actionPath + "/index");
     }
     @RequestMapping("/getList")
     public Result getList(Page pageReq, PlayerTradeReq record){
+        record.setTradeType(TradeType.WITHDRAW.getCode());
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo result = null;
         try{
             pageReq.setCondition(record);
-            result = detailService.getTradeDetailList(pageReq);
+            result = tradeService.getPlayerTradeList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
             logger.error("查询"+modelName+"列表异常",e);

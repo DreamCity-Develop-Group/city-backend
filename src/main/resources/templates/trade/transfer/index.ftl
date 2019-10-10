@@ -90,16 +90,13 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											交易人：<input id="playerName" name="playerName" type="text" value="${data.playerName}"/>
+											转账人：<input id="playerName" name="playerName" type="text" value="${data.playerName}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											交易类型：<input id="tradeDetailType" name="tradeDetailType" type="text" value="${data.tradeDetailType}"/>
+											交易描述：<input id="tradeDesc" name="tradeDesc" type="text" value="${data.tradeDesc}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											交易描述：<input id="detailDesc" name="detailDesc" type="text" value="${data.detailDesc}"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">查询开始时间：</label>
+											<label class="col-sm-3 control-label">开始时间：</label>
 											<div class="col-sm-8">
 												<input id="createTimeStart" name="createTimeStart"
 													   class="laydate-icon form-control"
@@ -107,7 +104,7 @@
 											</div>
 										</div>
 										<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">查询结束时间：</label>
+											<label class="col-sm-3 control-label">结束时间：</label>
 											<div class="col-sm-8">
 												<input id="createTimeEnd" name="createTimeEnd"
 													   class="laydate-icon form-control"
@@ -327,49 +324,28 @@
                         };
                     },
                     //数据列
+					//数据列
 					columns: [{
 						title: "ID",
-						field: "detailId",
+						field: "tradeId",
 						sortable: true
 					},{
-						title: "交易人",
+						title: "转账人",
 						field: "playerName"
 					},{
-						title: "审核人",
-						field: "verifyUserName"
-					},{
-						title: "订单",
-						field: "orderName"
-					},{
-						title: "订单号",
-						field: "orderNum"
-					},{
-						title: "交易金额",
+						title: "转账金额",
 						field: "tradeAmount"
 					},{
-						title: "个人所得税",
-						field: "personalTax"
+						title: "转账所得税",
+						field: "transferTax"
 					},{
-						title: "企业所得税",
-						field: "enterpriseTax"
-					},{
-						title: "交易类型",
-						field: "tradeDetailType",
-						formatter: function (value, row, index) {
-							<#list detailTypes as item>
-							if (value === '${item.getCode()}'){
-								return '${item.getDesc()}';
-							}
-							</#list>
-						}
-					},{
-						title: "交易状态",
+						title: "转账状态",
 						field: "tradeStatus",
 						formatter: function (value, row, index) {
 							<#list tradeStatuss as item>
-								if (value === '${item.getCode()}'){
-									return '${item.getDesc()}';
-								}
+							if (value === '${item.getCode()}'){
+								return '${item.getDesc()}';
+							}
 							</#list>
 						}
 					},{
@@ -378,36 +354,36 @@
 						formatter: function (value, row, index) {
 							var operateHtml = '<span class="label label-info">不需审核</span>';
 							<#list verifyStatuss as item>
-								if (value === '${item.getCode()}'){
-									if (value === 'WAIT') {
-										operateHtml = '<span class="label label-danger">${item.getDesc()}</span>';
-									}else {
-										operateHtml = '<span class="label label-info">${item.getDesc()}</span>';
-									}
+							if (value !==  null && value !== 'null' && value !== '' && value === '${item.getCode()}'){
+								if (value === 'WAIT'){
+									operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.tradeId+'\')"><span class="label label-danger">${item.getDesc()}</span></a>';
+								}else {
+									operateHtml = '<span class="label label-info">${item.getDesc()}</span>';
 								}
+							}
 							</#list>
 							return operateHtml;
 						}
 					},{
-						title: "交易描述",
-						field: "detailDesc"
+						title: "转账描述",
+						field: "tradeDesc"
 					},{
-						title: "交易时间",
-						field: "detailTime"
+						title: "转账时间",
+						field: "createTime"
 					},{
-						title: "审核时间",
-						field: "verifyTime"
-					},{
-                        title: "操作",
-                        field: "empty",
-                        formatter: function (value, row, index) {
+						title: "操作",
+						field: "empty",
+						formatter: function (value, row, index) {
 							var operateHtml = '';
-                            //operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.tradeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
-                            return operateHtml;
-                        }
-                    }]
+							//operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+							//operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+							if (row.verifyStatus === 'WAIT') {
+								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.tradeId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
+							}
+							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.tradeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+							return operateHtml;
+						}
+					}]
                 });
             });
 

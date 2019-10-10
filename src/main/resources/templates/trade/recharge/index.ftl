@@ -90,16 +90,13 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											交易人：<input id="playerName" name="playerName" type="text" value="${data.playerName}"/>
+											充值人：<input id="playerName" name="playerName" type="text" value="${data.playerName}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											交易类型：<input id="tradeDetailType" name="tradeDetailType" type="text" value="${data.tradeDetailType}"/>
+											交易描述：<input id="tradeDesc" name="tradeDesc" type="text" value="${data.tradeDesc}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											交易描述：<input id="detailDesc" name="detailDesc" type="text" value="${data.detailDesc}"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">查询开始时间：</label>
+											<label class="col-sm-3 control-label">开始时间：</label>
 											<div class="col-sm-8">
 												<input id="createTimeStart" name="createTimeStart"
 													   class="laydate-icon form-control"
@@ -107,7 +104,7 @@
 											</div>
 										</div>
 										<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">查询结束时间：</label>
+											<label class="col-sm-3 control-label">结束时间：</label>
 											<div class="col-sm-8">
 												<input id="createTimeEnd" name="createTimeEnd"
 													   class="laydate-icon form-control"
@@ -329,34 +326,19 @@
                     //数据列
 					columns: [{
 						title: "ID",
-						field: "detailId",
+						field: "tradeId",
 						sortable: true
 					},{
-						title: "交易人",
+						title: "充值人",
 						field: "playerName"
 					},{
-						title: "审核人",
-						field: "verifyUserName"
-					},{
-						title: "订单",
-						field: "orderName"
-					},{
-						title: "订单号",
-						field: "orderNum"
-					},{
-						title: "交易金额",
+						title: "充值金额",
 						field: "tradeAmount"
 					},{
-						title: "个人所得税",
-						field: "personalTax"
-					},{
-						title: "企业所得税",
-						field: "enterpriseTax"
-					},{
 						title: "交易类型",
-						field: "tradeDetailType",
+						field: "tradeType",
 						formatter: function (value, row, index) {
-							<#list detailTypes as item>
+							<#list tradeTypes as item>
 							if (value === '${item.getCode()}'){
 								return '${item.getDesc()}';
 							}
@@ -373,40 +355,24 @@
 							</#list>
 						}
 					},{
-						title: "审核状态",
-						field: "verifyStatus",
+						title: "入账还是出账",
+						field: "inOutStatus",
 						formatter: function (value, row, index) {
-							var operateHtml = '<span class="label label-info">不需审核</span>';
-							<#list verifyStatuss as item>
-								if (value === '${item.getCode()}'){
-									if (value === 'WAIT') {
-										operateHtml = '<span class="label label-danger">${item.getDesc()}</span>';
-									}else {
-										operateHtml = '<span class="label label-info">${item.getDesc()}</span>';
-									}
-								}
+							<#list dynTypes as item>
+							if (value === '${item.getCode()}'){
+								return '${item.getDesc()}';
+							}
 							</#list>
-							return operateHtml;
 						}
 					},{
 						title: "交易描述",
-						field: "detailDesc"
+						field: "tradeDesc"
 					},{
 						title: "交易时间",
-						field: "detailTime"
-					},{
-						title: "审核时间",
-						field: "verifyTime"
+						field: "createTime"
 					},{
                         title: "操作",
-                        field: "empty",
-                        formatter: function (value, row, index) {
-							var operateHtml = '';
-                            //operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.tradeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
-                            return operateHtml;
-                        }
+                        field: "empty"
                     }]
                 });
             });
@@ -427,8 +393,7 @@
                     "pages":params.pages,
                     "count":params.count,
 					"playerName":$("#playerName").val(),
-					"tradeDesc":$("#tradeDesc").val(),
-					"tradeType":$("#tradeType").val()
+					"tradeDesc":$("#tradeDesc").val()
                 }
                 return params;
             }
@@ -436,7 +401,6 @@
 				var params={
 					"playerName":$("#playerName").val(),
 					"tradeDesc":$("#tradeDesc").val(),
-					"tradeType":$("#tradeType").val(),
 					"createTimeStart":$("#createTimeStart").val(),
 					"createTimeEnd":$("#createTimeEnd").val()
 				}
