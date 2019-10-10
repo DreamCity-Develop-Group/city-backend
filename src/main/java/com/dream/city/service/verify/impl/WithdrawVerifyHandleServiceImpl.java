@@ -1,5 +1,6 @@
 package com.dream.city.service.verify.impl;
 
+import com.dream.city.base.model.enu.TradeType;
 import com.dream.city.base.model.resp.PlayerTradeResp;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.Codes;
@@ -8,7 +9,6 @@ import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.entity.PlayerEarning;
 import com.dream.city.base.model.entity.PlayerTrade;
 import com.dream.city.base.model.enu.AmountDynType;
-import com.dream.city.base.model.enu.TradeAmountType;
 import com.dream.city.base.model.enu.VerifyStatus;
 import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.req.VerifyReq;
@@ -81,7 +81,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         //生成审核记录
         verifyCommonService.createVerify (record);
 
-        if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.pass.name())){
+        if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.PASS.name())){
             //审核通过
             //玩家账户扣除金额 扣冻结Usdt金额
             int updatePlayerAccount = verifyCommonService.playerSubtractAmount(trade.getPlayerId(), trade.getTradeAmount(),"usdt");
@@ -92,8 +92,8 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
                 PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
                 createPlayerTradeReq.setAccId(playerAccount.getAccId());
                 createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-                createPlayerTradeReq.setTradeType(TradeAmountType.WITHDRAW.name());
-                createPlayerTradeReq.setTradeType(AmountDynType.out.name());
+                createPlayerTradeReq.setTradeType(TradeType.WITHDRAW.name());
+                createPlayerTradeReq.setTradeType(AmountDynType.OUT.name());
                 createPlayerTrade = verifyCommonService.createTradeRecord(createPlayerTradeReq,trade.getTradeAmount(),"提现扣除Usdt金额");
             }
 
@@ -135,12 +135,12 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
             }
             //平台账户增加金额流水
             if (platformAccount != null){
-                Result<PlayerTrade> createPlatformATradeResult  = this.createPlatformTrade(platformAccount,trade.getTradeAmount(),TradeAmountType.USDT_INVEST_TAX.name(),msg) ;
+                Result<PlayerTrade> createPlatformATradeResult  = this.createPlatformTrade(platformAccount,trade.getTradeAmount(),TradeType.INVEST.name(),msg) ;
                 success = createPlatformATradeResult.getSuccess();
                 msg = createPlatformATradeResult.getMsg();
             }
 
-        }else if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.notpass.name())){
+        }else if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.NOTPASS.name())){
             //审核不通过
             success = Boolean.TRUE;
             msg = "审核成功！";
@@ -170,7 +170,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         createPlayerTradeReq.setAccPlayerId(platformAccount.getAccPlayerId());
         //createPlayerTradeReq.setTradeAmountType(TradeAmountType.USDT_INVEST_TAX.name());
         createPlayerTradeReq.setTradeType(tradeType);
-        createPlayerTradeReq.setTradeType(AmountDynType.in.name());
+        createPlayerTradeReq.setTradeType(AmountDynType.IN.name());
         Result<PlayerTrade> createPlatformATradeResult = null;
         PlayerTrade createPlayerTrade = null;
         try {
@@ -240,8 +240,8 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
         createPlayerTradeReq.setAccId(playerAccount.getAccId());
         createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        createPlayerTradeReq.setTradeType(TradeAmountType.USDT_INVEST_TAX.name());
-        createPlayerTradeReq.setTradeType(AmountDynType.out.name());
+        createPlayerTradeReq.setTradeType(TradeType.INVEST.name());
+        createPlayerTradeReq.setTradeType(AmountDynType.OUT.name());
         PlayerTrade createPlayerTrade = null;
         try {
             //新增扣除税金流水
@@ -297,8 +297,8 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
         createPlayerTradeReq.setAccId(playerAccount.getAccId());
         createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        createPlayerTradeReq.setTradeType(TradeAmountType.WITHDRAW.name());
-        createPlayerTradeReq.setTradeType(AmountDynType.out.name());
+        createPlayerTradeReq.setTradeType(TradeType.WITHDRAW.name());
+        createPlayerTradeReq.setTradeType(AmountDynType.OUT.name());
         try {
             //新增流水
             createPlayerTradeResult = this.createPlayerTrade(createPlayerTradeReq, earning.getEarnMax(), "审核扣除冻结usdt");

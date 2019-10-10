@@ -4,14 +4,13 @@ import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.InvestRule;
 import com.dream.city.base.model.entity.RuleItem;
-import com.dream.city.base.model.enu.TradeAmountType;
+import com.dream.city.base.model.enu.TradeType;
 import com.dream.city.base.model.req.RuleReq;
 import com.dream.city.base.model.resp.RuleResp;
 import com.dream.city.base.utils.DateUtils;
 import com.dream.city.service.setting.InvestRuleService;
 import com.dream.city.service.setting.RuleItemService;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -58,7 +56,7 @@ public class InvestRuleController {
         model.addAttribute("title","添加");
         model.addAttribute("table","添加" + modelName);
         model.addAttribute("actionPath",actionPath);
-        model.addAttribute("itemTypes", TradeAmountType.values());
+        model.addAttribute("itemTypes", TradeType.values());
         return new ModelAndView(actionPath + "/add");
     }
     @RequestMapping("/insert")
