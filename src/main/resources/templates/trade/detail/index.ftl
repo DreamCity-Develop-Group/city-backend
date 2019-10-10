@@ -93,19 +93,13 @@
 											交易人：<input id="playerName" name="playerName" type="text" value="${data.playerName}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											交易类型：
-											<select id="tradeType" name="tradeType" class="">
-												<option value=""></option>
-												<#list tradeTypes as item>
-													<option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeType}'>selected="selected"</#if>>${item.getDesc()}</option>
-												</#list>
-											</select>
+											交易类型：<input id="tradeDetailType" name="tradeDetailType" type="text" value="${data.tradeDetailType}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											交易描述：<input id="tradeDesc" name="tradeDesc" type="text" value="${data.tradeDesc}"/>
+											交易描述：<input id="detailDesc" name="detailDesc" type="text" value="${data.detailDesc}"/>
 										</div>
 										<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">开始时间：</label>
+											<label class="col-sm-3 control-label">查询开始时间：</label>
 											<div class="col-sm-8">
 												<input id="createTimeStart" name="createTimeStart"
 													   class="laydate-icon form-control"
@@ -113,7 +107,7 @@
 											</div>
 										</div>
 										<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">结束时间：</label>
+											<label class="col-sm-3 control-label">查询结束时间：</label>
 											<div class="col-sm-8">
 												<input id="createTimeEnd" name="createTimeEnd"
 													   class="laydate-icon form-control"
@@ -335,11 +329,20 @@
                     //数据列
 					columns: [{
 						title: "ID",
-						field: "tradeId",
+						field: "detailId",
 						sortable: true
 					},{
 						title: "交易人",
 						field: "playerName"
+					},{
+						title: "审核人",
+						field: "verifyUserName"
+					},{
+						title: "订单",
+						field: "orderName"
+					},{
+						title: "订单号",
+						field: "orderNum"
 					},{
 						title: "交易金额",
 						field: "tradeAmount"
@@ -351,9 +354,9 @@
 						field: "enterpriseTax"
 					},{
 						title: "交易类型",
-						field: "tradeType",
+						field: "tradeDetailType",
 						formatter: function (value, row, index) {
-							<#list tradeTypes as item>
+							<#list detailTypes as item>
 							if (value === '${item.getCode()}'){
 								return '${item.getDesc()}';
 							}
@@ -373,34 +376,21 @@
 						title: "审核状态",
 						field: "verifyStatus",
 						formatter: function (value, row, index) {
-							var operateHtml = '';
 							<#list verifyStatuss as item>
 								if (value === '${item.getCode()}'){
-									if (value !== null && value === 'WAIT'){
-										operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.tradeId+'\')"><span class="label label-danger">${item.getDesc()}</span></a>';
-									}else {
-										operateHtml = '<span class="label label-info">${item.getDesc()}</span>';
-									}
+									return '${item.getDesc()}';
 								}
-							</#list>
-							return operateHtml;
-						}
-					},{
-						title: "入账还是出账",
-						field: "inOutStatus",
-						formatter: function (value, row, index) {
-							<#list dynTypes as item>
-							if (value === '${item.getCode()}'){
-								return '${item.getDesc()}';
-							}
 							</#list>
 						}
 					},{
 						title: "交易描述",
-						field: "tradeDesc"
+						field: "detailDesc"
 					},{
 						title: "交易时间",
-						field: "createTime"
+						field: "detailTime"
+					},{
+						title: "审核时间",
+						field: "verifyTime"
 					},{
                         title: "操作",
                         field: "empty",
@@ -408,9 +398,6 @@
 							var operateHtml = '';
                             //operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
                             //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-							if (row.verifyStatus === 'WAIT') {
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.tradeId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
-							}
                             operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.tradeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }

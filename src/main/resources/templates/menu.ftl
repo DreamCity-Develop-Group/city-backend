@@ -397,6 +397,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="${ctx}/trade/detail/index">
+                        <i class="icon-double-angle-right"></i>
+                        交易明细列表
+                    </a>
+                </li>
+                <li>
                     <a href="${ctx}/trade/index">
                         <i class="icon-double-angle-right"></i>
                         充值列表

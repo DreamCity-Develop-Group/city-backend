@@ -34,6 +34,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">审核人：</label>
+                            <div class="col-sm-8">
+                                <input id="verifyUserName" name="verifyUserName" class="form-control" type="text" value="${data.verifyUserName}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单：</label>
+                            <div class="col-sm-8">
+                                <input id="orderName" name="orderName" class="form-control" type="text" value="${data.orderName}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单号：</label>
+                            <div class="col-sm-8">
+                                <input id="orderNum" name="orderNum" class="form-control" type="text" value="${data.orderNum}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">交易金额：</label>
                             <div class="col-sm-8">
                                 <input id="tradeAmount" name="tradeAmount" class="form-control" type="text" value="${data.tradeAmount}">
@@ -54,10 +72,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">交易类型：</label>
                             <div class="col-sm-8">
-                                <select id="tradeType" name="tradeType" class="">
+                                <select id="tradeDetailType" name="tradeDetailType" class="">
                                     <option value=""></option>
-                                    <#list tradeTypes as item>
-                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeType}'>selected="selected"</#if>>${item.getDesc()}</option>
+                                    <#list detailTypes as item>
+                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeDetailType}'>selected="selected"</#if>>${item.getDesc()}</option>
                                     </#list>
                                 </select>
                             </div>
@@ -68,6 +86,17 @@
                                 <select id="tradeStatus" name="tradeStatus" class="">
                                     <option value=""></option>
                                     <#list tradeStatuss as item>
+                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeStatus}'>selected="selected"</#if>>${item.getDesc()}</option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">审核状态：</label>
+                            <div class="col-sm-8">
+                                <select id="verifyStatus" name="verifyStatus" class="">
+                                    <option value=""></option>
+                                    <#list verifyStatuss as item>
                                         <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeStatus}'>selected="selected"</#if>>${item.getDesc()}</option>
                                     </#list>
                                 </select>
@@ -85,28 +114,25 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">审核状态：</label>
-                            <div class="col-sm-8">
-                                <select id="verifyStatus" name="verifyStatus" class="">
-                                    <option value=""></option>
-                                    <#list verifyStatuss as item>
-                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.verifyStatus}'>selected="selected"</#if>>${item.getDesc()}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">交易描述：</label>
                             <div class="col-sm-8">
-                                <input id="tradeDesc" name="tradeDesc" class="form-control" value="${data.tradeDesc}">
+                                <input id="detailDesc" name="detailDesc" class="form-control" value="${data.detailDesc}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">交易时间：</label>
                             <div class="col-sm-8">
-                                <input id="createTime" name="createTime" readonly="readonly"
+                                <input id="detailTime" name="detailTime" readonly="readonly"
                                        class="laydate-icon form-control"
                                        value="${data.createTime}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">审核时间：</label>
+                            <div class="col-sm-8">
+                                <input id="verifyTime" name="verifyTime" readonly="readonly"
+                                       class="laydate-icon form-control"
+                                       value="${data.verifyTime}">
                             </div>
                         </div>
                         <div class="form-group">
