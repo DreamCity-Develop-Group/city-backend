@@ -98,7 +98,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
     public PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc) {
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeType(playerAccount.getTradeType());
-        tradeReq.setTradeAmountType(playerAccount.getTradeAmountType());
+        tradeReq.setTradeType(playerAccount.getTradeType());
         tradeReq.setTradeAccId(playerAccount.getAccId());
         tradeReq.setTradePlayerId(playerAccount.getAccPlayerId());
         tradeReq.setTradeDesc(desc);

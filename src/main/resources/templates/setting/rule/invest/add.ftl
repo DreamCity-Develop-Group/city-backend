@@ -85,13 +85,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">前置税率：</label>
+                                <label class="col-sm-3 control-label">前比率：</label>
                                 <div class="col-sm-8">
                                     <input id="ruleRatePre" name="ruleRatePre" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">后置税率：</label>
+                                <label class="col-sm-3 control-label">后比率：</label>
                                 <div class="col-sm-8">
                                     <input id="ruleRate" name="ruleRate" class="form-control" type="text" value="">
                                 </div>

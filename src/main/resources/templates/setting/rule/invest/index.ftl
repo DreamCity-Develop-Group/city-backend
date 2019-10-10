@@ -339,10 +339,10 @@
 						title: "后置条件",
 						field: "ruleOpt"
 					},{
-						title: "前置税率",
+						title: "前比率",
 						field: "ruleRatePre"
 					},{
-						title: "后置税率",
+						title: "后比率",
 						field: "ruleRate"
 					},{
 						title: "规则优先级别",

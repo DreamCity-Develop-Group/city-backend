@@ -162,14 +162,14 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
      * @param msg
      * @return
      */
-    private Result<PlayerTrade> createPlatformTrade(PlayerAccount platformAccount,BigDecimal amount,String tradeAmountType,String msg) throws OperationException {
+    private Result<PlayerTrade> createPlatformTrade(PlayerAccount platformAccount,BigDecimal amount,String tradeType,String msg) throws OperationException {
         boolean success = Boolean.TRUE;
         //平台mt账户增加税金
         PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
         createPlayerTradeReq.setAccId(platformAccount.getAccId());
         createPlayerTradeReq.setAccPlayerId(platformAccount.getAccPlayerId());
         //createPlayerTradeReq.setTradeAmountType(TradeAmountType.USDT_INVEST_TAX.name());
-        createPlayerTradeReq.setTradeAmountType(tradeAmountType);
+        createPlayerTradeReq.setTradeType(tradeType);
         createPlayerTradeReq.setTradeType(AmountDynType.in.name());
         Result<PlayerTrade> createPlatformATradeResult = null;
         PlayerTrade createPlayerTrade = null;
@@ -240,7 +240,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
         createPlayerTradeReq.setAccId(playerAccount.getAccId());
         createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        createPlayerTradeReq.setTradeAmountType(TradeAmountType.USDT_INVEST_TAX.name());
+        createPlayerTradeReq.setTradeType(TradeAmountType.USDT_INVEST_TAX.name());
         createPlayerTradeReq.setTradeType(AmountDynType.out.name());
         PlayerTrade createPlayerTrade = null;
         try {
@@ -415,7 +415,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
     private Result<PlayerTrade> createPlayerTrade(PlayerAccountReq record,BigDecimal tradeAmount,String desc) throws Exception{
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeType(record.getTradeType());
-        tradeReq.setTradeAmountType(record.getTradeType());
+        tradeReq.setTradeType(record.getTradeType());
         tradeReq.setTradeDesc(desc);
         tradeReq.setTradeAccId(record.getAccId());
         tradeReq.setTradePlayerId(record.getAccPlayerId());
