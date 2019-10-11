@@ -332,7 +332,7 @@
 						field: "jobGroupName"
 					},{
 						title: "任务执行类",
-						field: "jobClass"
+						field: "descr"
 					},{
 						title: "状态",
 						field: "jobStatus"/*,
@@ -344,10 +344,10 @@
 					},{
 						title: "执行时间",
 						field: "jobTime"
-					},{
+					},/*{
 						title: "描述",
 						field: "descr"
-					},{
+					},*/{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
@@ -360,7 +360,7 @@
 							}
 							if (row.jobStatus === 'PAUSED'){
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'resume\')"><i class="fa fa-edit"></i>&nbsp;恢复</button> &nbsp;';
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.jobName+'\',\''+row.jobGroupName+'\',\''+row.jobTime+'\',\''+row.jobStatus+'\',\''+row.descr+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
 							}
 							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.jobName+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
@@ -421,14 +421,15 @@
 					}
 				});
             }
-            function edit(id){
+            function edit(name,group,jobTime,jobStatus,descr){
                 layer.open({
 					type: 2,
                     title: '编辑${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/edit/'  + id,
+                    content: '${ctx}/${actionPath}/edit?jobName='+name+'&jobGroupName='+group+'&jobStatus='+jobStatus
+							+"&jobTime="+jobTime+"&descr="+descr,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }

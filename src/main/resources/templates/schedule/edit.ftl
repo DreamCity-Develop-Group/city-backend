@@ -31,14 +31,14 @@
                             <label class="col-sm-3 control-label">任务名：</label>
                             <div class="col-sm-8">
                                 <input id="jobName" name="jobName" class="form-control" type="text"
-                                       value="${data.jobName}">
+                                       value="${data.jobName}" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">任务组：</label>
                             <div class="col-sm-8">
                                 <input id="jobGroupName" name="jobGroupName" class="form-control" type="text"
-                                       value="${data.jobGroupName}">
+                                       value="${data.jobGroupName}" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,13 +48,13 @@
                                        value="${data.jobStatus}" readonly="readonly">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <label class="col-sm-3 control-label">任务执行类：</label>
                             <div class="col-sm-8">
                                 <input id="jobClass" name="jobClass" class="form-control" type="text"
                                        value="${data.jobClass}">
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">执行时间：</label>
                             <div class="col-sm-8">
@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <input id="descr" name="descr" class="form-control" value="${data.descr}">
+                                <input id="descr" name="descr" class="form-control" value="${data.descr}" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
@@ -105,10 +105,6 @@
                         required: true,
                         minlength: 1,
                         maxlength: 60
-                    },jobClass: {
-                        required: true,
-                        minlength: 1,
-                        maxlength: 600
                     },jobStatus: {
                         required: true,
                         minlength: 1,

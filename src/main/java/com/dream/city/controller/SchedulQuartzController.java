@@ -138,10 +138,9 @@ public class SchedulQuartzController {
 
 
 
-    @RequestMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") Integer id, Model model){
-        Object result =  null;
-        model.addAttribute("data",result);
+    @RequestMapping("/edit")
+    public ModelAndView edit(ScheduleReq record, Model model){
+        model.addAttribute("data",record);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
         model.addAttribute("edit",Boolean.TRUE);
