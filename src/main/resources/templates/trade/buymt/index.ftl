@@ -273,7 +273,7 @@
             $(document).ready(function () {
 
 				//外部js调用
-				laydate({
+				/*laydate({
 					elem: '#createTimeStart', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
 					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
 					format: 'YYYY-MM-DD hh:mm:ss',
@@ -284,7 +284,7 @@
 					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
 					format: 'YYYY-MM-DD hh:mm:ss',
 					istime: true
-				});
+				});*/
 
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({

@@ -433,7 +433,7 @@
                     </a>
                 </li>-->
                 <li>
-                    <a href="${ctx}/trade/index">
+                    <a href="${ctx}/trade/buymt/index">
                         <i class="icon-double-angle-right"></i>
                         购买MT列表
                     </a>

@@ -3,7 +3,6 @@ package com.dream.city.controller;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.SalesOrder;
-import com.dream.city.base.model.req.PlayerTradeReq;
 import com.dream.city.service.trade.SalesOrderService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -55,7 +54,7 @@ public class SalesOrderController {
 
 
     @RequestMapping("/index")
-    public ModelAndView index(PlayerTradeReq record,Model model){
+    public ModelAndView index(SalesOrder record,Model model){
         model.addAttribute("data",record);
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
