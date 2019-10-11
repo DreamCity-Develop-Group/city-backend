@@ -65,6 +65,42 @@ spring:
       datetime_format: yyyy-MM-dd HH:mm:ss
     order: 1
 
+
+    #  quartz:
+    #    #相关属性配置
+    #    properties:
+    #      org:
+    #        quartz:
+    #          scheduler:
+    #            instanceName: clusteredScheduler
+    #            instanceId: AUTO
+    #          jobStore:
+    #            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+    #            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+    #            tablePrefix: QRTZ_
+    #            isClustered: true
+    #            clusterCheckinInterval: 10000
+    #            useProperties: false
+    #          threadPool:
+    #            class: org.quartz.simpl.SimpleThreadPool
+    #            threadCount: 10
+    #            threadPriority: 5
+    #            threadsInheritContextClassLoaderOfInitializingThread: true
+    #    #数据库方式
+    #    job-store-type: jdbc
+    #初始化表结构
+    #jdbc:
+    #initialize-schema: never
+
+
+
+
+worker:
+  channel:
+    topics: topic1,topic2,topic3
+  tasks: "{listenerAdapterLogin: 'listenerAdapterLogin', listenerAdapterPlatTrans: 'listenerAdapterPlatTrans', listenerAdapterServerPush: 'listenerAdapterServerPush'}"
+
+
 #平台账户id，多个，都号隔开来自player_account表
 dreamcity:
   platform:

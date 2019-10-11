@@ -451,6 +451,24 @@
             <a href="#" class="dropdown-toggle">
                 <i class="icon-file-alt"></i>
                 <span class="menu-text">
+					任务管理
+				</span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="${ctx}/schedule/index">
+                        <i class="icon-double-angle-right"></i>
+                        任务列表
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-file-alt"></i>
+                <span class="menu-text">
 					设置管理
 				</span>
                 <b class="arrow icon-angle-down"></b>

@@ -1,13 +1,14 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /
+
 spring:
   application:
     name: city-backend
   profiles:
     active: dev
 
-server:
-  port: 8000
-  servlet:
-    context-path: /
 
 mybatis:
   type-aliases-package: com.dream.city.base.model.mapper
@@ -21,3 +22,18 @@ pagehelper:
   support-methods-arguments: true
   params: countSql
   helper-dialect: mysql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
