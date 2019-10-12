@@ -23,6 +23,7 @@ public interface InvestVerifyHandleService {
      * @param verifyReq
      * @return
      */
+    @Deprecated
     Result investOrderVerify(VerifyReq verifyReq);
 
 }

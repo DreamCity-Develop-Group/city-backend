@@ -1,5 +1,7 @@
 package com.dream.city.service.verify.impl;
 
+import com.dream.city.base.model.entity.TradeDetail;
+import com.dream.city.base.model.enu.TradeDetailType;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.entity.PlayerTrade;
@@ -8,6 +10,7 @@ import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.service.trade.EarningService;
 import com.dream.city.service.trade.PlayerTradeService;
+import com.dream.city.service.trade.TradeDetailService;
 import com.dream.city.service.verify.TradeVerifyService;
 import com.dream.city.service.verify.VerifyCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,9 +31,10 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
     PlayerTradeService tradeService;
     @Autowired
     EarningService earningService;
-
     @Autowired
     TradeVerifyService verifyService;
+    @Autowired
+    TradeDetailService detailService;
 
     @Override
     @Transactional
@@ -88,7 +93,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
 
 
     /**
-     * 生成交易记录
+     * 生成交易
      * @param playerAccount
      * @param amount
      * @param desc
@@ -97,14 +102,18 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
     @Override
     public PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc) {
         PlayerTrade tradeReq = new PlayerTrade();
-        tradeReq.setTradeType(playerAccount.getTradeType());
+        tradeReq.setInOutStatus(playerAccount.getInOut());
+        tradeReq.setTradeStatus(playerAccount.getTradeStatus());
         tradeReq.setTradeType(playerAccount.getTradeType());
         tradeReq.setTradeAccId(playerAccount.getAccId());
         tradeReq.setTradePlayerId(playerAccount.getAccPlayerId());
         tradeReq.setTradeDesc(desc);
         tradeReq.setTradeAmount(amount);
+        tradeReq.setPersonalTax(playerAccount.getPersonalTax());
+        tradeReq.setEnterpriseTax(playerAccount.getEnterpriseTax());
         return tradeService.insertPlayerTrade(tradeReq);
     }
+
 
     /**
      * 生成审核记录
@@ -120,4 +129,30 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
         verifyReq.setVerifyTradeId(record.getTradeId());
         return verifyService.updateTradeVerify(verifyReq);
     }
+
+
+    /**
+     * 生成交易流水
+     * @param payerId
+     * @param orderId
+     * @param tradeId
+     * @param verifyId
+     * @param amount
+     * @return
+     */
+    @Override
+    public TradeDetail createTradeDetail(String payerId, Integer orderId, Integer tradeId, Integer verifyId,
+                                         BigDecimal amount, String tradeDetailType,String desc){
+        TradeDetail tradeDetail = new TradeDetail();
+        tradeDetail.setTradeId(tradeId);
+        tradeDetail.setVerifyId(verifyId);
+        tradeDetail.setTradeDetailType(tradeDetailType);
+        tradeDetail.setTradeAmount(amount);
+        tradeDetail.setPlayerId(payerId);
+        tradeDetail.setDescr(desc);
+        tradeDetail.setOrderId(orderId);
+        tradeDetail.setVerifyTime(new Date());
+        return detailService.insert(tradeDetail);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.dream.city.service.verify;
 
 import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.entity.PlayerTrade;
+import com.dream.city.base.model.entity.TradeDetail;
 import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.req.VerifyReq;
 
@@ -17,6 +18,7 @@ public interface VerifyCommonService {
     /**
      * 扣除玩家金额
      * @param accPlayerId
+     * @param amountType
      * @return
      */
     int playerSubtractAmount(String accPlayerId,BigDecimal amount,String amountType);
@@ -31,11 +33,20 @@ public interface VerifyCommonService {
 
 
     /**
-     * 生成交易流水
+     * 生成交易
      * @param playerAccount
      * @return
      */
     PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc);
+
+
+    /**
+     * 生成交易流水
+     * @param payerId
+     * @return
+     */
+    TradeDetail createTradeDetail(String payerId, Integer orderId, Integer tradeId, Integer verifyId,
+                                  BigDecimal amount,String tradeDetailType,String desc);
 
 
     /**

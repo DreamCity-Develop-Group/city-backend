@@ -15,7 +15,7 @@ public interface TradeVerifyService {
      * @param record
      * @return
      */
-    int insertTradeVerify(TradeVerify record);
+    TradeVerify insertTradeVerify(TradeVerify record);
 
     /**
      * 审核
