@@ -7,6 +7,7 @@ import com.dream.city.exception.OperationException;
 
 /**
  *  转账审核
+ *  外部转账 流程跟提现审核一样
  */
 public interface TransferVerifyHandleService {
 
@@ -16,6 +17,7 @@ public interface TransferVerifyHandleService {
      * @param record
      * @return
      */
+    @Deprecated
     Result transferVerify(VerifyReq record) throws OperationException;
 
 
