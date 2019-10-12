@@ -12,18 +12,35 @@ public interface WithdrawVerifyHandleService {
 
 
     /**
-     * 提现预约
-     * @param record
-     * @return
-     */
-    Result withdrawSubscribe(VerifyReq record) throws OperationException;
-
-    /**
      * 提现审核
      * @param record
      * @return
      */
     Result withdrawVerify(VerifyReq record) throws OperationException;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 提现预约
+     * @param record
+     * @return
+     */
+    @Deprecated
+    Result withdrawSubscribe(VerifyReq record) throws OperationException;
+
 
 
 }

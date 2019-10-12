@@ -8,6 +8,7 @@ import com.dream.city.base.model.resp.PlayerTradeResp;
 import com.dream.city.service.invest.OrderService;
 import com.dream.city.service.trade.PlayerTradeService;
 import com.dream.city.service.verify.InvestVerifyHandleService;
+import com.dream.city.service.verify.WithdrawVerifyHandleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class VerifyController {
     OrderService orderService;
     @Autowired
     PlayerTradeService tradeService;
+    @Autowired
+    WithdrawVerifyHandleService withdrawVerifyHandleService;
     @Autowired
     private InvestVerifyHandleService verifyHandleService;
 
