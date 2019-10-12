@@ -1,5 +1,10 @@
 package com.dream.city.service.schedule;
 
+import com.dream.city.base.model.Page;
+import com.dream.city.base.model.req.ScheduleReq;
+import com.dream.city.base.model.resp.ScheduleResp;
+import com.github.pagehelper.PageInfo;
+import org.quartz.JobDataMap;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.List;
@@ -32,9 +37,9 @@ public interface SchedulQuartzService {
      * @param jobGroupName 任务组名
      * @param jobTime      时间表达式 （如：0/5 * * * * ? ）
      */
-    void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime) ;
+    void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime,JobDataMap jobDataMap) ;
 
-    void updateJob(String jobName, String jobGroupName, String jobTime);
+    void updateJob(String jobName, String jobGroupName, String jobTime, JobDataMap jobDataMap);
 
     void deleteJob(String jobName, String jobGroupName) ;
 
@@ -73,6 +78,10 @@ public interface SchedulQuartzService {
     List<Map<String,Object>> queryRunJobs();
 
 
+
+    ScheduleResp getJobByJobNameJobGroup(ScheduleReq record);
+
+    PageInfo<ScheduleResp> getJobTriggerCronList(Page page);
 
 
 }

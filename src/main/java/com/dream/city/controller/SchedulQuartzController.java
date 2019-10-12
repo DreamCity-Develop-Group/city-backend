@@ -2,20 +2,19 @@ package com.dream.city.controller;
 
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
-import com.dream.city.model.req.ScheduleReq;
+import com.dream.city.base.model.req.ScheduleReq;
 import com.dream.city.service.schedule.SchedulQuartzService;
+import com.github.pagehelper.PageInfo;
+import org.quartz.JobDataMap;
+import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -37,8 +36,9 @@ public class SchedulQuartzController {
 
 
     @RequestMapping("/index")
-    public ModelAndView index(ScheduleReq record,Model model){
+    public ModelAndView index(ScheduleReq record, Model model){
         model.addAttribute("data",record);
+        model.addAttribute("triggerStates", Trigger.TriggerState.values());
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
@@ -48,11 +48,16 @@ public class SchedulQuartzController {
     public Result getList(Page pageReq, ScheduleReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
-        //PageInfo result = null;
-        List<Map<String,Object>> result = null;
+        PageInfo result = null;
+        //List<Map<String,Object>> result = null;
         try{
             pageReq.setCondition(record);
-            result = quartzService.queryAllJobs();
+            /*if (StringUtils.isBlank(record.getJobStatus())){
+                result = quartzService.queryAllJobs();
+            }else if ("NORMAL".equalsIgnoreCase(record.getJobStatus())){
+                result = quartzService.queryRunJobs();
+            }*/
+            result = quartzService.getJobTriggerCronList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
         }
@@ -60,12 +65,12 @@ public class SchedulQuartzController {
     }
 
 
-    @RequestMapping("/get/{id}")
-    public ModelAndView get(@PathVariable("id") Integer id,Model model){
-        logger.info("查询"+ modelName +"：{}",id);
+    @RequestMapping("/get")
+    public ModelAndView get(ScheduleReq record,Model model){
+        logger.info("查询"+ modelName +"：{}",record);
         Object result = null;
         try {
-            result = null;
+            result = quartzService.getJobByJobNameJobGroup(record);
         }catch (Exception e){
             logger.error("查询"+ modelName +"异常",e);
         }
@@ -90,7 +95,7 @@ public class SchedulQuartzController {
         logger.info("新增"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         try {
-            quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),record.getJobTime());
+            quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),record.getJobTime(),new JobDataMap());
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("新增"+ modelName +"异常",e);
@@ -140,7 +145,14 @@ public class SchedulQuartzController {
 
     @RequestMapping("/edit")
     public ModelAndView edit(ScheduleReq record, Model model){
-        model.addAttribute("data",record);
+        Object result = null;
+        try {
+            result = quartzService.getJobByJobNameJobGroup(record);
+        }catch (Exception e){
+            logger.error("查询"+ modelName +"异常",e);
+        }
+        model.addAttribute("data",result);
+        //model.addAttribute("data",record);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
         model.addAttribute("edit",Boolean.TRUE);
@@ -152,7 +164,9 @@ public class SchedulQuartzController {
         logger.info("修改"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         try {
-            quartzService.updateJob(record.getJobName(),record.getJobGroupName(),record.getJobTime());
+            JobDataMap jobDataMap = new JobDataMap();
+            //jobDataMap.put("DESCRIPTION",record.getDescr());
+            quartzService.updateJob(record.getJobName(),record.getJobGroupName(),record.getJobTime(),jobDataMap);
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("修改"+ modelName +"异常",e);

@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">任务执行类：</label>
+                                <label class="col-sm-3 control-label">执行类：</label>
                                 <div class="col-sm-8">
                                     <input id="jobClass" name="jobClass" class="form-control" type="text"
                                            value="${data.jobClass}">

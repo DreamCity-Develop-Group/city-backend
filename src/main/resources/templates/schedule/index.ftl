@@ -303,7 +303,7 @@
                     //json数据解析
                     responseHandler: function(res) {
                         return {
-                            "rows": res.data,
+                            "rows": res.data.list,
                             "total": res.data.total,
 							"pageNum": res.data.pageNum,
 							"startRow": res.data.startRow,
@@ -331,39 +331,59 @@
 						title: "任务组",
 						field: "jobGroupName"
 					},{
-						title: "任务执行类",
-						field: "descr"
+						title: "执行类",
+						field: "jobClazz"
 					},{
 						title: "状态",
-						field: "jobStatus"/*,
+						field: "jobStatus",
 						formatter: function (value, row, index) {
-							if (value === 1)
-								return '是';
-							return '否';
-						}*/
+							var operateHtml = '无';
+							if (value === 'NORMAL' || value === 'ACQUIRED'){
+								operateHtml = '启动';
+							}else if (value === 'PAUSED'){
+								operateHtml = '暂停';
+							}else if (value === 'COMPLETE'){
+								operateHtml = '完成';
+							}else if (value === 'NONE'){
+								operateHtml = '无';
+							}else if (value === 'ERROR'){
+								operateHtml = '异常';
+							}else if (value === 'BLOCKED'){
+								operateHtml = '阻塞';
+							}
+							return operateHtml;
+						}
 					},{
 						title: "执行时间",
 						field: "jobTime"
-					},/*{
+					},{
+						title: "上次执行时间",
+						field: "prevFireTime"
+					},{
+						title: "下次执行时间",
+						field: "nextFireTime"
+					},{
 						title: "描述",
-						field: "descr"
-					},*/{
+						field: "jobDescr"
+					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
 							var operateHtml = '';
-							if (row.jobStatus !== 'NORMAL' && row.jobStatus !== 'PAUSED'){
+							if (row.jobStatus !== 'NORMAL' && row.jobStatus !== 'PAUSED' && row.jobStatus !== 'ACQUIRED'){
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'run\')"><i class="fa fa-edit"></i>&nbsp;启动</button> &nbsp;';
 							}
-							if (row.jobStatus === 'NORMAL'){
+							if (row.jobStatus === 'NORMAL' || row.jobStatus === 'ACQUIRED'){
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'pause\')"><i class="fa fa-edit"></i>&nbsp;停止</button> &nbsp;';
 							}
 							if (row.jobStatus === 'PAUSED'){
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'resume\')"><i class="fa fa-edit"></i>&nbsp;恢复</button> &nbsp;';
+							}
+							if (row.jobStatus !== 'NORMAL' && row.jobStatus !== 'ACQUIRED'){
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.jobName+'\',\''+row.jobGroupName+'\',\''+row.jobTime+'\',\''+row.jobStatus+'\',\''+row.descr+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
 							}
-							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.jobName+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
                     }]
@@ -450,7 +470,7 @@
                     });
                 });
             }
-			function detail(id) {
+			function detail(name,group) {
 
 				layer.open({
 					type: 2,
@@ -458,7 +478,7 @@
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/${actionPath}/get/'  + id,
+					content: '${ctx}/${actionPath}/get?jobName='+name+'&jobGroupName='+group,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

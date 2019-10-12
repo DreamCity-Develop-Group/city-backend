@@ -48,13 +48,13 @@
                                        value="${data.jobStatus}" readonly="readonly">
                             </div>
                         </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">任务执行类：</label>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">执行类：</label>
                             <div class="col-sm-8">
                                 <input id="jobClass" name="jobClass" class="form-control" type="text"
-                                       value="${data.jobClass}">
+                                       value="${data.jobClazz}" readonly="readonly">
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">执行时间：</label>
                             <div class="col-sm-8">
@@ -62,10 +62,26 @@
                                        value="${data.jobTime}">
                             </div>
                         </div>
+                        <#if !edit>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">上次执行时间：</label>
+                                <div class="col-sm-8">
+                                    <input id="prevFireTime" name="prevFireTime" class="form-control" type="text"
+                                           value="${data.prevFireTime}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">下次执行时间：</label>
+                                <div class="col-sm-8">
+                                    <input id="nextFireTime" name="nextFireTime" class="form-control" type="text"
+                                           value="${data.nextFireTime}">
+                                </div>
+                            </div>
+                        </#if>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <input id="descr" name="descr" class="form-control" value="${data.descr}" readonly="readonly">
+                                <input id="descr" name="descr" class="form-control" value="${data.descr}">
                             </div>
                         </div>
                         <div class="form-group">
