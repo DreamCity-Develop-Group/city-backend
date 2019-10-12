@@ -1,6 +1,7 @@
 package com.dream.city.controller;
 
 import com.dream.city.base.Result;
+import com.dream.city.base.model.enu.VerifyStatus;
 import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.base.model.resp.InvestOrderResp;
 import com.dream.city.base.model.resp.PlayerTradeResp;
@@ -41,7 +42,7 @@ public class VerifyController {
      * @param model
      * @return
      */
-    @RequestMapping("/subscribeOrderVerify/{id}")
+    @RequestMapping("/subscribeOrderVerifyPage/{id}")
     public ModelAndView subscribeOrderVerifyPage(@PathVariable("id") Integer id, Model model){
         InvestOrderResp result = orderService.getInvestOrderById(id);
         model.addAttribute("data",result);
@@ -53,17 +54,25 @@ public class VerifyController {
     @RequestMapping(value = "/subscribeOrderVerify", method = RequestMethod.POST)
     public Result<Integer> subscribeOrderVerify(VerifyReq record){
         logger.info("投资预约审核，{}",record);
+        String msg = "投资预约审核失败";
         boolean success = Boolean.FALSE;
         Result result = null;
         try {
-            result = verifyHandleService.subscribeOrderVerify(record);
-            if (result != null && result.getSuccess()){
-                success = Boolean.TRUE;
+            if (VerifyStatus.PASS.getCode().equalsIgnoreCase(record.getVerifyStatus())
+                    || VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(record.getVerifyStatus())){
+                result = verifyHandleService.subscribeOrderVerify(record);
+                if (result != null && result.getSuccess()){
+                    success = Boolean.TRUE;
+                    msg = "投资预约审核成功";
+                }
+            }else {
+                msg = "投资预约审核状态不对，当前提交状态:"+record.getVerifyStatus();
             }
+
         }catch (Exception e){
             logger.error("投资预约审核异常",e);
         }
-        return new Result(success,"投资预约审核",result);
+        return new Result(success,msg,result);
     }
 
 
@@ -85,18 +94,37 @@ public class VerifyController {
     }
     @RequestMapping(value = "/withdrawVerify", method = RequestMethod.POST)
     public Result<Integer> withdrawVerify(VerifyReq record){
-        logger.info("投资预约审核，{}",record);
+        logger.info("提现审核，{}",record);
+        String msg = "提现审核失败";
         boolean success = Boolean.FALSE;
         Result result = null;
         try {
-            result = verifyHandleService.subscribeOrderVerify(record);
-            if (result != null && result.getSuccess()){
-                success = Boolean.TRUE;
+            if (VerifyStatus.PASS.getCode().equalsIgnoreCase(record.getVerifyStatus())
+                    || VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(record.getVerifyStatus())){
+                result = verifyHandleService.subscribeOrderVerify(record);
+                if (result != null && result.getSuccess()){
+                    success = Boolean.TRUE;
+                    msg = "提现审核成功";
+                }
+            }else {
+                msg = "提现审核状态不对，当前提交状态:"+record.getVerifyStatus();
             }
         }catch (Exception e){
-            logger.error("投资预约审核异常",e);
+            msg = "提现审核异常";
+            logger.error("提现审核异常",e);
         }
-        return new Result(success,"投资预约审核",result);
+        return new Result(success,msg,result);
     }
+
+
+
+
+
+
+
+
+
+
+
 
 }

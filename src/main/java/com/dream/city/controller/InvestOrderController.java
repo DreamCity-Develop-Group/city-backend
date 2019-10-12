@@ -3,7 +3,6 @@ package com.dream.city.controller;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.req.InvestOrderReq;
-import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.service.invest.OrderService;
 import com.dream.city.service.verify.InvestVerifyHandleService;
 import com.github.pagehelper.PageInfo;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -82,35 +80,6 @@ public class InvestOrderController {
             logger.error("投查询"+ modelName +"列表异常",e);
         }
         return new Result(success,modelName + "列表",pageInfo);
-    }
-
-
-
-    @RequestMapping("/verify/{id}")
-    public ModelAndView verify(@PathVariable("id") Integer id, VerifyReq verifyReq, Model model){
-        Object result = null;
-        try {
-            result = orderService.getInvestOrderById(id);
-        }catch (Exception e){
-            logger.error("投资预约查询"+ modelName +"异常",e);
-        }
-        model.addAttribute("title",modelName);
-        model.addAttribute("table", modelName + "审核");
-        model.addAttribute("actionPath",actionPath);
-        model.addAttribute("edit",Boolean.TRUE);
-        model.addAttribute("data",result);
-        return new ModelAndView(actionPath + "/edit");
-    }
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> update(VerifyReq record){
-        logger.info("投资预约审核"+ modelName +"，：{}",record);
-        Result result = null;
-        try {
-            result = verifyHandleService.subscribeOrderVerify(record);
-        }catch (Exception e){
-            logger.error("投资预约审核"+ modelName +"异常",e);
-        }
-        return new Result(result.getSuccess(),result.getMsg(),result);
     }
 
 

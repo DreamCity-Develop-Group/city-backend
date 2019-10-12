@@ -25,8 +25,8 @@ public class TradeDetailServiceImpl implements TradeDetailService {
     @Override
     @Transactional
     public TradeDetail insert(TradeDetail record) {
-        TradeDetail result = detailMapper.insertSelective(record);
-        return result;
+        Integer integer = detailMapper.insertSelective(record);
+        return (integer == null || integer < 1)?null:record;
     }
 
     @Override

@@ -28,7 +28,19 @@
                     <form class="form-horizontal m-t" id="updateForm">
                         <input type="hidden" id="orderId" name="orderId" value="${data.orderId}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">项目名称：</label>
+                            <label class="col-sm-3 control-label">订单名称：</label>
+                            <div class="col-sm-8">
+                                <input id="orderName" name="orderName" class="form-control" type="text" readonly="readonly" value="${data.orderName}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单编号：</label>
+                            <div class="col-sm-8">
+                                <input id="orderNum" name="orderNum" class="form-control" type="text" readonly="readonly" value="${data.orderNum}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">物业名称：</label>
                             <div class="col-sm-8">
                                 <input id="inName" name="inName" class="form-control" type="text" readonly="readonly" value="${data.inName}">
                             </div>
@@ -36,7 +48,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">玩家：</label>
                             <div class="col-sm-8">
-                                <input id="payerName" name="payerName" class="form-control" type="text" readonly="readonly" value="${data.payerName}">
+                                <input id="playerName" name="playerName" class="form-control" type="text" readonly="readonly" value="${data.playerName}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -46,9 +58,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">税金：</label>
+                            <label class="col-sm-3 control-label">收益倍数：</label>
                             <div class="col-sm-8">
-                                <input id="inTax" name="inTax" class="form-control" type="text" readonly="readonly" value="${data.inTax}">
+                                <input id="inEarning" name="inEarning" class="form-control" type="text" readonly="readonly" value="${data.inEarning}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">个人所得税：</label>
+                            <div class="col-sm-8">
+                                <input id="personalInTax" name="personalInTax" class="form-control" type="text" readonly="readonly" value="${data.personalInTax}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">企业所得税：</label>
+                            <div class="col-sm-8">
+                                <input id="enterpriseIntax" name="enterpriseIntax" class="form-control" type="text" readonly="readonly" value="${data.enterpriseIntax}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -70,29 +94,28 @@
                             <label class="col-sm-3 control-label">投资时间：</label>
                             <div class="col-sm-8">
                                 <input id="createTime" name="createTime" readonly="readonly"
-                                       class="laydate-icon form-control"
-                                       value="${data.createTime}">
+                                       class="laydate-icon form-control" value="${data.createTime}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">审核状态：</label>
                             <div class="col-sm-8">
                                 <select name="verifyStatus" class="form-control">
-                                    <option value="wait" <#if data.verifyStatus == "wait">selected="selected"</#if>>待审核</option>
-                                    <#--<option value="verifying" <#if data.verifyStatus == "verifying">selected="selected"</#if>>审核中</option>-->
-                                    <option value="pass" <#if data.verifyStatus == "pass">selected="selected"</#if>>通过</option>
-                                    <option value="notpass" <#if data.verifyStatus == "notpass">selected="selected"</#if>>不通过</option>
+                                    <option value="WAIT" <#if data.verifyStatus == "WAIT">selected="selected"</#if>>待审核</option>
+                                    <#--<option value="verifying" <#if data.verifyStatus == "VERIFYING">selected="selected"</#if>>审核中</option>-->
+                                    <option value="PASS" <#if data.verifyStatus == "PASS">selected="selected"</#if>>通过</option>
+                                    <option value="NOTPASS" <#if data.verifyStatus == "NOTPASS">selected="selected"</#if>>不通过</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">审核意见：</label>
                             <div class="col-sm-8">
-                                <input id="verifyDesc" name="verifyDesc" class="form-control" value="${data.verifyDesc}">
+                                <textarea class="form-control" id="verifyDesc" name="verifyDesc" placeholder="Default Text">${data.verifyDesc}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <#if edit && data.verifyStatus == "wait">
+                            <#if edit && data.verifyStatus == "WAIT">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
                             </div>
@@ -122,7 +145,7 @@
         $("#updateForm").validate({
             rules: {
                 verifyStatus: {
-                    required: true,
+                    required: true
                 },verifyDesc: {
                     required: true,
                     minlength: 1,
@@ -134,7 +157,7 @@
                 $.ajax({
                     type: "POST",
                     dataType: "json",
-                    url: "${ctx}/${actionPath}/update",
+                    url: "${ctx}/verify/subscribeOrderVerify",
                     data: $(form).serialize(),
                     success: function(msg){
                         layer.msg(msg.msg, {time: 2000},function(){

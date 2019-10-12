@@ -2,7 +2,6 @@ package com.dream.city.service.invest.impl;
 
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.InvestOrder;
-import com.dream.city.base.model.entity.TradeVerify;
 import com.dream.city.base.model.enu.InvestStatus;
 import com.dream.city.base.model.mapper.InvestOrderMapper;
 import com.dream.city.base.model.req.InvestOrderReq;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +42,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public InvestOrder insertInvestOrder(InvestOrder record) {
-        return orderMapper.insertSelective(record);
+        Integer integer = orderMapper.insertSelective(record);
+        return (integer == null || integer < 1)? null:record;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
         if (orderId == null){
             return null;
         }
-        InvestOrder order = orderMapper.selectByPrimaryKey(orderId);
+        InvestOrderResp order = orderMapper.selectByPrimaryKey(orderId);
         return this.getOrderResp(order);
     }
 
@@ -77,18 +76,19 @@ public class OrderServiceImpl implements OrderService {
         InvestOrderReq invest = DataUtils.toJavaObject(record.getCondition(),InvestOrderReq.class);
         PropertyResp property = propertyService.getInvestByIdOrName(null, invest.getInName());
         PlayerResp player = playerService.getPlayerByName(invest.getPayerName());
-        InvestOrder recordReq =  DataUtils.toJavaObject(record.getCondition(),InvestOrder.class);
+        InvestOrderReq recordReq =  DataUtils.toJavaObject(record.getCondition(),InvestOrderReq.class);
         if (property != null) {
-            recordReq.setOrderInvestId(property.getInId());
+            recordReq.setInvestId(property.getInId());
         }
         if (player != null) {
-            recordReq.setOrderPayerId(player.getPlayerId());
+            recordReq.setPayerId(player.getPlayerId());
         }
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
-        List<InvestOrder> orders = orderMapper.getInvestOrders(recordReq);
+        List<InvestOrderResp> orders = orderMapper.getInvestOrders(recordReq);
+
         List<InvestOrderResp> ordersResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(orders)){
-            for (InvestOrder order : orders){
+            for (InvestOrderResp order : orders){
                 ordersResp.add(this.getOrderResp(order));
             }
         }
@@ -106,17 +106,7 @@ public class OrderServiceImpl implements OrderService {
         return integer ==null?0:integer;
     }
 
-    private InvestOrderResp getOrderResp(InvestOrder order){
-        InvestOrderResp resp = DataUtils.toJavaObject(order,InvestOrderResp.class);
-        PlayerResp player = playerService.getPlayerByPlayerId(order.getOrderPayerId());
-        if (player != null){
-            resp.setPlayerName(player.getPlayerName());
-        }
-        PropertyResp propertyResp = propertyService.getInvestByIdOrName(order.getOrderInvestId(), null);
-        if (propertyResp != null){
-            resp.setInName(propertyResp.getInName());
-            resp.setInTax(BigDecimal.valueOf(Double.parseDouble(String.valueOf(propertyResp.getInTax()))));
-        }
+    private InvestOrderResp getOrderResp(InvestOrderResp resp){
         String orderState = "";
         switch (resp.getOrderState()){
             case "SUBSCRIBE": orderState = InvestStatus.SUBSCRIBE.getDesc();break;
@@ -133,15 +123,6 @@ public class OrderServiceImpl implements OrderService {
             default:;
         }
         resp.setOrderState(orderState);
-
-        TradeVerify record = new TradeVerify();
-        record.setVerifyOrderId(order.getOrderId());
-        TradeVerify verify = verifyService.getTradeVerify(record);
-        if (verify != null){
-            resp.setVerifyStatus(verify.getVerifyStatus());
-            resp.setVerifyDesc(verify.getVerifyDesc());
-        }
-
         return resp;
     }
 

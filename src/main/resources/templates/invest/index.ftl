@@ -326,25 +326,35 @@
                         field: "orderId",
                         sortable: true
                     },{
-						title: "项目名称",
+						title: "订单名称",
+						field: "orderName"
+					},{
+						title: "订单编号",
+						field: "orderNum"
+					},{
+						title: "物业名称",
 						field: "inName"
 					},{
 						title: "玩家",
-						field: "payerName"
+						field: "playerName"
 					},{
 						title: "投资金额",
 						field: "orderAmount"
 					},{
-                        title: "税金",
-                        field: "inTax"
+						title: "收益倍数",
+						field: "inEarning"
+					},{
+                        title: "个人所得税",
+                        field: "personalInTax"
+                    },{
+                        title: "企业所得税",
+                        field: "enterpriseIntax"
                     },{
                         title: "投资状态",
                         field: "orderState",
 						formatter: function (value, row, index) {
 							var operateHtml = '';
 							if (value === '预约'){
-								operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.orderId+'\')"><span class="label label-danger">'+ value +'</span></a>';
-							}else if (value === '已投资'){
 								operateHtml = '<a href="javascript:void(0);" onclick="edit(\''+row.orderId+'\')"><span class="label label-danger">'+ value +'</span></a>';
 							}else {
 								operateHtml = '<span class="label label-info">'+ value +'</span>';
@@ -359,7 +369,7 @@
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '';
-							if (row.orderState === '预约' || row.orderState === '已投资') {
+							if (row.orderState === '预约中') {
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.orderId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
 							}
 							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
@@ -406,7 +416,7 @@
                     title: '添加${title}',
                     shadeClose: true,
                     shade: false,
-                    area: ['800px', '600px'],
+                    area: ['800px', '700px'],
                     content: '${ctx}/${actionPath}/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
@@ -419,8 +429,8 @@
                     title: '审核${title}',
                     shadeClose: true,
                     shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/verify/'  + id,
+                    area: ['800px', '700px'],
+                    content: '${ctx}/verify/subscribeOrderVerifyPage/' + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -448,7 +458,7 @@
 					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
-					area: ['800px', '600px'],
+					area: ['800px', '700px'],
 					content: '${ctx}/${actionPath}/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");

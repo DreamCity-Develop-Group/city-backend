@@ -367,17 +367,17 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/invest/index?verify=1&orderState=SUBSCRIBE">
+                    <a href="${ctx}/invest/index?verify=1&orderState=SUBSCRIBED">
                         <i class="icon-double-angle-right"></i>
                         预约待审核列表
                     </a>
                 </li>
-                <li>
+                <#--<li>
                     <a href="${ctx}/invest/index?verify=1&orderState=INVESTED">
                         <i class="icon-double-angle-right"></i>
                         投资待审核列表
                     </a>
-                </li>
+                </li>-->
             </ul>
         </li>
 

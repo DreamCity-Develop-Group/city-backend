@@ -50,7 +50,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
             PlayerTrade playerTrade = tradeService.getPlayerTrade(tradeReq);
 
             //必须是预约中的
-            if (InvestStatus.SUBSCRIBED.name().equalsIgnoreCase(order.getOrderState()) && playerTrade != null){
+            if (InvestStatus.SUBSCRIBED.getDesc().equalsIgnoreCase(order.getOrderState()) && playerTrade != null){
                 //修改订单状态
                 if (VerifyStatus.PASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
                     //审核通过 预约中->经营中
@@ -59,44 +59,46 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
                     //审核不通过 预约中->预约审核不通过
                     i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.SUBSCRIBE_VERIFY_FAIL.name());
                 }
-
-                if (i > 0 && VerifyStatus.PASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
+                if (i > 0){
                     success = Boolean.TRUE;
-                    descr = "预约审核成功";
+                    descr = "预约审核成功，审核状态为："+verifyReq.getVerifyStatus();
 
                     //生成审核记录
                     TradeVerify verify = this.insertTradeVerify(verifyReq);
 
-                    //扣除冻结投资金额
-                    //扣除冻结usdt投资金额
-                    String amountType = "usdtfreeze";
-                    i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getTradeAmount(),amountType);
-                    //扣除冻结mt投资税
-                    amountType = "mtfreeze";
-                    if (i > 0){
-                        //扣个人所得税
-                        i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getPersonalTax(),amountType);
-                    }
-                    if (i > 0){
-                        //扣企业所得税
-                        i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getEnterpriseTax(),amountType);
-                    }
-                    if (i > 0){
-                        //生成交易记录
-                        playerTrade = createPlayerTrade(order.getPayerId(),verifyReq.getOrderId(),playerTrade);
+                    if (VerifyStatus.PASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
+                        //扣除冻结投资金额
+                        //扣除冻结usdt投资金额
+                        String amountType = "usdtfreeze";
+                        i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getTradeAmount(),amountType);
+                        //扣除冻结mt投资税
+                        amountType = "mtfreeze";
+                        if (i > 0){
+                            //扣个人所得税
+                            i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getPersonalTax(),amountType);
+                        }
+                        if (i > 0){
+                            //扣企业所得税
+                            i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getEnterpriseTax(),amountType);
+                        }
+                        if (i > 0){
+                            //生成交易记录
+                            playerTrade = createPlayerTrade(order.getPayerId(),verifyReq.getOrderId(),playerTrade);
 
-                        //生成交易流水
-                        //扣除冻结usdt投资金额流水
-                        verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(),verify.getVerifyId(),
-                                playerTrade.getTradeAmount(),TradeDetailType.USDT_INVEST_VERIFY.getCode(),TradeDetailType.USDT_INVEST_VERIFY.getDesc());
-                        //扣个人所得税流水
-                        verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
-                                playerTrade.getPersonalTax(),TradeDetailType.MT_INVEST_PERSONAL_TAX.getCode(),TradeDetailType.MT_INVEST_PERSONAL_TAX.getDesc());
-                        //扣企业所得税流水
-                        verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
-                                playerTrade.getEnterpriseTax(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getCode(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getDesc());
+                            //生成交易流水
+                            //扣除冻结usdt投资金额流水
+                            verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(),verify.getVerifyId(),
+                                    playerTrade.getTradeAmount(),TradeDetailType.USDT_INVEST_VERIFY.getCode(),TradeDetailType.USDT_INVEST_VERIFY.getDesc());
+                            //扣个人所得税流水
+                            verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
+                                    playerTrade.getPersonalTax(),TradeDetailType.MT_INVEST_PERSONAL_TAX.getCode(),TradeDetailType.MT_INVEST_PERSONAL_TAX.getDesc());
+                            //扣企业所得税流水
+                            verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
+                                    playerTrade.getEnterpriseTax(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getCode(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getDesc());
+                        }
                     }
                 }
+
             }else {
                 descr = "预约投资状态不对，当前状态是：" + order.getOrderState();
             }
