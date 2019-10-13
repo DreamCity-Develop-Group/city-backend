@@ -4,6 +4,7 @@ package com.dream.city.service.verify;
 import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.entity.PlayerTrade;
 import com.dream.city.base.model.entity.TradeDetail;
+import com.dream.city.base.model.entity.TradeVerify;
 import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.req.VerifyReq;
 
@@ -54,7 +55,7 @@ public interface VerifyCommonService {
      * @param record
      * @return
      */
-    int createVerify (VerifyReq record);
+    TradeVerify createVerify (VerifyReq record);
 
 
 }

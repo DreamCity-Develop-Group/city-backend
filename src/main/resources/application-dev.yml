@@ -105,7 +105,7 @@ worker:
 dreamcity:
   platform:
     account:
-      accIds: 888888888,999999999
+      accIds: 4E2EE556055042AB80E3D164E51DDD1A
 
   #注册密码salt
   register:

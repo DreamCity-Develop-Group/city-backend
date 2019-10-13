@@ -2,7 +2,9 @@ package com.dream.city.service.verify;
 
 
 import com.dream.city.base.Result;
+import com.dream.city.base.exception.BusinessException;
 import com.dream.city.base.model.req.VerifyReq;
+import com.dream.city.exception.OperationException;
 
 /**
  *  投资审核
@@ -15,7 +17,7 @@ public interface InvestVerifyHandleService {
      * @param verifyReq
      * @return
      */
-    Result subscribeOrderVerify(VerifyReq verifyReq);
+    Result subscribeOrderVerify(VerifyReq verifyReq) throws BusinessException;
 
 
     /**

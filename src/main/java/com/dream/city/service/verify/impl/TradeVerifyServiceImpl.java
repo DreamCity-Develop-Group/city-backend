@@ -16,6 +16,7 @@ public class TradeVerifyServiceImpl implements TradeVerifyService {
     TradeVerifyMapper verifyMapper;
 
     @Override
+    @Transactional
     public TradeVerify insertTradeVerify(TradeVerify record) {
         Integer integer = verifyMapper.insertSelective(record);
         return (integer == null || integer < 1)? null:record;

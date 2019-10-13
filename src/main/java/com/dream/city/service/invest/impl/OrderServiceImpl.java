@@ -101,6 +101,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public int updateOrderStateById(InvestOrder record) {
         Integer integer = orderMapper.updateOrderStateById(record);
         return integer ==null?0:integer;

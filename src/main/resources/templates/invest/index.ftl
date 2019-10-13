@@ -429,7 +429,7 @@
                     title: '审核${title}',
                     shadeClose: true,
                     shade: false,
-                    area: ['800px', '700px'],
+                    area: ['800px', '800px'],
                     content: '${ctx}/verify/subscribeOrderVerifyPage/' + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
@@ -458,7 +458,7 @@
 					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
-					area: ['800px', '700px'],
+					area: ['800px', '800px'],
 					content: '${ctx}/${actionPath}/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");

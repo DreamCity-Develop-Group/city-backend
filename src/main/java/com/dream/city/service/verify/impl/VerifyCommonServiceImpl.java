@@ -64,6 +64,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
 
 
     @Override
+    @Transactional
     public PlayerAccount platformAddAmount(BigDecimal amount,String amountType) {
         //获取平台账户
         List<PlayerAccount>  platformAccountList = accountService.getPlatformAccounts(null);
@@ -85,7 +86,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
             //更新平台usdt账户
             updatePlayerAccount = accountService.updatePlayerAccount(platformAccount);
         }
-        if (updatePlayerAccount> 0){
+        if (updatePlayerAccount < 1){
             return null;
         }
         return platformAccount;
@@ -121,13 +122,13 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
      * @return
      */
     @Override
-    public int createVerify (VerifyReq record){
+    public TradeVerify createVerify (VerifyReq record){
         TradeVerify verifyReq = new TradeVerify();
         verifyReq.setVerifyStatus(record.getVerifyStatus());
         verifyReq.setVerifyEmpId(record.getEmpId());
         verifyReq.setVerifyDesc(record.getVerifyDesc());
         verifyReq.setVerifyTradeId(record.getTradeId());
-        return verifyService.updateTradeVerify(verifyReq);
+        return verifyService.insertTradeVerify(verifyReq);
     }
 
 
@@ -141,6 +142,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
      * @return
      */
     @Override
+    @Transactional
     public TradeDetail createTradeDetail(String payerId, Integer orderId, Integer tradeId, Integer verifyId,
                                          BigDecimal amount, String tradeDetailType,String desc){
         TradeDetail tradeDetail = new TradeDetail();
