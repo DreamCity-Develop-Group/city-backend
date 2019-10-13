@@ -6,7 +6,6 @@ import com.dream.city.base.model.enu.*;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.req.VerifyReq;
-import com.dream.city.exception.OperationException;
 import com.dream.city.service.trade.EarningService;
 import com.dream.city.service.trade.PlayerTradeService;
 import com.dream.city.service.verify.TradeVerifyService;
@@ -213,7 +212,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
 
     @Override
-    public Result withdrawSubscribe(VerifyReq record) throws OperationException {
+    public Result withdrawSubscribe(VerifyReq record) {
         return null;
     }
 

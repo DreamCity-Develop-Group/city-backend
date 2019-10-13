@@ -3,7 +3,6 @@ package com.dream.city.service.verify;
 
 import com.dream.city.base.Result;
 import com.dream.city.base.model.req.VerifyReq;
-import com.dream.city.exception.OperationException;
 
 /**
  *  提现审核
@@ -17,7 +16,7 @@ public interface WithdrawVerifyHandleService {
      * @param record
      * @return
      */
-    Result<Boolean> withdrawVerify(VerifyReq record) throws OperationException;
+    Result<Boolean> withdrawVerify(VerifyReq record) ;
 
 
 
@@ -40,7 +39,7 @@ public interface WithdrawVerifyHandleService {
      * @return
      */
     @Deprecated
-    Result withdrawSubscribe(VerifyReq record) throws OperationException;
+    Result withdrawSubscribe(VerifyReq record) ;
 
 
 

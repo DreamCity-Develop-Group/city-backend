@@ -3,7 +3,6 @@ package com.dream.city.service.verify;
 
 import com.dream.city.base.Result;
 import com.dream.city.base.model.req.VerifyReq;
-import com.dream.city.exception.OperationException;
 
 /**
  *  转账审核
@@ -18,7 +17,7 @@ public interface TransferVerifyHandleService {
      * @return
      */
     @Deprecated
-    Result transferVerify(VerifyReq record) throws OperationException;
+    Result transferVerify(VerifyReq record) ;
 
 
 
