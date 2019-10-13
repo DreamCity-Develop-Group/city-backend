@@ -59,10 +59,8 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
             if (InvestStatus.SUBSCRIBED.getDesc().equalsIgnoreCase(order.getOrderState()) && playerTrade != null){
                 //修改订单状态
                 result = this.updateOrderStatus(verifyReq);
-                if (result != null){
-                    success = result.getSuccess();
-                    descr = result.getMsg();
-                }
+                success = result.getSuccess();
+                descr = result.getMsg();
 
                 if (result.getSuccess() && result.getData() > 0){
                     //生成审核记录
