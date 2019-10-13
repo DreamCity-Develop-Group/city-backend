@@ -36,7 +36,7 @@ public class VerifyController {
     @Autowired
     WithdrawVerifyHandleService withdrawVerifyHandleService;
     @Autowired
-    private InvestVerifyHandleService verifyHandleService;
+    InvestVerifyHandleService verifyHandleService;
 
 
     /**
@@ -52,30 +52,28 @@ public class VerifyController {
         model.addAttribute("title","审核");
         model.addAttribute("table","投资预约审核");
         model.addAttribute("edit",Boolean.TRUE);
-        return new ModelAndView("invest/edit");
+        return new ModelAndView("/invest/edit");
     }
     @RequestMapping(value = "/subscribeOrderVerify", method = RequestMethod.POST)
     public Result<Integer> subscribeOrderVerify(VerifyReq record){
         logger.info("投资预约审核，{}",record);
         String msg = "投资预约审核失败";
         boolean success = Boolean.FALSE;
-        Result result = null;
         try {
             if (VerifyStatus.PASS.getCode().equalsIgnoreCase(record.getVerifyStatus())
                     || VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(record.getVerifyStatus())){
-                result = verifyHandleService.subscribeOrderVerify(record);
-                if (result != null && result.getSuccess()){
+                Result result = verifyHandleService.subscribeOrderVerify(record);
+                if (result != null){
                     success = Boolean.TRUE;
                     msg = "投资预约审核成功";
                 }
             }else {
                 msg = "投资预约审核状态不对，当前提交状态:"+record.getVerifyStatus();
             }
-
         }catch (Exception e){
             logger.error("投资预约审核异常",e);
         }
-        return new Result(success,msg,result);
+        return new Result<>(success,msg);
     }
 
 
@@ -93,21 +91,20 @@ public class VerifyController {
         model.addAttribute("title","审核");
         model.addAttribute("table","提现审核");
         model.addAttribute("edit",Boolean.TRUE);
-        return new ModelAndView("withdraw/edit");
+        return new ModelAndView("/trade/withdraw/edit");
     }
     @RequestMapping(value = "/withdrawVerify", method = RequestMethod.POST)
-    public Result<Integer> withdrawVerify(VerifyReq record){
+    public Result withdrawVerify(VerifyReq record){
         logger.info("提现审核，{}",record);
         String msg = "提现审核失败";
         boolean success = Boolean.FALSE;
-        Result result = null;
         try {
             if (VerifyStatus.PASS.getCode().equalsIgnoreCase(record.getVerifyStatus())
                     || VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(record.getVerifyStatus())){
-                result = verifyHandleService.subscribeOrderVerify(record);
-                if (result != null && result.getSuccess()){
-                    success = Boolean.TRUE;
-                    msg = "提现审核成功";
+                Result result = withdrawVerifyHandleService.withdrawVerify(record);
+                if (result != null){
+                    success = result.getSuccess();
+                    msg = result.getMsg();
                 }
             }else {
                 msg = "提现审核状态不对，当前提交状态:"+record.getVerifyStatus();
@@ -116,7 +113,7 @@ public class VerifyController {
             msg = "提现审核异常";
             logger.error("提现审核异常",e);
         }
-        return new Result(success,msg,result);
+        return new Result<>(success,msg);
     }
 
 

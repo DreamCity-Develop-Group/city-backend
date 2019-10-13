@@ -334,16 +334,16 @@
 					},{
 						title: "提现金额",
 						field: "tradeAmount"
-					},{
+					},/*{
 						title: "最大提取额度",
 						field: "earnMax"
 					},{
 						title: "当前获得额度",
 						field: "earnCurrent"
-					},{
+					},*/{
 						title: "个人所得税",
 						field: "personalTax"
-					},{
+					},/*{
 						title: "企业所得税",
 						field: "enterpriseTax"
 					},{
@@ -355,7 +355,7 @@
 							}
 							return '是';
 						}
-					},{
+					},*/{
 						title: "交易状态",
 						field: "tradeStatus",
 						formatter: function (value, row, index) {
@@ -453,7 +453,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/edit/'  + id,
+                    content: '${ctx}/verify/withdrawVerifyPage/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }

@@ -1,12 +1,7 @@
 package com.dream.city.service.verify.impl;
 
-import com.dream.city.base.model.entity.TradeDetail;
-import com.dream.city.base.model.enu.TradeDetailType;
+import com.dream.city.base.model.entity.*;
 import com.dream.city.service.account.AccountService;
-import com.dream.city.base.model.entity.PlayerAccount;
-import com.dream.city.base.model.entity.PlayerTrade;
-import com.dream.city.base.model.entity.TradeVerify;
-import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.service.trade.EarningService;
 import com.dream.city.service.trade.PlayerTradeService;
@@ -22,6 +17,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author
+ */
 @Service
 public class VerifyCommonServiceImpl implements VerifyCommonService {
 
@@ -37,7 +35,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
     TradeDetailService detailService;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int playerSubtractAmount(String accPlayerId,BigDecimal amount,String amountType) {
         PlayerAccount getPlayerAccountReq = new PlayerAccount();
         getPlayerAccountReq.setAccPlayerId(accPlayerId);
@@ -64,7 +62,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
 
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public PlayerAccount platformAddAmount(BigDecimal amount,String amountType) {
         //获取平台账户
         List<PlayerAccount>  platformAccountList = accountService.getPlatformAccounts(null);
@@ -95,24 +93,42 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
 
     /**
      * 生成交易
-     * @param playerAccount
-     * @param amount
-     * @param desc
+     * @param payerId
+     * @param orderId
+     * @param playerTrade
      * @return
      */
     @Override
-    public PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc) {
+    public PlayerTrade createPlayerTrade(String payerId,Integer orderId,PlayerTrade playerTrade,String tradeType,
+                                          String tradeStatus,String inOutStatus,String descr){
         PlayerTrade tradeReq = new PlayerTrade();
-        tradeReq.setInOutStatus(playerAccount.getInOut());
-        tradeReq.setTradeStatus(playerAccount.getTradeStatus());
-        tradeReq.setTradeType(playerAccount.getTradeType());
-        tradeReq.setTradeAccId(playerAccount.getAccId());
-        tradeReq.setTradePlayerId(playerAccount.getAccPlayerId());
-        tradeReq.setTradeDesc(desc);
-        tradeReq.setTradeAmount(amount);
-        tradeReq.setPersonalTax(playerAccount.getPersonalTax());
-        tradeReq.setEnterpriseTax(playerAccount.getEnterpriseTax());
+        tradeReq.setTradePlayerId(payerId);
+        tradeReq.setTradeOrderId(orderId);
+        tradeReq.setTradeType(tradeType);
+        tradeReq.setTradeStatus(tradeStatus);
+        tradeReq.setInOutStatus(inOutStatus);
+        tradeReq.setEnterpriseTax(playerTrade.getEnterpriseTax());
+        tradeReq.setPersonalTax(playerTrade.getPersonalTax());
+        tradeReq.setTradeAccId(playerTrade.getTradeAccId());
+        tradeReq.setTradeAmount(playerTrade.getTradeAmount());
+        tradeReq.setTradeDesc(descr);
         return tradeService.insertPlayerTrade(tradeReq);
+    }
+
+    @Override
+    public PlayerTrade updatePlayerTradeStatus(Integer tradeId, String tradeType,
+                                         String tradeStatus, String inOutStatus, String descr) {
+        PlayerTrade tradeReq = new PlayerTrade();
+        tradeReq.setTradeId(tradeId);
+        tradeReq.setTradeType(tradeType);
+        tradeReq.setTradeStatus(tradeStatus);
+        tradeReq.setInOutStatus(inOutStatus);
+        tradeReq.setTradeDesc(descr);
+        int i = tradeService.updatePlayerTrade(tradeReq);
+        if (i > 0){
+            return tradeReq;
+        }
+        return null;
     }
 
 
@@ -122,13 +138,38 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
      * @return
      */
     @Override
-    public TradeVerify createVerify (VerifyReq record){
+    public TradeVerify createVerify(VerifyReq record){
         TradeVerify verifyReq = new TradeVerify();
         verifyReq.setVerifyStatus(record.getVerifyStatus());
         verifyReq.setVerifyEmpId(record.getEmpId());
         verifyReq.setVerifyDesc(record.getVerifyDesc());
         verifyReq.setVerifyTradeId(record.getTradeId());
         return verifyService.insertTradeVerify(verifyReq);
+    }
+
+    /**
+     * 玩家账户解冻金额
+     * @param playerId
+     * @param msg
+     * @return
+     */
+    @Override
+    public int unfreezePlayerAccount(String playerId,BigDecimal amount,String amountType, String msg) {
+        PlayerAccount accountReq = new PlayerAccount();
+        accountReq.setAccPlayerId(playerId);
+        //获取玩家账户
+        PlayerAccount playerAccount = accountService.getPlayerAccount(accountReq);
+        if ("usdtUnfreeze".equalsIgnoreCase(amountType)){
+            playerAccount.setAccUsdtFreeze(playerAccount.getAccUsdtFreeze().subtract(amount));
+            playerAccount.setAccUsdtAvailable(playerAccount.getAccUsdtAvailable().add(amount));
+            playerAccount.setAccUsdt(playerAccount.getAccUsdt().add(amount));
+        }
+        if ("mtUnfreeze".equalsIgnoreCase(amountType)){
+            playerAccount.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(amount));
+            playerAccount.setAccMtAvailable(playerAccount.getAccMtAvailable().add(amount));
+            playerAccount.setAccMt(playerAccount.getAccMt().add(amount));
+        }
+        return accountService.updatePlayerAccount(playerAccount);
     }
 
 

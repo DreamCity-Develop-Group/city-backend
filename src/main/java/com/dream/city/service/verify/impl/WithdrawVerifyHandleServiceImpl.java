@@ -1,16 +1,10 @@
 package com.dream.city.service.verify.impl;
 
-import com.dream.city.base.model.enu.TradeType;
-import com.dream.city.base.model.resp.PlayerTradeResp;
+import com.dream.city.base.exception.BusinessException;
+import com.dream.city.base.model.entity.*;
+import com.dream.city.base.model.enu.*;
 import com.dream.city.service.account.AccountService;
-import com.dream.city.base.Codes;
 import com.dream.city.base.Result;
-import com.dream.city.base.model.entity.PlayerAccount;
-import com.dream.city.base.model.entity.PlayerEarning;
-import com.dream.city.base.model.entity.PlayerTrade;
-import com.dream.city.base.model.enu.AmountDynType;
-import com.dream.city.base.model.enu.VerifyStatus;
-import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.exception.OperationException;
 import com.dream.city.service.trade.EarningService;
@@ -18,7 +12,6 @@ import com.dream.city.service.trade.PlayerTradeService;
 import com.dream.city.service.verify.TradeVerifyService;
 import com.dream.city.service.verify.VerifyCommonService;
 import com.dream.city.service.verify.WithdrawVerifyHandleService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +22,9 @@ import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author
+ */
 @Service
 public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleService {
 
@@ -48,390 +44,170 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
 
     @Override
-    @Transactional
-    public Result withdrawVerify(VerifyReq record) throws OperationException {
+    @Transactional(rollbackFor = Exception.class)
+    public Result<Boolean> withdrawVerify(VerifyReq record) {
         boolean success = Boolean.FALSE;
         String msg = "";
         if (record.getTradeId() == null || (record.getTradeId() != null &&record.getTradeId() < 0)){
             msg = "交易id不能为空";
+            logger.error("提现审核失败，{}",msg);
+            return new Result<>(success,msg);
         }
         //提现交易
-        PlayerTradeResp trade = tradeService.getPlayerTradeById(record.getTradeId());
-
-        /*PlayerEarning earningReq = new PlayerEarning();
-        earningReq.setEarnPlayerId(trade.getPlayerId());
-        earningReq.setEarnInvestId(record.getInvestId());
-        PlayerEarning earning = earningService.getEarning(earningReq);
-        if (earning == null || !"Y".equalsIgnoreCase(earning.getIsWithdrew())){
-            msg = "交易不可以提现，原因：IsWithdrew=" + earning.getIsWithdrew();
-        }*/
-
-        //玩家账户信息
-        PlayerAccount accountReq = new PlayerAccount();
-        accountReq.setAccPlayerId(trade.getPlayerId());
-        PlayerAccount playerAccount = accountService.getPlayerAccount(accountReq);
-
-        //校验金额
-        BigDecimal tax = trade.getPersonalTax().add(trade.getEnterpriseTax());
-        Result<Boolean> checkWithdrawAmountResult = this.checkWithdrawAmount(trade.getTradeAmount(),tax,playerAccount);
-        success = checkWithdrawAmountResult.getSuccess();
-        msg = checkWithdrawAmountResult.getMsg();
-        if (StringUtils.isNotBlank(msg)){
-            return new Result<Boolean>(success,msg);
-        }
+        PlayerTrade tradeReq = new PlayerTrade();
+        tradeReq.setTradeId(record.getTradeId());
+        PlayerTrade playerTrade = tradeService.getPlayerTrade(tradeReq);
 
         //生成审核记录
-        verifyCommonService.createVerify (record);
-
+        TradeVerify verify = verifyCommonService.createVerify(record);
+        Result result = null;
         if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.PASS.name())){
             //审核通过
-            //玩家账户扣除金额 扣冻结Usdt金额
-            int updatePlayerAccount = verifyCommonService.playerSubtractAmount(trade.getPlayerId(), trade.getTradeAmount(),"usdt");
+            //玩家账户扣除金额
+            result = this.playerAcountSubtractAmount(playerTrade,verify.getVerifyId());
 
-            //玩家账户扣除Usdt金额
-            PlayerTrade createPlayerTrade = null;
-            if (updatePlayerAccount > 0){
-                PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
-                createPlayerTradeReq.setAccId(playerAccount.getAccId());
-                createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-                createPlayerTradeReq.setTradeType(TradeType.WITHDRAW.name());
-                createPlayerTradeReq.setTradeType(AmountDynType.OUT.name());
-                createPlayerTrade = verifyCommonService.createTradeRecord(createPlayerTradeReq,trade.getTradeAmount(),"提现扣除Usdt金额");
+            //扣除税金加到平台账户
+            if (result.getSuccess()){
+                this.platformAcountAddAmount(record, playerTrade,verify);
             }
-
-            //更新玩家收益为已经提取
-            int updateEarning = 0;
-            if (createPlayerTrade != null){
-                //earning.setIsWithdrew("Y");
-                //updateEarning = earningService.updateEarningById(earning);
-            }else {
-                msg = "审核新增流水失败";
-            }
-
-            /*if(updateEarning > 0){
-                //玩家账户扣除税金 扣冻结mt税金
-                Result<Integer> updatePlayerAccountMt = this.subtractPlayerAccountMt(earning, playerAccount, msg);
-                success = updatePlayerAccountMt.getSuccess();
-                msg = updatePlayerAccountMt.getMsg();
-                updatePlayerAccount = updatePlayerAccountMt.getData();
-            }else {
-                msg = "更新玩家收益为已经提取";
-            }*/
-
-            //玩家账户扣除税金流水
-            PlayerTrade createPlayerTradeMt = null;
-            /*if (updatePlayerAccount > 0){
-                Result<PlayerTrade> createPlayerTradeMtResult = this.createPlayerTrade(earning, playerAccount, msg);
-                createPlayerTradeMt = createPlayerTradeMtResult.getData();
-            }else {
-                msg = "审核更新玩家mt账户失败";
-            }*/
-
-            //把玩家账户扣除jine 加到平台账户
-            PlayerAccount platformAccount = null;
-            /*if (createPlayerTrade != null && createPlayerTrade.getTradeId() != null && createPlayerTrade.getTradeId() > 0){
-                Result<PlayerAccount> updatePlatformAccountResult = this.updatePlatformAccount(earning, msg);
-                platformAccount = updatePlatformAccountResult.getData();
-                success = updatePlatformAccountResult.getSuccess();
-                msg = updatePlatformAccountResult.getMsg();
-            }*/
-            //平台账户增加金额流水
-            if (platformAccount != null){
-                Result<PlayerTrade> createPlatformATradeResult  = this.createPlatformTrade(platformAccount,trade.getTradeAmount(),TradeType.INVEST.name(),msg) ;
-                success = createPlatformATradeResult.getSuccess();
-                msg = createPlatformATradeResult.getMsg();
-            }
-
         }else if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.NOTPASS.name())){
-            //审核不通过
-            success = Boolean.TRUE;
-            msg = "审核成功！";
-
-            //返回冻结金额
-            /*Result<Integer> unfreezePlayerAccount = this.unfreezePlayerAccount(earning, playerAccount, msg);
-            if (unfreezePlayerAccount.getData() != null && unfreezePlayerAccount.getData() < 1){
-                msg = "审核不通过解冻资金失败！";
-            }*/
+            //审核不通过,返回冻结金额
+            result = this.unfreezePlayerAccount(playerTrade,verify.getVerifyId());
         }
-
-        return new Result<Boolean>(success,msg,success);
+        return result;
     }
 
-
     /**
-     * 平台账户增加流水
-     * @param platformAccount
-     * @param msg
-     * @return
+     * 平台账户进账操作
+     * @param verifyReq
+     * @param playerTrade
+     * @param verify
      */
-    private Result<PlayerTrade> createPlatformTrade(PlayerAccount platformAccount,BigDecimal amount,String tradeType,String msg) throws OperationException {
-        boolean success = Boolean.TRUE;
-        //平台mt账户增加税金
-        PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
-        createPlayerTradeReq.setAccId(platformAccount.getAccId());
-        createPlayerTradeReq.setAccPlayerId(platformAccount.getAccPlayerId());
-        //createPlayerTradeReq.setTradeAmountType(TradeAmountType.USDT_INVEST_TAX.name());
-        createPlayerTradeReq.setTradeType(tradeType);
-        createPlayerTradeReq.setTradeType(AmountDynType.IN.name());
-        Result<PlayerTrade> createPlatformATradeResult = null;
-        PlayerTrade createPlayerTrade = null;
-        try {
-            //新增平台mt账户增加税金流水
-            createPlatformATradeResult = this.createPlayerTrade(createPlayerTradeReq, amount, "平台mt账户增加税金");
-            if (createPlatformATradeResult.getSuccess()) {
-                createPlayerTrade = createPlatformATradeResult.getData();
+    private void platformAcountAddAmount(VerifyReq verifyReq,PlayerTrade playerTrade,TradeVerify verify) throws BusinessException {
+        List<PlayerAccount> platformAccounts = accountService.getPlatformAccounts(null);
+        if (CollectionUtils.isEmpty(platformAccounts)){
+            throw new BusinessException("找不到平台账户");
+        }else {
+            PlayerAccount platformAccount = platformAccounts.get(0);
+            //扣除玩家冻结5MT税金加到平台账户
+            platformAccount = verifyCommonService.platformAddAmount(playerTrade.getTradeAmount(),"mt");
+            //生成平台账户交易记录
+            if (platformAccount != null){
+                playerTrade = verifyCommonService.createPlayerTrade(platformAccount.getAccPlayerId(),null,playerTrade,
+                        TradeType.RECEIVABLES.getCode(),TradeStatus.IN.getCode(),AmountDynType.IN.getCode(),
+                        "将扣除玩家冻结税金加到平台账户");
             }
-        } catch (Exception e) {
-            msg = "审核新增扣除税金流水异常";
-            logger.error(msg, e);
-            throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核新增扣除税金流水异常");
-        }
-        if (!createPlatformATradeResult.getSuccess() && createPlayerTrade == null) {
-            msg = "审核新增扣除税金流水失败";
-        } else {
-            success = Boolean.TRUE;
-            msg = "审核成功！";
-        }
-        return new Result<PlayerTrade>(success,msg,createPlayerTrade);
-    }
-
-    /**
-     * 把玩家账户扣除金额 加到平台账户
-     * @param earning
-     * @param msg
-     * @return
-     */
-    private Result<PlayerAccount> updatePlatformAccount(PlayerEarning earning,String msg) throws OperationException {
-        //获取平台账户
-        List<PlayerAccount> platformAccountList = null;
-        PlayerAccount platformAccount = null;
-        platformAccountList = accountService.getPlatformAccounts(null);
-        if (!CollectionUtils.isEmpty(platformAccountList)){
-            platformAccount = platformAccountList.get(0);
-        }
-        int updatePlayerAccount = 0;
-        if (platformAccount != null){
-            //把玩家账户扣除税金 加到平台mt账户
-            platformAccount.setAccMt(platformAccount.getAccMtAvailable().add(earning.getEarnPersonalTax()));
-            platformAccount.setAccMtAvailable(platformAccount.getAccMtAvailable().add(earning.getEarnPersonalTax()));
-            try {
-                //更新平台mt账户
-                updatePlayerAccount = accountService.updatePlayerAccount(platformAccount);
-            }catch (Exception e){
-                msg = "审核平台mt账户异常";
-                logger.error(msg,e);
-                throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核更新平台mt账户异常");
+            //生成平台账户交易流水
+            if (playerTrade != null){
+                verifyCommonService.createTradeDetail(platformAccount.getAccPlayerId(),
+                        verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
+                        playerTrade.getTradeAmount(), TradeDetailType.RECEIVABLES_INVEST_TAX.getCode(),
+                        "将扣除玩家冻结税金加到平台账户");
             }
         }
-        if (updatePlayerAccount> 0){
-            return new Result<PlayerAccount>(Boolean.TRUE,msg,platformAccount);
-        }
-        return new Result<PlayerAccount>(Boolean.FALSE,msg,null);
     }
 
-    /**
-     * 玩家账户扣除税金流水
-     * @param earning
-     * @param playerAccount
-     * @param msg
-     * @return
-     */
-    private Result<PlayerTrade> createPlayerTrade(PlayerEarning earning,PlayerAccount playerAccount,String msg) throws OperationException {
-        Result<PlayerTrade> createPlayerTradeResult = null;
-        //玩家账户扣除税金流水
-        PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
-        createPlayerTradeReq.setAccId(playerAccount.getAccId());
-        createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        createPlayerTradeReq.setTradeType(TradeType.INVEST.name());
-        createPlayerTradeReq.setTradeType(AmountDynType.OUT.name());
-        PlayerTrade createPlayerTrade = null;
-        try {
-            //新增扣除税金流水
-            createPlayerTradeResult = this.createPlayerTrade(createPlayerTradeReq, earning.getEarnPersonalTax(), "审核扣除mt税金");
-            if (createPlayerTradeResult.getSuccess()){
-                createPlayerTrade = createPlayerTradeResult.getData();
-            }
-        }catch (Exception e){
-            msg = "审核新增扣除税金流水异常";
-            logger.error("msg",e);
-            throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核新增扣除税金流水异常");
-        }
-        return new Result<PlayerTrade>(Boolean.TRUE,msg,createPlayerTrade);
-    }
-
-    /**
-     * 玩家账户扣除税金 扣冻结mt税金
-     * @param earning
-     * @param playerAccount
-     * @param msg
-     * @return
-     */
-    private Result<Integer> subtractPlayerAccountMt(PlayerEarning earning,PlayerAccount playerAccount,String msg) throws OperationException {
-        //玩家账户扣除税金 扣冻结mt税金
-        PlayerAccount updateAccountReq = new PlayerAccount();
-        updateAccountReq.setAccId(playerAccount.getAccId());
-        updateAccountReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(earning.getEarnPersonalTax()));
-        int updatePlayerAccount = 0;
-        try {
-            //更新玩家账户
-            updatePlayerAccount = accountService.updatePlayerAccount(updateAccountReq);
-        }catch (Exception e){
-            msg = "审核更新玩家mt账户异常";
-            logger.error(msg,e);
-            throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核更新玩家mt账户异常");
-        }
-        return new Result<Integer>(Boolean.TRUE,msg,updatePlayerAccount);
-    }
-
-    /**
-     * 玩家账户扣除金额流水
-     * @param earning
-     * @param playerAccount
-     * @param msg
-     * @return
-     */
-    private Result<PlayerTrade> createPlayerTradeResult(PlayerEarning earning,PlayerAccount playerAccount,String msg) throws OperationException {
-        //玩家账户扣除金额流水
-        Result<PlayerTrade> createPlayerTradeResult = null;
-        PlayerTrade createPlayerTrade = null;
-        PlayerAccountReq createPlayerTradeReq = new PlayerAccountReq();
-
-        createPlayerTradeReq.setAccId(playerAccount.getAccId());
-        createPlayerTradeReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        createPlayerTradeReq.setTradeType(TradeType.WITHDRAW.name());
-        createPlayerTradeReq.setTradeType(AmountDynType.OUT.name());
-        try {
-            //新增流水
-            createPlayerTradeResult = this.createPlayerTrade(createPlayerTradeReq, earning.getEarnMax(), "审核扣除冻结usdt");
-            if (createPlayerTradeResult != null && createPlayerTradeResult.getSuccess()){
-                createPlayerTrade = createPlayerTradeResult.getData();
-            }
-        }catch (Exception e){
-            msg = "审核新增流水异常";
-            logger.error(msg,e);
-            throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核新增流水异常");
-        }
-        return new Result<PlayerTrade>(Boolean.TRUE,msg,createPlayerTrade);
-    }
-
-    /**
-     * 玩家账户扣除金额 扣冻结金额
-     * @param earning
-     * @param playerAccount
-     * @param msg
-     * @return
-     */
-    private Result<Integer> subtractPlayerAccount(PlayerEarning earning,PlayerAccount playerAccount,String msg) throws OperationException {
-        //玩家账户扣除金额 扣冻结金额
-        PlayerAccount updateAccountReq = new PlayerAccount();
-        updateAccountReq.setAccId(playerAccount.getAccId());
-        updateAccountReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        updateAccountReq.setAccUsdtFreeze(playerAccount.getAccUsdtFreeze().subtract(earning.getEarnMax()));
-        int updatePlayerAccount = 0;
-        try {
-            //更新玩家账户
-            updatePlayerAccount = accountService.updatePlayerAccount(updateAccountReq);
-        }catch (Exception e){
-            msg = "审核更新usdt账户异常";
-            logger.error(msg,e);
-            throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核更新usdt账户异常");
-        }
-        return new Result<Integer>(Boolean.TRUE,msg,updatePlayerAccount);
-    }
-
-    /**
-     * 审核不通过解冻金额
-     * @param earning
-     * @param playerAccount
-     * @param msg
-     * @return
-     */
-    private Result<Integer> unfreezePlayerAccount(PlayerEarning earning,PlayerAccount playerAccount,String msg) throws OperationException {
-        //玩家账户扣除金额 扣冻结金额
-        PlayerAccount updateAccountReq = new PlayerAccount();
-        updateAccountReq.setAccId(playerAccount.getAccId());
-        updateAccountReq.setAccPlayerId(playerAccount.getAccPlayerId());
-        updateAccountReq.setAccUsdtFreeze(playerAccount.getAccUsdtFreeze().subtract(earning.getEarnMax()));
-        updateAccountReq.setAccUsdtAvailable(playerAccount.getAccUsdtAvailable().add(earning.getEarnMax()));
-        updateAccountReq.setAccUsdt(playerAccount.getAccUsdt().add(earning.getEarnMax()));
-        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().subtract(earning.getEarnPersonalTax()));
-        updateAccountReq.setAccMtFreeze(playerAccount.getAccMtFreeze().add(earning.getEarnPersonalTax()));
-        updateAccountReq.setAccMt(playerAccount.getAccMt().add(earning.getEarnPersonalTax()));
-        int updatePlayerAccount = 0;
-        try {
-            //更新玩家账户
-            updatePlayerAccount = accountService.updatePlayerAccount(updateAccountReq);
-        }catch (Exception e){
-            msg = "审核不通过解冻金额异常";
-            logger.error(msg,e);
-            throw new OperationException(Codes.SYSTEM_ERROR.getCode(),"审核不通过解冻金额异常");
-        }
-        return new Result<Integer>(Boolean.TRUE,msg,updatePlayerAccount);
-    }
-
-
-
-    /**
-     * 校验提现金额
-     * @param tradeAmount
-     * @param playerAccount
-     * @return
-     */
-    private Result<Boolean> checkWithdrawAmount(BigDecimal tradeAmount,BigDecimal tax,PlayerAccount playerAccount){
-        String msg = "";
-        //校验金额
-        if (playerAccount.getAccUsdtFreeze().compareTo(tradeAmount) < 0){
-            if (playerAccount.getAccUsdtAvailable().compareTo(tradeAmount) < 0){
-                msg = "USDT不足";
-                return new Result<Boolean>(Boolean.FALSE,"USDT不足");
-            }
-        }
-        //校验税金
-        if (playerAccount.getAccMtFreeze().compareTo(tax) < 0){
-            if (playerAccount.getAccMtAvailable().compareTo(tax) < 0){
-                msg = "MT不足";
-                return new Result<Boolean>(Boolean.FALSE,"MT不足");
-            }
-        }
-        return new Result<Boolean>(Boolean.TRUE,"");
-    }
-
-
-    /**
-     * 判断是内部还是外部地址
-     * @param accAddr 玩家账户地址
-     * @return TRUE：内部地址，FALSE外部地址
-     */
-    private boolean isInsideAccAddr(String accAddr){
-        //判断accAddr是内部还是外部地址 todo
-
-        return Boolean.TRUE;
-    }
-
-
-    /**
-     * 新增交易记录
-     * @param record
-     */
-    private Result<PlayerTrade> createPlayerTrade(PlayerAccountReq record,BigDecimal tradeAmount,String desc) throws Exception{
-        PlayerTrade tradeReq = new PlayerTrade();
-        tradeReq.setTradeType(record.getTradeType());
-        tradeReq.setTradeType(record.getTradeType());
-        tradeReq.setTradeDesc(desc);
-        tradeReq.setTradeAccId(record.getAccId());
-        tradeReq.setTradePlayerId(record.getAccPlayerId());
-        tradeReq.setTradeAmount(tradeAmount);
-        //生成交易记录
-        PlayerTrade insertPlayerTrade = tradeService.insertPlayerTrade(tradeReq);
+    private Result unfreezePlayerAccount(PlayerTrade playerTrade,Integer verifyId){
         boolean success = Boolean.FALSE;
-        if (insertPlayerTrade != null){
-            success = Boolean.TRUE;
+        String msg = "";
+        //解冻usdt
+        int updatePlayerAccount = verifyCommonService.unfreezePlayerAccount(playerTrade.getTradePlayerId(), playerTrade.getTradeAmount(),
+                "usdtUnfreeze", "审核不通过返回冻结USDT");
+        //解冻5mt税金
+        if (updatePlayerAccount > 0){
+            updatePlayerAccount = verifyCommonService.unfreezePlayerAccount(playerTrade.getTradePlayerId(), playerTrade.getPersonalTax(),
+                    "mtUnfreeze",  "审核不通过返回冻结5MT税金");
+        }else {
+            msg = "审核不通过返回冻结USDT金额失败";
         }
-        return new Result(success,desc,insertPlayerTrade);
+
+        //更新解冻交易记录
+        PlayerTrade createPlayerTrade = null;
+        if (updatePlayerAccount > 0){
+            createPlayerTrade = verifyCommonService.updatePlayerTradeStatus(playerTrade.getTradeId(),
+                    TradeType.WITHDRAW.getCode(),TradeStatus.UNFREEZE.getCode(),AmountDynType.IN.getCode(),
+                    "提现审核不通过解冻扣除金额");
+        }else {
+            msg = "审核不通过返回冻结金额5MT税金失败";
+        }
+        //生成解冻交易流水
+        TradeDetail createPlayerTradeDetai = null;
+        if (createPlayerTrade != null){
+            createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
+                    playerTrade.getTradeId(),  verifyId, playerTrade.getTradeAmount(),
+                    TradeDetailType.WITHDRAW_UNFREEZE_USDT.getCode(), "提现审核不通过解冻扣除USDT");
+        }else {
+            msg = "提现审核不通过解冻扣除USDT失败";
+        }
+        if (createPlayerTradeDetai != null){
+            createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
+                    playerTrade.getTradeId(),  verifyId, playerTrade.getTradeAmount(),
+                    TradeDetailType.WITHDRAW_UNFREEZE_MT.getCode(), "提现审核不通过解冻扣除MT税金");
+        }else {
+            msg = "审核不通生成解冻交易流水失败";
+        }
+        if (createPlayerTradeDetai == null){
+            msg = "提现审核不通过解冻扣除MT税金失败";
+        }else {
+            success = Boolean.TRUE;
+            msg = "审核成功！";
+        }
+        return new Result<>(success,msg);
     }
 
+    /**
+     * 玩家账户扣除金额 扣冻结Usdt金额
+     * @param playerTrade
+     */
+    private Result playerAcountSubtractAmount(PlayerTrade playerTrade,Integer verifyId){
+        boolean success = Boolean.FALSE;
+        String msg = "";
+        int updatePlayerAccount = verifyCommonService.playerSubtractAmount(playerTrade.getTradePlayerId(),
+                playerTrade.getTradeAmount(),"usdtfreeze");
+        //玩家账户扣除税金 扣冻结税金5mt
+        //todo 5mt改为从规则中取
+        if (updatePlayerAccount > 0){
+            updatePlayerAccount = verifyCommonService.playerSubtractAmount(playerTrade.getTradePlayerId(),
+                    playerTrade.getPersonalTax(), "mtfreeze");
+        }else {
+            msg = "玩家账户扣除金额失败";
+        }
 
+        //更新玩家交易记录
+        PlayerTrade createPlayerTrade = null;
+        if (updatePlayerAccount > 0){
+            createPlayerTrade = verifyCommonService.updatePlayerTradeStatus(playerTrade.getTradeId(),
+                    TradeType.WITHDRAW.getCode(),TradeStatus.OUT.getCode(),AmountDynType.OUT.getCode(),
+                    "提现审核扣除USDT冻结金额");
+        }else {
+            msg = "玩家账户扣除税金失败";
+        }
+
+        //玩家账户扣除流水
+        TradeDetail createPlayerTradeDetai = null;
+        if (createPlayerTrade != null){
+            createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
+                    playerTrade.getTradeId(),  verifyId, playerTrade.getTradeAmount(),
+                    TradeDetailType.WITHDRAW_VERIFY.getCode(), "提现审核扣除USDT冻结金额");
+        }else {
+            msg = "生成玩家账户扣除金额记录失败";
+        }
+        //玩家账户扣除税金流水
+        if (createPlayerTradeDetai != null){
+            createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
+                    playerTrade.getTradeId(),  verifyId, playerTrade.getPersonalTax(),
+                    TradeDetailType.WITHDRAW_VERIFY.getCode(), "提现审核扣除冻结税金");
+        }else {
+            msg = "生成玩家账户扣除流水失败";
+        }
+        if (createPlayerTradeDetai == null){
+            msg = "提现审核扣除冻结税金失败";
+        }else {
+            success = Boolean.TRUE;
+            msg = "审核成功！";
+        }
+        return new Result<>(success,msg);
+    }
 
 
 

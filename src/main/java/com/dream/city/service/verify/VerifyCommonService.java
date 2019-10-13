@@ -1,11 +1,7 @@
 package com.dream.city.service.verify;
 
 
-import com.dream.city.base.model.entity.PlayerAccount;
-import com.dream.city.base.model.entity.PlayerTrade;
-import com.dream.city.base.model.entity.TradeDetail;
-import com.dream.city.base.model.entity.TradeVerify;
-import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.entity.*;
 import com.dream.city.base.model.req.VerifyReq;
 
 import java.math.BigDecimal;
@@ -35,11 +31,15 @@ public interface VerifyCommonService {
 
     /**
      * 生成交易
-     * @param playerAccount
+     * @param payerId
      * @return
      */
-    PlayerTrade createTradeRecord(PlayerAccountReq playerAccount, BigDecimal amount, String desc);
+    PlayerTrade createPlayerTrade(String payerId,Integer orderId,PlayerTrade playerTrade,String tradeType,
+                                  String tradeStatus,String inOutStatus,String descr);
 
+
+    PlayerTrade updatePlayerTradeStatus(Integer tradeId,String tradeType,
+                                  String tradeStatus,String inOutStatus,String descr);
 
     /**
      * 生成交易流水
@@ -58,4 +58,11 @@ public interface VerifyCommonService {
     TradeVerify createVerify (VerifyReq record);
 
 
+    /**
+     * 玩家账户解冻金额
+     * @param playerId
+     * @param msg
+     * @return
+     */
+    int unfreezePlayerAccount(String playerId,BigDecimal amount,String amountType, String msg);
 }

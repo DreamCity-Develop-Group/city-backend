@@ -7,6 +7,7 @@ import com.dream.city.exception.OperationException;
 
 /**
  *  提现审核
+ * @author
  */
 public interface WithdrawVerifyHandleService {
 
@@ -16,7 +17,7 @@ public interface WithdrawVerifyHandleService {
      * @param record
      * @return
      */
-    Result withdrawVerify(VerifyReq record) throws OperationException;
+    Result<Boolean> withdrawVerify(VerifyReq record) throws OperationException;
 
 
 
