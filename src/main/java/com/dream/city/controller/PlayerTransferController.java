@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author
- * 玩家交易记录
+ * 玩家转账记录
  */
 @RestController
 @RequestMapping("/trade/transfer")
@@ -89,74 +89,6 @@ public class PlayerTransferController {
         }
         return new Result(success,modelName + "列表",result);
     }
-
-
-    /*@RequestMapping("/add")
-    public ModelAndView add(Player record, Model model){
-        model.addAttribute("title","添加");
-        model.addAttribute("table","添加" + modelName);
-        model.addAttribute("actionPath",actionPath);
-        model.addAttribute("data",record);
-        return new ModelAndView(actionPath + "/add");
-    }
-    @RequestMapping("/insert")
-    public Result insert(Player record){
-        logger.info("新增"+ modelName +"，：{}",record);
-        boolean success = Boolean.FALSE;
-        Integer result = 0;
-        try {
-            result = null;
-            if (result > 0){
-                success = Boolean.TRUE;
-            }
-        }catch (Exception e){
-            logger.error("新增"+ modelName +"异常",e);
-        }
-        return new Result(success,"新增" + modelName,result);
-    }
-
-
-    @RequestMapping("/delete/{id}")
-    public Result delete(@PathVariable("id") Integer id){
-        logger.info("删除"+ modelName +"，：{}",id);
-        boolean success = Boolean.FALSE;
-        Integer result = 0;
-        try {
-            result = 0;
-            if (result > 0){
-                success = Boolean.TRUE;
-            }
-        }catch (Exception e){
-            logger.error("删除"+ modelName +"异常",e);
-        }
-        return new Result(success,"删除"+ modelName,result);
-    }
-
-
-    @RequestMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("data", null);
-        model.addAttribute("title","编辑");
-        model.addAttribute("table","编辑"+ modelName);
-        model.addAttribute("edit",Boolean.TRUE);
-        model.addAttribute("actionPath",actionPath);
-        return new ModelAndView(actionPath + "/edit");
-    }
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> update(Player record){
-        logger.info("修改"+ modelName +"，：{}",record);
-        boolean success = Boolean.FALSE;
-        Integer result = 0;
-        try {
-            result = 0;
-            if (result != null && result > 0){
-                success = Boolean.TRUE;
-            }
-        }catch (Exception e){
-            logger.error("修改"+ modelName +"异常",e);
-        }
-        return new Result(success,"修改"+ modelName,result);
-    }*/
 
 
 

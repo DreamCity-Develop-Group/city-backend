@@ -337,7 +337,7 @@
 						field: "tradeAmount"
 					},{
 						title: "转账所得税",
-						field: "transferTax"
+						field: "personalTax"
 					},{
 						title: "转账状态",
 						field: "tradeStatus",
@@ -438,7 +438,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/edit/'  + id,
+                    content: '${ctx}/verify/transferVerifyPage/' + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }

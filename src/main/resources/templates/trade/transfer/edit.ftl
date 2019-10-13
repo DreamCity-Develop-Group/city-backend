@@ -28,89 +28,49 @@
                     <form class="form-horizontal m-t" id="updateForm">
                         <input type="hidden" id="tradeId" name="tradeId" value="${data.tradeId}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">交易人：</label>
+                            <label class="col-sm-3 control-label">转账人：</label>
                             <div class="col-sm-8">
-                                <input id="playerName" name="playerName" class="form-control" type="text" value="${data.playerName}">
+                                <input id="playerName" name="playerName" class="form-control" readonly="readonly" type="text" value="${data.playerName}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">交易金额：</label>
+                            <label class="col-sm-3 control-label">转账金额：</label>
                             <div class="col-sm-8">
-                                <input id="tradeAmount" name="tradeAmount" class="form-control" type="text" value="${data.tradeAmount}">
+                                <input id="tradeAmount" name="tradeAmount" class="form-control" readonly="readonly" type="text" value="${data.tradeAmount}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">个人所得税：</label>
+                            <label class="col-sm-3 control-label">转账所得税：</label>
                             <div class="col-sm-8">
-                                <input id="personalTax" name="personalTax" class="form-control" type="text" value="${data.personalTax}">
+                                <input id="personalTax" name="personalTax" class="form-control" readonly="readonly" type="text" value="${data.personalTax}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">企业所得税：</label>
+                            <label class="col-sm-3 control-label">转账描述：</label>
                             <div class="col-sm-8">
-                                <input id="enterpriseTax" name="enterpriseTax" class="form-control" type="text" value="${data.enterpriseTax}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">交易类型：</label>
-                            <div class="col-sm-8">
-                                <select id="tradeType" name="tradeType" class="">
-                                    <option value=""></option>
-                                    <#list tradeTypes as item>
-                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeType}'>selected="selected"</#if>>${item.getDesc()}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">交易状态：</label>
-                            <div class="col-sm-8">
-                                <select id="tradeStatus" name="tradeStatus" class="">
-                                    <option value=""></option>
-                                    <#list tradeStatuss as item>
-                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.tradeStatus}'>selected="selected"</#if>>${item.getDesc()}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">入账还是出账：</label>
-                            <div class="col-sm-8">
-                                <select id="inOut" name="inOut" class="">
-                                    <option value=""></option>
-                                    <#list dynTypes as item>
-                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.inOutStatus}'>selected="selected"</#if>>${item.getDesc()}</option>
-                                    </#list>
-                                </select>
+                                <textarea class="form-control" id="tradeDesc" name="tradeDesc" readonly="readonly"
+                                          placeholder="Default Text">${data.tradeDesc}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">审核状态：</label>
                             <div class="col-sm-8">
-                                <select id="verifyStatus" name="verifyStatus" class="">
-                                    <option value=""></option>
-                                    <#list verifyStatuss as item>
-                                        <option value="${item.getCode()}" <#if '${item.getCode()}' == '${data.verifyStatus}'>selected="selected"</#if>>${item.getDesc()}</option>
-                                    </#list>
+                                <select name="verifyStatus" class="form-control">
+                                    <option value="WAIT" <#if data.verifyStatus == "WAIT">selected="selected"</#if>>待审核</option>
+                                    <option value="PASS" <#if data.verifyStatus == "PASS">selected="selected"</#if>>通过</option>
+                                    <option value="NOTPASS" <#if data.verifyStatus == "NOTPASS">selected="selected"</#if>>不通过</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">交易描述：</label>
+                            <label class="col-sm-3 control-label">审核意见：</label>
                             <div class="col-sm-8">
-                                <input id="tradeDesc" name="tradeDesc" class="form-control" value="${data.tradeDesc}">
+                                <textarea class="form-control" id="verifyDesc" name="verifyDesc" placeholder="Default Text">${data.verifyDesc}</textarea>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">交易时间：</label>
-                            <div class="col-sm-8">
-                                <input id="createTime" name="createTime" readonly="readonly"
-                                       class="laydate-icon form-control"
-                                       value="${data.createTime}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <#if edit>
+                            <#if edit && data.verifyStatus == "WAIT">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
                             </div>
@@ -138,23 +98,9 @@
 
             $("#updateForm").validate({
                 rules: {
-                    playerName: {
-                        required: true,
-                        minlength: 1,
-                        maxlength: 60
-                    },tradeAmount: {
+                    verifyStatus: {
                         required: true
-                    },personalTax: {
-                        required: true
-                    },enterpriseTax: {
-                        required: true
-                    },tradeType: {
-                        required: true
-                    },tradeStatus: {
-                        required: true
-                    },inOut: {
-                        required: true
-                    },tradeDesc: {
+                    },verifyDesc: {
                         required: true,
                         minlength: 1,
                         maxlength: 600
@@ -165,7 +111,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/${actionPath}/update",
+                        url: "${ctx}/verify/transferVerify",
                         data: $(form).serialize(),
                         success: function(msg){
                             layer.msg(msg.msg, {time: 2000},function(){

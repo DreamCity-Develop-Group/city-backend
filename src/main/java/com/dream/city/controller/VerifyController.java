@@ -48,10 +48,7 @@ public class VerifyController {
     @RequestMapping("/subscribeOrderVerifyPage/{id}")
     public ModelAndView subscribeOrderVerifyPage(@PathVariable("id") Integer id, Model model){
         InvestOrderResp result = orderService.getInvestOrderById(id);
-        model.addAttribute("data",result);
-        model.addAttribute("title","审核");
-        model.addAttribute("table","投资预约审核");
-        model.addAttribute("edit",Boolean.TRUE);
+        this.getModel(result, model, "投资预约");
         return new ModelAndView("/invest/edit");
     }
     @RequestMapping(value = "/subscribeOrderVerify", method = RequestMethod.POST)
@@ -87,16 +84,36 @@ public class VerifyController {
     @RequestMapping("/withdrawVerifyPage/{id}")
     public ModelAndView withdrawVerifyPage(@PathVariable("id") Integer id, Model model){
         PlayerTradeResp result = tradeService.getPlayerTradeById(id);
-        model.addAttribute("data",result);
-        model.addAttribute("title","审核");
-        model.addAttribute("table","提现审核");
-        model.addAttribute("edit",Boolean.TRUE);
+        this.getModel(result, model, "提现");
         return new ModelAndView("/trade/withdraw/edit");
     }
     @RequestMapping(value = "/withdrawVerify", method = RequestMethod.POST)
     public Result withdrawVerify(VerifyReq record){
-        logger.info("提现审核，{}",record);
-        String msg = "提现审核失败";
+        return withdrawAndTransferVerify(record,"提现");
+    }
+
+
+    /**
+     * 转账审核
+     * @param id 转账交易id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/transferVerifyPage/{id}")
+    public ModelAndView transferVerifyPage(@PathVariable("id") Integer id, Model model){
+        PlayerTradeResp result = tradeService.getPlayerTradeById(id);
+        this.getModel(result, model, "转账");
+        return new ModelAndView("/trade/transfer/edit");
+    }
+    @RequestMapping(value = "/transferVerify", method = RequestMethod.POST)
+    public Result transferVerify(VerifyReq record){
+        return withdrawAndTransferVerify(record,"转账");
+    }
+
+
+    private Result withdrawAndTransferVerify(VerifyReq record,String modelName){
+        logger.info(modelName + "审核，{}",record);
+        String msg = modelName + "审核失败";
         boolean success = Boolean.FALSE;
         try {
             if (VerifyStatus.PASS.getCode().equalsIgnoreCase(record.getVerifyStatus())
@@ -107,23 +124,22 @@ public class VerifyController {
                     msg = result.getMsg();
                 }
             }else {
-                msg = "提现审核状态不对，当前提交状态:"+record.getVerifyStatus();
+                msg = modelName + "审核状态不对，当前状态:"+record.getVerifyStatus();
             }
         }catch (Exception e){
-            msg = "提现审核异常";
-            logger.error("提现审核异常",e);
+            msg = modelName + "审核异常";
+            logger.error(modelName + "审核异常",e);
         }
         return new Result<>(success,msg);
     }
 
 
-
-
-
-
-
-
-
+    private void getModel(Object result,Model model,String modelName){
+        model.addAttribute("data",result);
+        model.addAttribute("title","审核");
+        model.addAttribute("table",modelName + "审核");
+        model.addAttribute("edit",Boolean.TRUE);
+    }
 
 
 

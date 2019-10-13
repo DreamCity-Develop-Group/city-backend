@@ -35,7 +35,7 @@ public interface VerifyCommonService {
      * @return
      */
     PlayerTrade createPlayerTrade(String payerId,Integer orderId,PlayerTrade playerTrade,String tradeType,
-                                  String tradeStatus,String inOutStatus,String descr);
+                                  String tradeStatus,String inOutStatus,String amountType,String descr);
 
 
     PlayerTrade updatePlayerTradeStatus(Integer tradeId,String tradeType,

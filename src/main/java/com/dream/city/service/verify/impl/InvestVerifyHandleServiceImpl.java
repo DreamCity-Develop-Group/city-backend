@@ -177,7 +177,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
             if (platformAccount != null){
                 playerTrade = verifyCommonService.createPlayerTrade(platformAccount.getAccPlayerId(),orderId,playerTrade,
                         TradeType.RECEIVABLES.getCode(),TradeStatus.IN.getCode(),AmountDynType.IN.getCode(),
-                        "将扣除玩家冻结usdt投资金额加到平台账户");
+                        "tradeAmount","将扣除玩家冻结usdt投资金额加到平台账户");
             }
             //生成平台账户交易流水
             if (playerTrade != null){

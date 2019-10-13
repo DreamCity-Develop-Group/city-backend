@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author
- * 玩家交易记录
+ * 玩家充值记录
  */
 @RestController
 @RequestMapping("/trade/recharge")

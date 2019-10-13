@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -50,17 +49,17 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         String msg = "";
         if (record.getTradeId() == null || (record.getTradeId() != null &&record.getTradeId() < 0)){
             msg = "交易id不能为空";
-            logger.error("提现审核失败，{}",msg);
+            logger.error("审核失败，{}",msg);
             return new Result<>(success,msg);
         }
-        //提现交易
+        //获取交易记录
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeId(record.getTradeId());
         PlayerTrade playerTrade = tradeService.getPlayerTrade(tradeReq);
 
         //生成审核记录
         TradeVerify verify = verifyCommonService.createVerify(record);
-        Result result = null;
+        Result<Boolean> result = null;
         if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.PASS.name())){
             //审核通过
             //玩家账户扣除金额
@@ -79,6 +78,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
     /**
      * 平台账户进账操作
+     * 扣除玩家冻结5MT税金加到平台账户
      * @param verifyReq
      * @param playerTrade
      * @param verify
@@ -90,18 +90,18 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         }else {
             PlayerAccount platformAccount = platformAccounts.get(0);
             //扣除玩家冻结5MT税金加到平台账户
-            platformAccount = verifyCommonService.platformAddAmount(playerTrade.getTradeAmount(),"mt");
+            platformAccount = verifyCommonService.platformAddAmount(playerTrade.getPersonalTax(),"mt");
             //生成平台账户交易记录
             if (platformAccount != null){
                 playerTrade = verifyCommonService.createPlayerTrade(platformAccount.getAccPlayerId(),null,playerTrade,
                         TradeType.RECEIVABLES.getCode(),TradeStatus.IN.getCode(),AmountDynType.IN.getCode(),
-                        "将扣除玩家冻结税金加到平台账户");
+                        "personalTax","将扣除玩家冻结税金加到平台账户");
             }
             //生成平台账户交易流水
             if (playerTrade != null){
                 verifyCommonService.createTradeDetail(platformAccount.getAccPlayerId(),
                         verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
-                        playerTrade.getTradeAmount(), TradeDetailType.RECEIVABLES_INVEST_TAX.getCode(),
+                        playerTrade.getPersonalTax(), TradeDetailType.RECEIVABLES_INVEST_TAX.getCode(),
                         "将扣除玩家冻结税金加到平台账户");
             }
         }
@@ -126,7 +126,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         if (updatePlayerAccount > 0){
             createPlayerTrade = verifyCommonService.updatePlayerTradeStatus(playerTrade.getTradeId(),
                     TradeType.WITHDRAW.getCode(),TradeStatus.UNFREEZE.getCode(),AmountDynType.IN.getCode(),
-                    "提现审核不通过解冻扣除金额");
+                    "审核不通过解冻扣除金额");
         }else {
             msg = "审核不通过返回冻结金额5MT税金失败";
         }
@@ -135,19 +135,19 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         if (createPlayerTrade != null){
             createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
                     playerTrade.getTradeId(),  verifyId, playerTrade.getTradeAmount(),
-                    TradeDetailType.WITHDRAW_UNFREEZE_USDT.getCode(), "提现审核不通过解冻扣除USDT");
+                    TradeDetailType.WITHDRAW_UNFREEZE_USDT.getCode(), "审核不通过解冻扣除USDT");
         }else {
-            msg = "提现审核不通过解冻扣除USDT失败";
+            msg = "审核不通过解冻扣除USDT失败";
         }
         if (createPlayerTradeDetai != null){
             createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
                     playerTrade.getTradeId(),  verifyId, playerTrade.getTradeAmount(),
-                    TradeDetailType.WITHDRAW_UNFREEZE_MT.getCode(), "提现审核不通过解冻扣除MT税金");
+                    TradeDetailType.WITHDRAW_UNFREEZE_MT.getCode(), "审核不通过解冻扣除MT税金");
         }else {
             msg = "审核不通生成解冻交易流水失败";
         }
         if (createPlayerTradeDetai == null){
-            msg = "提现审核不通过解冻扣除MT税金失败";
+            msg = "审核不通过解冻扣除MT税金失败";
         }else {
             success = Boolean.TRUE;
             msg = "审核成功！";
@@ -178,17 +178,17 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         if (updatePlayerAccount > 0){
             createPlayerTrade = verifyCommonService.updatePlayerTradeStatus(playerTrade.getTradeId(),
                     TradeType.WITHDRAW.getCode(),TradeStatus.OUT.getCode(),AmountDynType.OUT.getCode(),
-                    "提现审核扣除USDT冻结金额");
+                    "审核通过扣除USDT冻结金额");
         }else {
             msg = "玩家账户扣除税金失败";
         }
 
-        //玩家账户扣除流水
+        //玩家账户扣除USDT流水
         TradeDetail createPlayerTradeDetai = null;
         if (createPlayerTrade != null){
             createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
                     playerTrade.getTradeId(),  verifyId, playerTrade.getTradeAmount(),
-                    TradeDetailType.WITHDRAW_VERIFY.getCode(), "提现审核扣除USDT冻结金额");
+                    TradeDetailType.WITHDRAW_VERIFY.getCode(), "审核通过扣除USDT冻结金额");
         }else {
             msg = "生成玩家账户扣除金额记录失败";
         }
@@ -196,12 +196,12 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         if (createPlayerTradeDetai != null){
             createPlayerTradeDetai = verifyCommonService.createTradeDetail(playerTrade.getTradePlayerId(),  null,
                     playerTrade.getTradeId(),  verifyId, playerTrade.getPersonalTax(),
-                    TradeDetailType.WITHDRAW_VERIFY.getCode(), "提现审核扣除冻结税金");
+                    TradeDetailType.WITHDRAW_VERIFY.getCode(), "审核通过扣除冻结税金");
         }else {
             msg = "生成玩家账户扣除流水失败";
         }
         if (createPlayerTradeDetai == null){
-            msg = "提现审核扣除冻结税金失败";
+            msg = "审核通过扣除冻结税金失败";
         }else {
             success = Boolean.TRUE;
             msg = "审核成功！";

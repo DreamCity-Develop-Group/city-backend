@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">个人所得税：</label>
+                            <label class="col-sm-3 control-label">提现所得税：</label>
                             <div class="col-sm-8">
                                 <input id="personalTax" name="personalTax" class="form-control" type="text" readonly="readonly" value="${data.personalTax}">
                             </div>

@@ -100,17 +100,28 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
      */
     @Override
     public PlayerTrade createPlayerTrade(String payerId,Integer orderId,PlayerTrade playerTrade,String tradeType,
-                                          String tradeStatus,String inOutStatus,String descr){
+                                          String tradeStatus,String inOutStatus,String amountType,String descr){
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradePlayerId(payerId);
         tradeReq.setTradeOrderId(orderId);
         tradeReq.setTradeType(tradeType);
         tradeReq.setTradeStatus(tradeStatus);
         tradeReq.setInOutStatus(inOutStatus);
-        tradeReq.setEnterpriseTax(playerTrade.getEnterpriseTax());
-        tradeReq.setPersonalTax(playerTrade.getPersonalTax());
         tradeReq.setTradeAccId(playerTrade.getTradeAccId());
-        tradeReq.setTradeAmount(playerTrade.getTradeAmount());
+        if ("personalTax".equalsIgnoreCase(amountType)) {
+            tradeReq.setPersonalTax(playerTrade.getPersonalTax());
+        }else if ("enterpriseTax".equalsIgnoreCase(amountType)) {
+            tradeReq.setEnterpriseTax(playerTrade.getEnterpriseTax());
+        }else if ("tradeAmount".equalsIgnoreCase(amountType)) {
+            tradeReq.setTradeAmount(playerTrade.getTradeAmount());
+        }else if ("tax".equalsIgnoreCase(amountType)) {
+            tradeReq.setPersonalTax(playerTrade.getPersonalTax());
+            tradeReq.setEnterpriseTax(playerTrade.getEnterpriseTax());
+        }else {
+            tradeReq.setPersonalTax(playerTrade.getPersonalTax());
+            tradeReq.setEnterpriseTax(playerTrade.getEnterpriseTax());
+            tradeReq.setTradeAmount(playerTrade.getTradeAmount());
+        }
         tradeReq.setTradeDesc(descr);
         return tradeService.insertPlayerTrade(tradeReq);
     }
@@ -120,7 +131,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
                                          String tradeStatus, String inOutStatus, String descr) {
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeId(tradeId);
-        tradeReq.setTradeType(tradeType);
+        //tradeReq.setTradeType(tradeType);
         tradeReq.setTradeStatus(tradeStatus);
         tradeReq.setInOutStatus(inOutStatus);
         tradeReq.setTradeDesc(descr);
