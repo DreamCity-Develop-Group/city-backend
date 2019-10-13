@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2019-10-12 19:35:55
+Date: 2019-10-13 20:50:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,7 +54,7 @@ CREATE TABLE `city_dictionary` (
 -- ----------------------------
 -- Records of city_dictionary
 -- ----------------------------
-INSERT INTO `city_dictionary` VALUES ('1', '平台账户id', 'platform.account.accIds', '888888888,999999999', '1', '平台账户id，多个，都号隔开来自player_account表', null, null);
+INSERT INTO `city_dictionary` VALUES ('1', '平台账户id', 'platform.account.accIds', '4E2EE556055042AB80E3D164E51DDD1A', '1', '平台账户id，多个，都号隔开来自player_account表', null, null);
 INSERT INTO `city_dictionary` VALUES ('2', '注册密码salt', 'register.password.salt', 'DREAM_CITY_890@#$%', '1', '注册密码salt', null, null);
 
 -- ----------------------------
@@ -198,7 +198,7 @@ CREATE TABLE `city_player` (
 -- ----------------------------
 INSERT INTO `city_player` VALUES ('100', 'FD826FE2E378445594D23CA84C0C485D', '123', '123', '123', null, '', '0', '1', '2019-09-12 02:37:37', null);
 INSERT INTO `city_player` VALUES ('111', '99B1D351FD5242CD8F73E86A2BBC89A0', '17879502040', 'zp00', '123445', '123445', 'fcf7dd', '0', '1', '2019-09-28 11:31:28', '2019-10-04 21:13:42');
-INSERT INTO `city_player` VALUES ('112', 'E13D6322D389411C959CD7AC7A2B230F', '17879502041', 'zp01', '11111111', null, 'eb47d7', '0', '1', '2019-09-28 11:32:11', null);
+INSERT INTO `city_player` VALUES ('112', '4E2EE556055042AB80E3D164E51DDD1A', '17879502041', 'zp01', '11111111', null, 'eb47d7', '0', '1', '2019-09-28 11:32:11', null);
 INSERT INTO `city_player` VALUES ('113', 'A701ECCF318A4B018407C821A551DA81', '17896415468', 'sfdfsf', '111111', null, 'c7f8f9', '0', '1', '2019-10-04 16:43:55', null);
 INSERT INTO `city_player` VALUES ('114', '55698633E60848EEAEEB84A5CDC4B317', '17897945648', 'dfsd', '111111', null, 'e43865', '0', '1', '2019-10-04 16:48:52', null);
 INSERT INTO `city_player` VALUES ('115', '661964B73D22476AAE2444B97B3A7A57', '16848989456', 'awdw', '111111', null, '984c4e', '0', '1', '2019-10-04 17:08:02', null);
@@ -301,7 +301,7 @@ CREATE TABLE `invest_order` (
   `order_payer_id` varchar(64) DEFAULT NULL COMMENT '玩家ID',
   `order_name` varchar(50) DEFAULT NULL,
   `order_num` varchar(64) DEFAULT NULL,
-  `order_amount` decimal(9,4) unsigned DEFAULT NULL COMMENT '投资金额',
+  `order_amount` decimal(20,4) unsigned DEFAULT '0.0000' COMMENT '投资金额',
   `order_state` varchar(60) DEFAULT NULL COMMENT '状态(SUBSCRIBE预约，SUBSCRIBED预约中,SUBSCRIBE_PASS预约成功,INVEST投资,INVESTED已投资,MANAGEMENT经营中,EXTRACT可提取,FINISHED已完成,CANCEL取消,SUBSCRIBE_VERIFY_FAIL预约审核不通过，INVALID作废)',
   `order_repeat` tinyint(4) unsigned DEFAULT '0' COMMENT '是否复投（0否，1是）',
   `create_time` datetime DEFAULT NULL,
@@ -314,7 +314,7 @@ CREATE TABLE `invest_order` (
 -- ----------------------------
 -- Records of invest_order
 -- ----------------------------
-INSERT INTO `invest_order` VALUES ('1', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', '订单名1', '12141', '5.0000', 'MANAGEMENT', '0', '2019-10-02 12:43:21', '2019-10-12 18:59:34');
+INSERT INTO `invest_order` VALUES ('1', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', '订单名1', '12141', '5.0000', 'SUBSCRIBED', '0', '2019-10-02 12:43:21', '2019-10-13 18:43:04');
 INSERT INTO `invest_order` VALUES ('2', '2', '99B1D351FD5242CD8F73E86A2BBC89A0', '订单名2', '3341341342', '1.0000', 'INVESTED', '0', '2019-10-03 12:44:28', '2019-10-03 12:44:33');
 INSERT INTO `invest_order` VALUES ('3', '1', 'E13D6322D389411C959CD7AC7A2B230F', '订单名3', '63663', '5.0000', 'MANAGEMENT', '0', '2019-10-02 12:45:37', '2019-10-02 12:45:42');
 
@@ -441,23 +441,24 @@ CREATE TABLE `player_account` (
   `acc_player_id` varchar(64) NOT NULL COMMENT '账户玩家id',
   `acc_addr` varchar(255) DEFAULT NULL COMMENT '账户地址',
   `acc_pass` varchar(255) DEFAULT NULL COMMENT '账户密码',
-  `acc_usdt` decimal(9,4) NOT NULL DEFAULT '0.0000' COMMENT '账户usdt额度',
-  `acc_usdt_available` decimal(9,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'usdt可用金额',
-  `acc_usdt_freeze` decimal(9,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'usdt冻结金额',
-  `acc_mt` decimal(9,4) NOT NULL DEFAULT '0.0000' COMMENT '账户mt额度',
-  `acc_mt_available` decimal(9,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'mt可用金额',
-  `acc_mt_freeze` decimal(9,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'mt冻结金额',
-  `acc_income` decimal(9,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '积累总收入',
+  `acc_usdt` decimal(20,4) NOT NULL DEFAULT '0.0000' COMMENT '账户usdt额度',
+  `acc_usdt_available` decimal(20,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'usdt可用金额',
+  `acc_usdt_freeze` decimal(20,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'usdt冻结金额',
+  `acc_mt` decimal(20,4) NOT NULL DEFAULT '0.0000' COMMENT '账户mt额度',
+  `acc_mt_available` decimal(20,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'mt可用金额',
+  `acc_mt_freeze` decimal(20,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT 'mt冻结金额',
+  `acc_income` decimal(20,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '积累总收入',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`acc_id`),
   KEY `index_acc_player_id` (`acc_player_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='玩家账户表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='玩家账户表';
 
 -- ----------------------------
 -- Records of player_account
 -- ----------------------------
-INSERT INTO `player_account` VALUES ('1', '99B1D351FD5242CD8F73E86A2BBC89A0', 'aaaa', '123456', '1400.0000', '800.0000', '600.0000', '1000.0000', '900.0000', '98.0000', '10.0000', '2019-10-09 18:56:26', '2019-10-12 18:59:49');
+INSERT INTO `player_account` VALUES ('1', '4E2EE556055042AB80E3D164E51DDD1A', 'aaaa', '123456', '180200.0000', '12000200.0000', '60000.0000', '100025.0000', '90025.0000', '98.0000', '10.0000', '2019-10-09 18:56:26', '2019-10-13 20:29:15');
+INSERT INTO `player_account` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', 'qwergh', '123456', '22200220.0000', '1220220.0000', '19540.0000', '1000012.2000', '60012.2000', '357.7000', '10.0000', '2019-10-01 11:27:22', '2019-10-13 20:29:15');
 
 -- ----------------------------
 -- Table structure for player_account_log
@@ -652,9 +653,9 @@ CREATE TABLE `player_trade` (
   `trade_acc_id` int(10) unsigned NOT NULL COMMENT '账户id',
   `trade_player_id` varchar(64) DEFAULT NULL COMMENT '交易人id',
   `trade_order_id` int(11) unsigned DEFAULT NULL COMMENT '订单id',
-  `trade_amount` decimal(9,4) NOT NULL DEFAULT '0.0000' COMMENT '交易金额',
-  `personal_tax` decimal(9,4) unsigned DEFAULT NULL COMMENT '个人所得税',
-  `enterprise_tax` decimal(9,4) unsigned DEFAULT NULL COMMENT '企业所得税',
+  `trade_amount` decimal(20,4) NOT NULL DEFAULT '0.0000' COMMENT '交易金额',
+  `personal_tax` decimal(20,4) unsigned DEFAULT '0.0000' COMMENT '个人所得税',
+  `enterprise_tax` decimal(20,4) unsigned DEFAULT '0.0000' COMMENT '企业所得税',
   `trade_status` varchar(30) DEFAULT NULL COMMENT '交易状态(FREEZE冻结,OUT已出账,IN已入账)',
   `in_out` varchar(10) DEFAULT NULL COMMENT '入账还是出账(入账in,出账out)',
   `trade_type` varchar(30) DEFAULT NULL COMMENT '交易类型（充值:recharge,转账:transfer,提现:withdraw,购买mt:buy_mt,投资invest,投资收益:invest_earnings)',
@@ -664,18 +665,17 @@ CREATE TABLE `player_trade` (
   PRIMARY KEY (`trade_id`),
   KEY `index_trade_player_id` (`trade_player_id`),
   KEY `index_trade_order_id` (`trade_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='交易记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='交易记录表';
 
 -- ----------------------------
 -- Records of player_trade
 -- ----------------------------
-INSERT INTO `player_trade` VALUES ('1', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', '1', '200.0000', '1.0000', '1.0000', 'FREEZE', 'OUT', 'INVEST', '投资adgagaf', '2019-10-09 21:50:30', '2019-10-09 21:50:37');
+INSERT INTO `player_trade` VALUES ('1', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', '1', '200.0000', '1.0000', '1.0000', 'FREEZE', 'IN', 'INVEST', '待审核', '2019-10-09 21:50:30', '2019-10-13 18:43:08');
 INSERT INTO `player_trade` VALUES ('2', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '100.0000', null, null, 'IN', 'IN', 'RECHARGE', '充值', '2019-10-08 18:02:15', '2019-10-09 18:02:19');
-INSERT INTO `player_trade` VALUES ('3', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '10.0000', '0.1000', '0.0200', 'FREEZE', 'OUT', 'WITHDRAW', '提现冻结', '2019-10-08 18:03:52', '2019-10-09 18:03:56');
-INSERT INTO `player_trade` VALUES ('4', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '5.0000', '0.0100', '0.0200', 'OUT', 'OUT', 'WITHDRAW', '提现审核通过扣款', '2019-10-01 18:05:43', '2019-10-02 18:05:46');
+INSERT INTO `player_trade` VALUES ('3', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '10.0000', '5.0000', '0.0000', 'FREEZE', 'OUT', 'WITHDRAW', '待审核', '2019-10-08 18:03:52', '2019-10-13 17:24:13');
+INSERT INTO `player_trade` VALUES ('4', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '5.0000', '5.0000', '0.0000', 'OUT', 'OUT', 'WITHDRAW', '提现审核通过扣款', '2019-10-01 18:05:43', '2019-10-02 18:05:46');
 INSERT INTO `player_trade` VALUES ('5', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '2.0000', null, null, 'OUT', 'OUT', 'TRANSFER', '内部转账', '2019-10-03 18:07:14', '2019-10-04 18:07:19');
-INSERT INTO `player_trade` VALUES ('6', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '10.0000', null, null, 'FREEZE', 'OUT', 'TRANSFER', '外部转账', '2019-10-01 18:08:51', '2019-10-02 18:08:55');
-INSERT INTO `player_trade` VALUES ('8', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', '1', '200.0000', '1.0000', '1.0000', null, 'OUT', 'INVEST', '扣除冻结投资金额', '2019-10-12 18:59:53', '2019-10-12 18:59:53');
+INSERT INTO `player_trade` VALUES ('6', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '10.0000', '5.0000', null, 'FREEZE', 'OUT', 'TRANSFER', '待审核', '2019-10-01 18:08:51', '2019-10-13 20:29:15');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -1046,7 +1046,7 @@ CREATE TABLE `trade_detail` (
   `order_id` int(11) unsigned DEFAULT NULL COMMENT '订单id',
   `player_id` varchar(64) DEFAULT NULL COMMENT '交易人',
   `trade_detail_type` varchar(50) DEFAULT NULL COMMENT '交易明细类型（充值:recharge,usdt投资收益:usdt_earnings,mt投资收益:mt_earnings,usdt投资税金:usdt_invest_tax,mt投资税金:mt_invest_tax,个人所得税:personal_tax,企业所得税:enterprise_tax,转账所得税:transfer_tax,转账冻结:transfer_freeze,提现冻结:withdraw_freeze,购买mt冻结:buy_mt_freeze,usdt投资冻结:usdt_invest_freeze,mt投资冻结:mt_inves_freeze,转账审核通过扣款:transfer_verify,提现审核通过扣款:withdraw_verify,usdt投资审核通过扣款:usdt_invest_verify',
-  `trade_amount` decimal(11,4) DEFAULT NULL COMMENT '交易金额',
+  `trade_amount` decimal(20,4) DEFAULT '0.0000' COMMENT '交易金额',
   `verify_time` datetime DEFAULT NULL COMMENT '交易审核时间',
   `descr` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
@@ -1055,20 +1055,11 @@ CREATE TABLE `trade_detail` (
   KEY `index_player_id` (`player_id`),
   KEY `index_order_id` (`order_id`),
   KEY `index_verify_id` (`verify_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='交易流水表';
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='交易流水表';
 
 -- ----------------------------
 -- Records of trade_detail
 -- ----------------------------
-INSERT INTO `trade_detail` VALUES ('1', '1', '1', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', 'USDT_INVEST_FREEZE', '200.0000', '2019-10-10 18:22:17', '投资冻结', '2019-10-10 18:22:17');
-INSERT INTO `trade_detail` VALUES ('2', '2', null, null, '99B1D351FD5242CD8F73E86A2BBC89A0', 'RECHARGE', '100.0000', '2019-10-04 18:12:07', '充值', '2019-10-04 18:11:40');
-INSERT INTO `trade_detail` VALUES ('3', '3', '1', null, '99B1D351FD5242CD8F73E86A2BBC89A0', 'WITHDRAW_FREEZE', '10.0000', '2019-10-10 18:23:55', '提现冻结金额', '2019-10-10 18:23:55');
-INSERT INTO `trade_detail` VALUES ('4', '4', '4', null, '99B1D351FD5242CD8F73E86A2BBC89A0', 'WITHDRAW_FREEZE', '5.0000', '2019-10-10 18:24:55', '提现冻结金额', '2019-10-10 18:24:55');
-INSERT INTO `trade_detail` VALUES ('5', '4', '2', null, '99B1D351FD5242CD8F73E86A2BBC89A0', 'WITHDRAW_VERIFY', '5.0000', '2019-10-10 18:24:57', '提现审核通过扣款', '2019-10-10 18:24:57');
-INSERT INTO `trade_detail` VALUES ('6', '6', '5', null, '99B1D351FD5242CD8F73E86A2BBC89A0', 'TRANSFER_FREEZE', '10.0000', '2019-10-10 18:25:19', '转账冻结', '2019-10-10 18:25:19');
-INSERT INTO `trade_detail` VALUES ('7', '8', '15', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', 'USDT_INVEST_VERIFY', '200.0000', '2019-10-12 11:00:01', 'usdt投资审核通过扣款', '2019-10-12 19:00:01');
-INSERT INTO `trade_detail` VALUES ('8', '8', '15', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', 'MT_INVEST_PERSONAL_TAX', '1.0000', '2019-10-12 11:00:03', 'mt投资个人税金', '2019-10-12 19:00:03');
-INSERT INTO `trade_detail` VALUES ('9', '8', '15', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', 'MT_INVEST_ENTERPRISE_TAX', '1.0000', '2019-10-12 11:00:05', 'mt投资企业税金', '2019-10-12 19:00:05');
 
 -- ----------------------------
 -- Table structure for trade_verify
@@ -1084,7 +1075,7 @@ CREATE TABLE `trade_verify` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`verify_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='交易审核表';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='交易审核表';
 
 -- ----------------------------
 -- Records of trade_verify
@@ -1094,9 +1085,6 @@ INSERT INTO `trade_verify` VALUES ('2', '1', '4', null, 'PASS', '提现审核通
 INSERT INTO `trade_verify` VALUES ('3', null, '3', null, 'WAIT', '待审核', '2019-10-05 20:18:15', '2019-10-05 20:18:15');
 INSERT INTO `trade_verify` VALUES ('4', null, '4', null, 'WAIT', '提现冻结', null, null);
 INSERT INTO `trade_verify` VALUES ('5', null, '6', null, 'WAIT', '转账冻结', null, null);
-INSERT INTO `trade_verify` VALUES ('10', null, null, '1', 'WAIT', 'ssss', '2019-10-12 18:29:41', '2019-10-12 18:29:41');
-INSERT INTO `trade_verify` VALUES ('11', null, null, '1', 'WAIT', 'wwwww', '2019-10-12 18:52:14', '2019-10-12 18:52:14');
-INSERT INTO `trade_verify` VALUES ('15', null, null, '1', 'PASS', 'ok', '2019-10-12 18:59:34', '2019-10-12 18:59:34');
 
 -- ----------------------------
 -- Table structure for user
