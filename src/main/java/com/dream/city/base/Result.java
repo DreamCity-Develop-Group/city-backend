@@ -43,10 +43,12 @@ public class Result<T> {
         if (code == Codes.OK.getCode()) {
             this.success = Boolean.TRUE;
         }
+        this.data = null;
     }
 
     public Result(int code, T data) {
         super();
+        this.msg = null;
         this.code = code;
         this.data = data;
         if (code == Codes.OK.getCode()) {
@@ -67,15 +69,17 @@ public class Result<T> {
     public Result(boolean success, String msg) {
         super();
         this.success = success;
-        this.msg = msg;
         if (success) {
             this.code = Codes.OK.getCode();
         }
+        this.msg = msg;
+        this.data = null;
     }
 
     public Result(boolean success, T data) {
         super();
         this.success = success;
+        this.msg = null;
         this.data = data;
         if (success) {
             this.code = Codes.OK.getCode();
@@ -103,6 +107,11 @@ public class Result<T> {
     public Result(boolean success){
         super();
         this.success = success;
+        this.msg = null;
+        this.data = null;
+        if (success) {
+            this.code = Codes.OK.getCode();
+        }
     }
 
     public boolean getSuccess() {

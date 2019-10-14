@@ -61,8 +61,8 @@ public class VerifyController {
                     || VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(record.getVerifyStatus())){
                 Result result = verifyHandleService.subscribeOrderVerify(record);
                 if (result != null){
-                    success = Boolean.TRUE;
-                    msg = "投资预约审核成功";
+                    success = result.getSuccess();
+                    msg = result.getMsg();
                 }
             }else {
                 msg = "投资预约审核状态不对，当前提交状态:"+record.getVerifyStatus();

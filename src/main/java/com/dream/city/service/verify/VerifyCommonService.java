@@ -1,6 +1,8 @@
 package com.dream.city.service.verify;
 
 
+import com.alibaba.fastjson.JSONObject;
+import com.dream.city.base.Result;
 import com.dream.city.base.model.entity.*;
 import com.dream.city.base.model.req.VerifyReq;
 
@@ -18,7 +20,7 @@ public interface VerifyCommonService {
      * @param amountType
      * @return
      */
-    int playerSubtractAmount(String accPlayerId,BigDecimal amount,String amountType);
+    Result<JSONObject> playerSubtractAmount(String accPlayerId, BigDecimal amount, String amountType);
 
 
     /**

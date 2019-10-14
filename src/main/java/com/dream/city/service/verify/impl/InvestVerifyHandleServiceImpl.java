@@ -1,5 +1,6 @@
 package com.dream.city.service.verify.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dream.city.base.Result;
 import com.dream.city.base.exception.BusinessException;
 import com.dream.city.base.model.entity.*;
@@ -41,9 +42,10 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result subscribeOrderVerify(VerifyReq verifyReq) throws BusinessException {
+    public Result<JSONObject> subscribeOrderVerify(VerifyReq verifyReq) throws BusinessException {
         boolean success = Boolean.FALSE;
         String descr = "预约审核失败";
+        JSONObject json = new JSONObject();
         //获取审核订单
         InvestOrderResp order = orderService.getInvestOrderById(verifyReq.getOrderId());
         //审核将状态改成投资
@@ -72,9 +74,10 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
                     if (VerifyStatus.PASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
                         //审核通过扣除冻结金额
                         //玩家账户扣除冻结投资金额
-                        TradeDetail tradeDetail = this.playerAcountSubtractAmount(verifyReq, playerTrade, order, verify);
+                        Result<JSONObject> playerAcountSubtractAmountResult = this.playerAcountSubtractAmount(verifyReq, playerTrade, order, verify);
                         //平台账户进账
-                        if (tradeDetail != null){
+                        if (playerAcountSubtractAmountResult.getSuccess()){
+                            json.putAll(playerAcountSubtractAmountResult.getData());
                             this.platformAcountAddAmount(verifyReq, playerTrade, order.getOrderId(), verify);
                         }
                     }else if (VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
@@ -85,7 +88,6 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
                         descr = result.getMsg();
                     }
                     if (success) {
-                        success = Boolean.TRUE;
                         descr = "预约审核成功";
                     }
                 }
@@ -93,7 +95,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
                 descr = "预约投资状态不对，当前状态是：" + order.getOrderState();
             }
         }
-        return new Result(success,descr);
+        return new Result<>(success,descr,json);
     }
 
 
@@ -193,21 +195,28 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
     /**
      * 玩家账户扣除冻结投资金额
      */
-    private TradeDetail playerAcountSubtractAmount(VerifyReq verifyReq,PlayerTrade playerTrade,InvestOrderResp order,TradeVerify verify){
+    private Result<JSONObject> playerAcountSubtractAmount(VerifyReq verifyReq,PlayerTrade playerTrade,InvestOrderResp order,TradeVerify verify){
+        boolean success = Boolean.FALSE;
+        String msg = "扣除冻结投资金额失败";
+        JSONObject json = new JSONObject();
         //扣除冻结usdt投资金额
-        int i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getTradeAmount(),"usdtfreeze");
+        Result<JSONObject> result = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getTradeAmount(),"usdtfreeze");
         //扣除冻结mt投资税
-        if (i > 0){
+        if (result.getSuccess()){
+            json.putAll(result.getData());
+            json.put("tradeAmount",playerTrade.getTradeAmount());
             //扣个人所得税
-            i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getPersonalTax(),"mtfreeze");
+            result = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getPersonalTax(),"mtfreeze");
         }
-        if (i > 0){
+        if (result.getSuccess()){
+            json.put("personalTax",playerTrade.getPersonalTax());
             //扣企业所得税
-            i = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getEnterpriseTax(),"mtfreeze");
+            result = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getEnterpriseTax(),"mtfreeze");
         }
 
         //更新交易记录
-        if (i > 0){
+        if (result.getSuccess()){
+            json.put("enterpriseTax",playerTrade.getEnterpriseTax());
             playerTrade = verifyCommonService.updatePlayerTradeStatus(playerTrade.getTradeId(),
                     TradeType.INVEST.getCode(),TradeStatus.OUT.getCode(),AmountDynType.OUT.getCode(),"扣除冻结投资金额");
         }
@@ -229,7 +238,11 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
             tradeDetail = verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
                     playerTrade.getEnterpriseTax(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getCode(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getDesc());
         }
-        return tradeDetail;
+        if (tradeDetail != null){
+            success = Boolean.TRUE;
+            msg = "扣除冻结投资金额成功";
+        }
+        return new Result<>(success,msg,json);
     }
 
     /**

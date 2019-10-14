@@ -1,6 +1,7 @@
 package com.dream.city.service.verify;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.req.VerifyReq;
 
@@ -16,7 +17,7 @@ public interface WithdrawVerifyHandleService {
      * @param record
      * @return
      */
-    Result<Boolean> withdrawVerify(VerifyReq record) ;
+    Result<JSONObject> withdrawVerify(VerifyReq record) ;
 
 
 

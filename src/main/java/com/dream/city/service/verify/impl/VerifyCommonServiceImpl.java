@@ -1,5 +1,7 @@
 package com.dream.city.service.verify.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.dream.city.base.Result;
 import com.dream.city.base.model.entity.*;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.model.req.VerifyReq;
@@ -36,7 +38,9 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int playerSubtractAmount(String accPlayerId,BigDecimal amount,String amountType) {
+    public Result<JSONObject> playerSubtractAmount(String accPlayerId, BigDecimal amount, String amountType) {
+        boolean success = Boolean.FALSE;
+        String msg = "扣减金额失败";
         PlayerAccount getPlayerAccountReq = new PlayerAccount();
         getPlayerAccountReq.setAccPlayerId(accPlayerId);
         PlayerAccount playerAccount = accountService.getPlayerAccount(getPlayerAccountReq);
@@ -57,7 +61,15 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
             updateAccountReq.setAccMt(playerAccount.getAccMt().subtract(amount));
             updateAccountReq.setAccMtAvailable(playerAccount.getAccMtAvailable().subtract(amount));
         }
-        return accountService.updatePlayerAccount(updateAccountReq);
+        int i = accountService.updatePlayerAccount(updateAccountReq);
+        JSONObject json = new JSONObject();
+        if (i > 0){
+            success = Boolean.TRUE;
+            msg = "扣减金额成功";
+            json.put("accAddr",playerAccount.getAccAddr());
+            json.put("playerId",playerAccount.getAccPlayerId());
+        }
+        return new Result<>(success,msg,json);
     }
 
 
@@ -131,7 +143,6 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
                                          String tradeStatus, String inOutStatus, String descr) {
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeId(tradeId);
-        //tradeReq.setTradeType(tradeType);
         tradeReq.setTradeStatus(tradeStatus);
         tradeReq.setInOutStatus(inOutStatus);
         tradeReq.setTradeDesc(descr);

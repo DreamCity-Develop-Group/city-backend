@@ -1,5 +1,6 @@
 package com.dream.city.service.verify.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dream.city.base.exception.BusinessException;
 import com.dream.city.base.model.entity.*;
 import com.dream.city.base.model.enu.*;
@@ -43,7 +44,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<Boolean> withdrawVerify(VerifyReq record) {
+    public Result<JSONObject> withdrawVerify(VerifyReq record) {
         boolean success = Boolean.FALSE;
         String msg = "";
         if (record.getTradeId() == null || (record.getTradeId() != null &&record.getTradeId() < 0)){
@@ -58,12 +59,11 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
         //生成审核记录
         TradeVerify verify = verifyCommonService.createVerify(record);
-        Result<Boolean> result = null;
+        Result<JSONObject> result = null;
         if (record.getVerifyStatus().equalsIgnoreCase(VerifyStatus.PASS.name())){
             //审核通过
             //玩家账户扣除金额
             result = this.playerAcountSubtractAmount(playerTrade,verify.getVerifyId());
-
             //扣除税金加到平台账户
             if (result.getSuccess()){
                 this.platformAcountAddAmount(record, playerTrade,verify);
@@ -106,7 +106,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         }
     }
 
-    private Result<Boolean> unfreezePlayerAccount(PlayerTrade playerTrade,Integer verifyId){
+    private Result<JSONObject> unfreezePlayerAccount(PlayerTrade playerTrade,Integer verifyId){
         boolean success = Boolean.FALSE;
         String msg = "";
         //解冻usdt
@@ -158,14 +158,15 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
      * 玩家账户扣除金额 扣冻结Usdt金额
      * @param playerTrade
      */
-    private Result<Boolean> playerAcountSubtractAmount(PlayerTrade playerTrade,Integer verifyId){
+    private Result<JSONObject> playerAcountSubtractAmount(PlayerTrade playerTrade, Integer verifyId){
         boolean success = Boolean.FALSE;
         String msg = "";
-        int updatePlayerAccount = verifyCommonService.playerSubtractAmount(playerTrade.getTradePlayerId(),
+        Result<JSONObject> updatePlayerAccount = verifyCommonService.playerSubtractAmount(playerTrade.getTradePlayerId(),
                 playerTrade.getTradeAmount(),"usdtfreeze");
         //玩家账户扣除税金 扣冻结税金5mt
         //todo 5mt改为从规则中取
-        if (updatePlayerAccount > 0){
+        if (updatePlayerAccount.getSuccess()){
+            updatePlayerAccount.getData().put("tradeAmount",playerTrade.getTradeAmount());
             updatePlayerAccount = verifyCommonService.playerSubtractAmount(playerTrade.getTradePlayerId(),
                     playerTrade.getPersonalTax(), "mtfreeze");
         }else {
@@ -174,7 +175,8 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
 
         //更新玩家交易记录
         PlayerTrade createPlayerTrade = null;
-        if (updatePlayerAccount > 0){
+        if (updatePlayerAccount.getSuccess()){
+            updatePlayerAccount.getData().put("personalTax",playerTrade.getPersonalTax());
             createPlayerTrade = verifyCommonService.updatePlayerTradeStatus(playerTrade.getTradeId(),
                     TradeType.WITHDRAW.getCode(),TradeStatus.OUT.getCode(),AmountDynType.OUT.getCode(),
                     "审核通过扣除USDT冻结金额");
@@ -205,7 +207,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
             success = Boolean.TRUE;
             msg = "审核成功！";
         }
-        return new Result<>(success,msg);
+        return new Result<>(success,msg,updatePlayerAccount.getData());
     }
 
 
