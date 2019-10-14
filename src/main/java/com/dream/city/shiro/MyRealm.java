@@ -1,9 +1,12 @@
 package com.dream.city.shiro;
 
+import com.alibaba.fastjson.JSON;
 import com.dream.city.base.model.entity.Menu;
 import com.dream.city.base.model.entity.Role;
 import com.dream.city.base.model.entity.User;
 import com.dream.city.base.utils.EncryptUtils;
+import com.dream.city.base.utils.RedisKeys;
+import com.dream.city.base.utils.RedisUtils;
 import com.dream.city.service.user.UserService;
 import com.dream.city.service.setting.MenuService;
 import com.dream.city.service.setting.RoleService;
@@ -42,6 +45,11 @@ public class MyRealm extends AuthorizingRealm {
 
 	@Autowired
 	private MenuService menuService;
+
+	@Autowired
+	private RedisUtils redisUtils;
+
+
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
@@ -88,7 +96,7 @@ public class MyRealm extends AuthorizingRealm {
 		}
 
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
-
+		redisUtils.setStr(RedisKeys.CURRENT_USER + loginName, JSON.toJSONString(user));
 		return info;
 	}
 

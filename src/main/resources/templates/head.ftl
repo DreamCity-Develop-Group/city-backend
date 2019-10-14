@@ -4,6 +4,7 @@
     </script>
 
     <div class="navbar-container" id="navbar-container">
+        <input type="hidden" id="username" name="username" value="${user.loginName}">
         <div class="navbar-header pull-left">
             <a href="#" class="navbar-brand">
                 <small>
@@ -17,10 +18,11 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="${ctx}/avatars/user.jpg" alt="Jason's Photo" />
+                        <#--<img class="nav-user-photo" src="${ctx}/avatars/user.jpg" alt="Jason's Photo" />-->
+                        <img class="nav-user-photo" src="${ctx}/${user.photo}" alt="User's Photo" />
                         <span class="user-info">
-									<small>欢迎光临,</small>
-									Jason
+									<small>欢迎光临!</small>
+									${user.loginName}
 								</span>
 
                         <i class="icon-caret-down"></i>

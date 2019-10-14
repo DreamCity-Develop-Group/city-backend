@@ -26,6 +26,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 @Import(ShiroManager.class)
 public class ShiroConfig {
@@ -46,7 +49,7 @@ public class ShiroConfig {
 	private int maxIdle;
 	@Value("${spring.redis.jedis.pool.min-idle:1}")
 	private int minIdle;
-	@Value("${spring.redis.jedis.timeout:-1}")
+	@Value("${spring.redis.jedis.timeout:0}")
 	private int timeout;
 
 	@Value("${dreamcity.register.password.salt:0123456789}")
@@ -150,22 +153,20 @@ public class ShiroConfig {
 	 * 生命周期处理器
 	 * @return
 	 */
-	/*@Bean(name = "lifecycleBeanPostProcessor")
-	 public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-		 return new LifecycleBeanPostProcessor();
-	 }*/
-	 @Bean
+	 /*@Bean
 	 public HashedCredentialsMatcher hashedCredentialsMatcher() {
 		 HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-		 credentialsMatcher.setHashAlgorithmName("MD5"); //加密方式
-		 credentialsMatcher.setHashIterations(2);//散列次数
+		 //加密方式
+		 credentialsMatcher.setHashAlgorithmName("MD5");
+		 //散列次数
+		 credentialsMatcher.setHashIterations(2);
 		 return credentialsMatcher;
-	 }
+	 }*/
 	@Bean(name = "realm")
 	@DependsOn("lifecycleBeanPostProcessor")
 	 public Realm realm() {
 		 MyRealm customRealm = new MyRealm();
-		 customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+		 //customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		 customRealm.setAuthenticationCachingEnabled(true);
 		 customRealm.setAuthorizationCachingEnabled(true);
 		 return customRealm;
@@ -211,11 +212,14 @@ public class ShiroConfig {
 		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
 		cookieRememberMeManager.setCookie(rememberMeCookie());
 		// rememberMe cookie 加密的密钥
-		cookieRememberMeManager.setCipherKey(Base64.decode(salt));
+		//cookieRememberMeManager.setCipherKey(Base64.decode(salt));
 		return cookieRememberMeManager;
 	}
 
-	// RedisSessionDao 插件
+	/**
+	 * RedisSessionDao 插件
+	 * @return
+	 */
 	@Bean
 	public RedisSessionDAO redisSessionDAO() {
 		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
@@ -226,13 +230,18 @@ public class ShiroConfig {
 	public DefaultWebSessionManager sessionManager() {
 		DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
 		defaultWebSessionManager.setSessionDAO(redisSessionDAO());
-		defaultWebSessionManager.setGlobalSessionTimeout(3600 * 1000);//单位毫秒
+		//单位毫秒
+		defaultWebSessionManager.setGlobalSessionTimeout(3600 * 1000);
 		//defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
 		//defaultWebSessionManager.setSessionIdCookieEnabled(false);
 		return defaultWebSessionManager;
 	}
 
-	// 开启 shiro aop 注解模式  注意需要注解依赖
+	/**
+	 * 开启 shiro aop 注解模式  注意需要注解依赖
+	 * @param securityManager
+	 * @return
+	 */
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager securityManager) {
 		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
@@ -247,17 +256,15 @@ public class ShiroConfig {
 	@DependsOn("securityManager")
 	@ConditionalOnMissingBean
 	public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
-
 		ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
 		shiroFilter.setSecurityManager(securityManager);
-		shiroFilter.setUnauthorizedUrl("*/*");
-		/*shiroFilter.setLoginUrl("/admin/login");
+		//shiroFilter.setUnauthorizedUrl("*/*");
+		shiroFilter.setLoginUrl("/admin/login");
 		shiroFilter.setSuccessUrl("/admin/index");
 		shiroFilter.setUnauthorizedUrl("/previlige/no");
 		Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
 
 		filterChainDefinitionMap.put("/admin/login", "anon");
-
 		filterChainDefinitionMap.put("/user/index", "perms[system:user:index]");
 		filterChainDefinitionMap.put("/user/add", "perms[system:user:add]");
 		filterChainDefinitionMap.put("/user/edit", "perms[system:user:edit]");
@@ -279,7 +286,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/user/**", "authc");
 		filterChainDefinitionMap.put("/role/**", "authc");
 		filterChainDefinitionMap.put("/menu/**", "authc");
-		shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);*/
+		shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilter;
 	}
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import java.util.Locale;
 
 @Configuration
 public class FreeMarkerConfig {
@@ -16,6 +17,7 @@ public class FreeMarkerConfig {
     public void setSharedVariable() {
     	try {
 			configuration.setSharedVariable("shiro", new ShiroTags());
+            configuration.setEncoding(Locale.getDefault(),"UTF-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

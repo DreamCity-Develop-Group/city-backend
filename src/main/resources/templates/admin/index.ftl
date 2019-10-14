@@ -92,10 +92,10 @@
 
 									欢迎使用
 									<strong class="green">
-										Ace后台管理系统
-										<small>(v1.2)</small>
+										Deram City 后台管理系统
+										<#--<small>(v1.2)</small>-->
 									</strong>
-									,轻量级好用的后台管理系统模版.	
+									<#--,轻量级好用的后台管理系统模版.	-->
 								</div>
 
 								<div class="row">
