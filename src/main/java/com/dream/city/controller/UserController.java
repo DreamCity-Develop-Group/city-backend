@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Codes;
 import com.dream.city.base.ResponseResult;
 import com.dream.city.base.model.dto.UserDto;
@@ -32,7 +33,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 @CrossOrigin
-public class UserController {
+public class UserController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.model.entity.CityFile;
 import com.dream.city.service.other.FileService;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/other/file")
-public class FileController {
+public class FileController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

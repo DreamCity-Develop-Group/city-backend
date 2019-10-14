@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.RuleItem;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/setting/rule/item")
-public class RuleItemController {
+public class RuleItemController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

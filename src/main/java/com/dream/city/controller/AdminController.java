@@ -2,6 +2,8 @@ package com.dream.city.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dream.city.base.model.entity.User;
+import com.dream.city.base.model.vo.UserVo;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.base.utils.RedisKeys;
 import com.dream.city.base.utils.RedisUtils;
 import com.dream.city.service.user.UserService;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -34,8 +38,7 @@ public class AdminController {
 
 
 	@RequestMapping(value = "/login" , method = RequestMethod.GET)
-	public String login(ModelMap model) {
-		model.put("user",new User());
+	public String login() {
 		return "admin/login";
 	}
 
@@ -44,12 +47,24 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String username,
-						@RequestParam("password") String password, ModelMap model) {
+						@RequestParam("password") String password, ModelMap model,HttpServletRequest request) {
 		try {
 			Subject subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 			subject.login(token);
-			return redirect("/admin/index?user=" + username);
+			Object object = subject.getPrincipal();
+			UserVo userVo = new UserVo();
+			if (object != null){
+				userVo = DataUtils.toJavaObject(object,UserVo.class);
+			}
+			String sid = request.getRequestedSessionId();
+			if (userVo != null && StringUtils.isNotBlank(sid) && !redisUtils.hasKey(RedisKeys.CURRENT_USER + sid)){
+				User user = userService.findUserByName(userVo.getLoginName());
+				userVo = DataUtils.toJavaObject(user,UserVo.class);
+				request.getSession().setAttribute(RedisKeys.CURRENT_USER + sid, userVo);
+				redisUtils.setStr(RedisKeys.CURRENT_USER + sid, JSON.toJSONString(userVo));
+			}
+			return redirect("/admin/index");
 		} catch (AuthenticationException e) {
 			model.put("message", e.getMessage());
 			logger.error("用户登录验证异常",e);
@@ -60,35 +75,30 @@ public class AdminController {
 
 
 	@RequestMapping(value = "/logout" , method = RequestMethod.GET)
-	public String logout(ModelMap model) {
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		Subject subject = SecurityUtils.getSubject();
-		Object object = subject.getPrincipal();
-		String loginName = null;
-		if (object != null){
-			Object json = JSON.toJSON(object);
-			Map map = JSON.parseObject(JSON.toJSONString(json));
-			if (map != null && map.containsKey("loginName")){
-				loginName = String.valueOf(map.get("loginName"));
-			}
-		}
-		if (StringUtils.isNotBlank(loginName) && redisUtils.hasKey(RedisKeys.CURRENT_USER + loginName)){
-			redisUtils.del(RedisKeys.CURRENT_USER + loginName);
-		}
 		subject.logout();
-		model.put("user",new User());
+		String sid = request.getRequestedSessionId();
+		if (StringUtils.isNotBlank(sid) && redisUtils.hasKey(RedisKeys.CURRENT_USER + sid)){
+			redisUtils.del(RedisKeys.CURRENT_USER + sid);
+		}
 		return redirect("admin/login");
 	}
 
 	@RequestMapping(value ={"","/index"}, method = RequestMethod.GET)
-	public String index(String user,ModelMap model){
-		User data = new User();
-		if (StringUtils.isNotBlank(user)) {
-			data = userService.findUserByName(user);
-			if (data != null && StringUtils.isNotBlank(data.getLoginName()) && !redisUtils.hasKey(RedisKeys.CURRENT_USER + data.getLoginName())){
-				redisUtils.setStr(RedisKeys.CURRENT_USER + data.getLoginName(), JSON.toJSONString(data));
+	public String index(HttpServletRequest request){
+		String sid = request.getRequestedSessionId();
+		Object userVoObject = request.getSession().getAttribute(RedisKeys.CURRENT_USER + sid);
+		UserVo userVo = new UserVo();
+		if (userVoObject == null){
+			if (redisUtils.hasKey(RedisKeys.CURRENT_USER + sid)){
+				String userVoStr = redisUtils.getStr(RedisKeys.CURRENT_USER + sid);
+				userVo = DataUtils.toJavaObject(userVoStr,UserVo.class);
 			}
+		}else {
+			userVo = DataUtils.toJavaObject(userVoObject,UserVo.class);
 		}
-		model.put("user",data);
+		request.setAttribute("user",userVo);
 		return "admin/index";
 	}
 

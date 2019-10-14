@@ -18,8 +18,11 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <#--<img class="nav-user-photo" src="${ctx}/avatars/user.jpg" alt="Jason's Photo" />-->
-                        <img class="nav-user-photo" src="${ctx}/${user.photo}" alt="User's Photo" />
+                        <#if '${user.loginName}' != ''>
+                            <img class="nav-user-photo" src="${ctx}/${user.photo}" alt="User's Photo" />
+                        <#else>
+                            <img class="nav-user-photo" src="${ctx}/avatars/user.jpg" alt="Photo" />
+                        </#if>
                         <span class="user-info">
 									<small>欢迎光临!</small>
 									${user.loginName}

@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.SalesOrder;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 @RequestMapping("/trade/buymt")
-public class SalesOrderController {
+public class SalesOrderController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

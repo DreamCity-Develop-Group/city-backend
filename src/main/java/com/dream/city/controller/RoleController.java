@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Codes;
 import com.dream.city.base.ResponseResult;
 import com.dream.city.base.model.dto.RoleDto;
@@ -21,7 +22,7 @@ import java.util.Map;
 @Controller
 @CrossOrigin
 @RequestMapping("/role")
-public class RoleController {
+public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;

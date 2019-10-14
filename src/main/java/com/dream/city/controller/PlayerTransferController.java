@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.enu.AmountDynType;
@@ -25,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 @RequestMapping("/trade/transfer")
-public class PlayerTransferController {
+public class PlayerTransferController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

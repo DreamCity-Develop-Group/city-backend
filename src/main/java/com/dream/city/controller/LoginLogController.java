@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.req.LoginLogReq;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/player/loginlog")
-public class LoginLogController {
+public class LoginLogController extends BaseController {
 
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());

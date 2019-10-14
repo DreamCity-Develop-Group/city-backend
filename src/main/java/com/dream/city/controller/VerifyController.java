@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.enu.VerifyStatus;
 import com.dream.city.base.model.req.VerifyReq;
@@ -25,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 @RequestMapping("/verify")
-public class VerifyController {
+public class VerifyController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

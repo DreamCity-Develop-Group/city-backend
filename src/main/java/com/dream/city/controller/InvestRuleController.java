@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.InvestRule;
@@ -31,7 +32,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/setting/rule/invest")
-public class InvestRuleController {
+public class InvestRuleController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

@@ -1,5 +1,6 @@
 package com.dream.city.controller;
 
+import com.dream.city.base.BaseController;
 import com.dream.city.base.Codes;
 import com.dream.city.base.model.entity.Menu;
 import com.dream.city.base.model.vo.ZtreeView;
@@ -22,7 +23,7 @@ import java.util.*;
 @Controller
 @CrossOrigin
 @RequestMapping("/menu")
-public class MenuController {
+public class MenuController  extends BaseController {
 
     @Autowired
     private MenuService menuService;
