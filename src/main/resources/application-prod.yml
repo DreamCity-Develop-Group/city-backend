@@ -7,7 +7,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: localhost
+    host: 103.107.237.198
     port: 6379
     database: 0
     password: 123456

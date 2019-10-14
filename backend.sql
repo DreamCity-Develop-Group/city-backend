@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2019-10-13 20:50:18
+Date: 2019-10-14 18:37:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -457,8 +457,8 @@ CREATE TABLE `player_account` (
 -- ----------------------------
 -- Records of player_account
 -- ----------------------------
-INSERT INTO `player_account` VALUES ('1', '4E2EE556055042AB80E3D164E51DDD1A', 'aaaa', '123456', '180200.0000', '12000200.0000', '60000.0000', '100025.0000', '90025.0000', '98.0000', '10.0000', '2019-10-09 18:56:26', '2019-10-13 20:29:15');
-INSERT INTO `player_account` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', 'qwergh', '123456', '22200220.0000', '1220220.0000', '19540.0000', '1000012.2000', '60012.2000', '357.7000', '10.0000', '2019-10-01 11:27:22', '2019-10-13 20:29:15');
+INSERT INTO `player_account` VALUES ('1', '4E2EE556055042AB80E3D164E51DDD1A', 'aaaa', '123456', '180200.0000', '12000200.0000', '60000.0000', '100025.0000', '90025.0000', '980.0000', '10.0000', '2019-10-09 18:56:26', '2019-10-13 20:29:15');
+INSERT INTO `player_account` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', 'qwergh', '123456', '22200220.0000', '1220220.0000', '195400.0000', '1000012.2000', '60012.2000', '3507.7000', '10.0000', '2019-10-01 11:27:22', '2019-10-13 20:29:15');
 
 -- ----------------------------
 -- Table structure for player_account_log
@@ -665,7 +665,7 @@ CREATE TABLE `player_trade` (
   PRIMARY KEY (`trade_id`),
   KEY `index_trade_player_id` (`trade_player_id`),
   KEY `index_trade_order_id` (`trade_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='交易记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='交易记录表';
 
 -- ----------------------------
 -- Records of player_trade
@@ -1055,7 +1055,7 @@ CREATE TABLE `trade_detail` (
   KEY `index_player_id` (`player_id`),
   KEY `index_order_id` (`order_id`),
   KEY `index_verify_id` (`verify_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='交易流水表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易流水表';
 
 -- ----------------------------
 -- Records of trade_detail
@@ -1075,7 +1075,7 @@ CREATE TABLE `trade_verify` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`verify_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='交易审核表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='交易审核表';
 
 -- ----------------------------
 -- Records of trade_verify
@@ -1118,11 +1118,11 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '管理员', null, null, null, null, null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
-INSERT INTO `user` VALUES ('2', 'superadmin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '超级管理员', null, null, null, null, null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
-INSERT INTO `user` VALUES ('3', 'test2', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '测试2', 'test@mail.cn', '13100131000', null, null, null, null, null, '2017-11-05 23:14:22', null, '2017-11-05 23:14:22', null, '0');
-INSERT INTO `user` VALUES ('4', 'test1', 'f4cc399f0effd13c888e310ea2cf5399', '1', null, 'test1', 'tw@mail.com', '13800138000', null, null, null, null, null, '2018-05-26 00:00:45', null, '2018-05-16 23:27:53', '123eee', '0');
-INSERT INTO `user` VALUES ('5', 'test1', 'e358efa489f58062f10dd7316b65649e', '1', null, 'test', '123@main.com', '123', null, null, null, null, null, '2018-05-19 20:13:03', null, '2018-05-19 20:13:19', '123', '0');
+INSERT INTO `user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '管理员', null, null, null, 'avatars/user.jpg', null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
+INSERT INTO `user` VALUES ('2', 'superadmin', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '超级管理员', null, null, null, 'avatars/user.jpg', null, null, null, '2017-09-21 10:08:53', null, '2017-09-21 10:08:53', null, '0');
+INSERT INTO `user` VALUES ('3', 'test2', 'e10adc3949ba59abbe56e057f20f883e', '1', null, '测试2', 'test@mail.cn', '13100131000', null, 'avatars/user.jpg', null, null, null, '2017-11-05 23:14:22', null, '2017-11-05 23:14:22', null, '0');
+INSERT INTO `user` VALUES ('4', 'test1', 'f4cc399f0effd13c888e310ea2cf5399', '1', null, 'test1', 'tw@mail.com', '13800138000', null, 'avatars/user.jpg', null, null, null, '2018-05-26 00:00:45', null, '2018-05-16 23:27:53', '123eee', '0');
+INSERT INTO `user` VALUES ('5', 'test1', 'e358efa489f58062f10dd7316b65649e', '1', null, 'test', '123@main.com', '123', null, 'avatars/user.jpg', null, null, null, '2018-05-19 20:13:03', null, '2018-05-19 20:13:19', '123', '0');
 
 -- ----------------------------
 -- Table structure for user_role
