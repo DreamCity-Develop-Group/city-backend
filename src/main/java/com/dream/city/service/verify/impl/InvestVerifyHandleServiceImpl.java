@@ -21,6 +21,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 
+/**
+ * @author
+ */
 @Service
 public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService {
 
@@ -78,13 +81,13 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
                         //审核不通过解冻金额
                         result = this.unfreezePlayerAccount(order.getPayerId(),  playerTrade.getTradeId(),  playerTrade.getTradeAmount(),
                                 order.getOrderId(), playerTrade.getPersonalTax(), playerTrade.getEnterpriseTax(), verify.getVerifyId());
-                        if (result != null){
-                            success = result.getSuccess();
-                            descr = result.getMsg();
-                        }
+                        success = result.getSuccess();
+                        descr = result.getMsg();
                     }
-                    success = Boolean.TRUE;
-                    descr = "预约审核成功";
+                    if (success) {
+                        success = Boolean.TRUE;
+                        descr = "预约审核成功";
+                    }
                 }
             }else {
                 descr = "预约投资状态不对，当前状态是：" + order.getOrderState();
@@ -100,7 +103,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
      * @param verifyId
      * @return
      */
-    private Result unfreezePlayerAccount(String playerId, Integer tradeId, BigDecimal tradeAmount,Integer orderId,
+    private Result<Integer> unfreezePlayerAccount(String playerId, Integer tradeId, BigDecimal tradeAmount,Integer orderId,
                                          BigDecimal personalTax,BigDecimal enterpriseTax,Integer verifyId){
         boolean success = Boolean.FALSE;
         String msg = "";

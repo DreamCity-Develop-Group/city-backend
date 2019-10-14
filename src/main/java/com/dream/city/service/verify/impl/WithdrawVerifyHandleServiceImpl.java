@@ -106,7 +106,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
         }
     }
 
-    private Result unfreezePlayerAccount(PlayerTrade playerTrade,Integer verifyId){
+    private Result<Boolean> unfreezePlayerAccount(PlayerTrade playerTrade,Integer verifyId){
         boolean success = Boolean.FALSE;
         String msg = "";
         //解冻usdt
@@ -158,7 +158,7 @@ public class WithdrawVerifyHandleServiceImpl implements WithdrawVerifyHandleServ
      * 玩家账户扣除金额 扣冻结Usdt金额
      * @param playerTrade
      */
-    private Result playerAcountSubtractAmount(PlayerTrade playerTrade,Integer verifyId){
+    private Result<Boolean> playerAcountSubtractAmount(PlayerTrade playerTrade,Integer verifyId){
         boolean success = Boolean.FALSE;
         String msg = "";
         int updatePlayerAccount = verifyCommonService.playerSubtractAmount(playerTrade.getTradePlayerId(),
