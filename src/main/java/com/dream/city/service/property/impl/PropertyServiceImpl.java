@@ -43,13 +43,10 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PropertyResp getInvestByIdOrName(Integer inId, String inName) {
-        if (inId == null && StringUtils.isBlank(inName)){
+        if (inId == null){
             return null;
         }
-        CityInvest record = new CityInvest();
-        record.setInId(inId);
-        record.setInName(inName);
-        CityInvest property = investMapper.selectByPrimaryKey(record);
+        CityInvest property = investMapper.selectByPrimaryKey(inId);
         return DataUtils.toJavaObject(property,PropertyResp.class);
     }
 
