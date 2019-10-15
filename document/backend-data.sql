@@ -466,6 +466,7 @@ INSERT INTO `player_account` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', 'q
 DROP TABLE IF EXISTS `player_account_log`;
 CREATE TABLE `player_account_log` (
   `id` int(11) NOT NULL,
+  `acc_id` int(11) NOT NULL COMMENT '交易ID号',
   `player_id` varchar(50) DEFAULT NULL COMMENT '玩家',
   `address` varchar(50) DEFAULT NULL COMMENT '地址',
   `amount_mt` decimal(50,0) DEFAULT NULL,
@@ -604,8 +605,8 @@ CREATE TABLE `player_likes` (
   `liked_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `liked_player_id` varchar(64) CHARACTER SET utf8 DEFAULT NULL COMMENT '收获玩家',
   `liked_invest_id` int(10) unsigned DEFAULT NULL COMMENT '点赞项目ID',
-  `liked_set_total` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '点赞数量',
   `liked_get_total` int(11) unsigned DEFAULT '0' COMMENT '收获点赞数量',
+  `liked_set_total` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '点赞数量',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`liked_id`),

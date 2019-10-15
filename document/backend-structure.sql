@@ -95,11 +95,6 @@ CREATE TABLE `city_help` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='帮助';
 
--- ----------------------------
--- Records of city_help
--- ----------------------------
-INSERT INTO `city_help` VALUES ('2', '帮助2', '内容22', null, '1', null, null, null);
-INSERT INTO `city_help` VALUES ('3', '帮助1', '鞍山市所所所所所所所所所付多所撒', 'help', '1', null, '2019-10-02 10:47:48', '2019-10-02 10:47:48');
 
 -- ----------------------------
 -- Table structure for city_invest
@@ -122,12 +117,6 @@ CREATE TABLE `city_invest` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='投资项目表';
 
 -- ----------------------------
--- Records of city_invest
--- ----------------------------
-INSERT INTO `city_invest` VALUES ('1', '物业1', '100.0000', '2019-10-02 16:31:16', '0.1000', '0.0200', '2', '2019-11-30 16:31:57', null, 'Y', '2019-10-02 16:32:10', '2019-10-02 16:32:23');
-INSERT INTO `city_invest` VALUES ('2', '物业2', '50.0000', '2019-10-08 16:47:52', '0.2000', '0.0600', '6', '2019-12-31 16:48:09', null, 'Y', '2019-10-09 16:48:18', '2019-10-09 16:48:22');
-
--- ----------------------------
 -- Table structure for city_message
 -- ----------------------------
 DROP TABLE IF EXISTS `city_message`;
@@ -145,11 +134,6 @@ CREATE TABLE `city_message` (
   KEY `index_friend_id` (`friend_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of city_message
--- ----------------------------
-INSERT INTO `city_message` VALUES ('1', 'FD826FE2E378445594D23CA84C0C485D', 'E13D6322D389411C959CD7AC7A2B230F', 'dgjnyrmtfsd', '0', '2019-10-02 18:03:30', '2019-10-02 18:03:30', null);
-INSERT INTO `city_message` VALUES ('3', 'FD826FE2E378445594D23CA84C0C485D', '99B1D351FD5242CD8F73E86A2BBC89A0', 'asadvbsbz', '0', '2019-10-02 18:03:30', null, null);
 
 -- ----------------------------
 -- Table structure for city_notice
@@ -164,11 +148,6 @@ CREATE TABLE `city_notice` (
   PRIMARY KEY (`notice_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of city_notice
--- ----------------------------
-INSERT INTO `city_notice` VALUES ('1', 'advababavs', '1', '2019-10-02 14:17:02', null);
-INSERT INTO `city_notice` VALUES ('3', 'wwwwwwwwwwwwwwww', '1', '2019-10-02 14:17:02', '2019-10-02 14:17:02');
 
 -- ----------------------------
 -- Table structure for city_player
@@ -196,30 +175,7 @@ CREATE TABLE `city_player` (
 -- ----------------------------
 -- Records of city_player
 -- ----------------------------
-INSERT INTO `city_player` VALUES ('100', 'FD826FE2E378445594D23CA84C0C485D', '123', '123', '123', null, '', '0', '1', '2019-09-12 02:37:37', null);
-INSERT INTO `city_player` VALUES ('111', '99B1D351FD5242CD8F73E86A2BBC89A0', '17879502040', 'zp00', '123445', '123445', 'fcf7dd', '0', '1', '2019-09-28 11:31:28', '2019-10-04 21:13:42');
-INSERT INTO `city_player` VALUES ('112', '4E2EE556055042AB80E3D164E51DDD1A', '17879502041', 'zp01', '11111111', null, 'eb47d7', '0', '1', '2019-09-28 11:32:11', null);
-INSERT INTO `city_player` VALUES ('113', 'A701ECCF318A4B018407C821A551DA81', '17896415468', 'sfdfsf', '111111', null, 'c7f8f9', '0', '1', '2019-10-04 16:43:55', null);
-INSERT INTO `city_player` VALUES ('114', '55698633E60848EEAEEB84A5CDC4B317', '17897945648', 'dfsd', '111111', null, 'e43865', '0', '1', '2019-10-04 16:48:52', null);
-INSERT INTO `city_player` VALUES ('115', '661964B73D22476AAE2444B97B3A7A57', '16848989456', 'awdw', '111111', null, '984c4e', '0', '1', '2019-10-04 17:08:02', null);
-INSERT INTO `city_player` VALUES ('116', '1CF9477B70E044FBA962616485FC90D2', '16848988456', 'awdi', '111111', null, '3e53b6', '0', '1', '2019-10-04 17:14:02', null);
-INSERT INTO `city_player` VALUES ('117', '908D3C99EC404C8184EC7D39D88054C5', '16948989456', 'awdif', '111111', null, '198c5f', '0', '1', '2019-10-04 17:15:39', null);
-INSERT INTO `city_player` VALUES ('118', 'C7C3151A0ADB47DCB85A74842711DDF0', '17897548564', 'erwrew', '111111', null, '2e0d28', '0', '1', '2019-10-04 17:23:58', null);
-INSERT INTO `city_player` VALUES ('119', '4FE57D9A8830433987FC930A65C3A7F4', '17895464845', 'asdasd', '111111', null, '56cead', '0', '1', '2019-10-04 17:35:28', null);
-INSERT INTO `city_player` VALUES ('120', '84F74A60724D4293B7506C9A72A023B8', '17895464849', 'asdasu', '111111', null, 'c3a9e9', '0', '1', '2019-10-04 17:38:52', null);
-INSERT INTO `city_player` VALUES ('121', '28588A2E551248C4A48359BF03796780', '17895464844', 'asdasg', 'dsssss', null, '2a18a7', '0', '1', '2019-10-04 17:45:22', null);
-INSERT INTO `city_player` VALUES ('122', '8FAA7F265AA0477EB81FA80BC0A0F959', '17895484849', 'asdsg', 'dsssss', null, '515c30', '0', '1', '2019-10-04 17:45:57', null);
-INSERT INTO `city_player` VALUES ('123', 'E5FC87A257DA4F2ABBA69CD323DBE6C1', '17895984849', 'apdsg', 'dsssss', null, '393126', '0', '1', '2019-10-04 17:46:23', null);
-INSERT INTO `city_player` VALUES ('124', '622498A4D5804F4F9CC59AC13443DF7B', '17895984842', 'apdst', 'dsssss', null, '252392', '0', '1', '2019-10-04 17:47:35', null);
-INSERT INTO `city_player` VALUES ('125', '458AAD9035B142048BAE8EEE291E6CC3', '17895989842', 'apdso', 'dsssss', null, 'a245f9', '0', '1', '2019-10-04 17:49:23', null);
-INSERT INTO `city_player` VALUES ('126', '906EA12CBF514EB6B2F8E5A512074FFF', '17895989844', 'apdppo', 'dsssss', null, '0acb06', '0', '1', '2019-10-04 17:50:22', null);
-INSERT INTO `city_player` VALUES ('127', 'B287F9590C5E46BEAEF178F8EB6BE8CD', '17895909844', 'apdppj', 'dsssss', null, '54b1b2', '0', '1', '2019-10-04 17:52:26', null);
-INSERT INTO `city_player` VALUES ('128', 'BAF99A6B9B1249A78B27AD530154438D', '17895909848', 'apdppj1', 'dsssss', null, 'dec565', '0', '1', '2019-10-04 17:54:39', null);
-INSERT INTO `city_player` VALUES ('129', '65BE42D75E95423CA4A8002E1AEFDFB5', '17895909849', 'apdppj1p', 'dsssss', null, 'bd6e61', '0', '1', '2019-10-04 17:55:32', null);
-INSERT INTO `city_player` VALUES ('130', '97B5B35F47CF466AA55FC76D980DEC0E', '17895909888', 'apdppj1p1', 'dsssss', null, '48f768', '0', '1', '2019-10-04 17:56:03', null);
-INSERT INTO `city_player` VALUES ('131', 'EEB19A3B8B064A4D950A7D076953D72A', '14977894456', 'qwew', '111111', null, 'f50d84', '0', '1', '2019-10-04 18:05:52', null);
-INSERT INTO `city_player` VALUES ('132', '17835EA7B4CD4AA5924BF0C69A6184A5', '17879502056', 'qwe', '111111', null, '8fafae', '0', '1', '2019-10-04 19:04:49', null);
-INSERT INTO `city_player` VALUES ('133', '4AF375CA36A248E185A57955D840FC38', '18826444089', 'ggjjs', '123456', null, '801dd6', '0', '1', '2019-10-04 21:26:31', null);
+INSERT INTO `city_player` VALUES ('1', '4E2EE556055042AB80E3D164E51DDD1A', '17879502041', 'zp01', '11111111', null, 'eb47d7', '0', '1', '2019-09-28 11:32:11', null);
 
 -- ----------------------------
 -- Table structure for city_player_grade
@@ -311,12 +267,7 @@ CREATE TABLE `invest_order` (
   KEY `index_order_payer_id` (`order_payer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='订单（投资记录）';
 
--- ----------------------------
--- Records of invest_order
--- ----------------------------
-INSERT INTO `invest_order` VALUES ('1', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', '订单名1', '12141', '5.0000', 'SUBSCRIBED', '0', '2019-10-02 12:43:21', '2019-10-13 18:43:04');
-INSERT INTO `invest_order` VALUES ('2', '2', '99B1D351FD5242CD8F73E86A2BBC89A0', '订单名2', '3341341342', '1.0000', 'INVESTED', '0', '2019-10-03 12:44:28', '2019-10-03 12:44:33');
-INSERT INTO `invest_order` VALUES ('3', '1', 'E13D6322D389411C959CD7AC7A2B230F', '订单名3', '63663', '5.0000', 'MANAGEMENT', '0', '2019-10-02 12:45:37', '2019-10-02 12:45:42');
+
 
 -- ----------------------------
 -- Table structure for invest_rule
@@ -384,10 +335,6 @@ CREATE TABLE `likes_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='点赞记录表';
 
--- ----------------------------
--- Records of likes_log
--- ----------------------------
-INSERT INTO `likes_log` VALUES ('1', '1', 'FD826FE2E378445594D23CA84C0C485D', '99B1D351FD5242CD8F73E86A2BBC89A0', '1', '2019-10-08 19:10:34', '2019-10-08 19:10:38');
 
 -- ----------------------------
 -- Table structure for menu
@@ -458,7 +405,6 @@ CREATE TABLE `player_account` (
 -- Records of player_account
 -- ----------------------------
 INSERT INTO `player_account` VALUES ('1', '4E2EE556055042AB80E3D164E51DDD1A', 'aaaa', '123456', '180200.0000', '12000200.0000', '60000.0000', '100025.0000', '90025.0000', '980.0000', '10.0000', '2019-10-09 18:56:26', '2019-10-13 20:29:15');
-INSERT INTO `player_account` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', 'qwergh', '123456', '22200220.0000', '1220220.0000', '195400.0000', '1000012.2000', '60012.2000', '3507.7000', '10.0000', '2019-10-01 11:27:22', '2019-10-13 20:29:15');
 
 -- ----------------------------
 -- Table structure for player_account_log
@@ -466,6 +412,7 @@ INSERT INTO `player_account` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', 'q
 DROP TABLE IF EXISTS `player_account_log`;
 CREATE TABLE `player_account_log` (
   `id` int(11) NOT NULL,
+  `acc_id` int(11) NOT NULL COMMENT '交易ID号',
   `player_id` varchar(50) DEFAULT NULL COMMENT '玩家',
   `address` varchar(50) DEFAULT NULL COMMENT '地址',
   `amount_mt` decimal(50,0) DEFAULT NULL,
@@ -499,10 +446,6 @@ CREATE TABLE `player_earning` (
   KEY `index_earn_player_id` (`earn_player_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='玩家收益';
 
--- ----------------------------
--- Records of player_earning
--- ----------------------------
-INSERT INTO `player_earning` VALUES ('1', '1', '99B1D351FD5242CD8F73E86A2BBC89A0', '20.0000', '10.0000', '0.0100', '0.0200', 'N', '2019-10-08 18:52:50', '2019-10-08 18:52:54');
 
 -- ----------------------------
 -- Table structure for player_ext
@@ -542,13 +485,6 @@ CREATE TABLE `player_friends` (
   KEY `index_invite` (`invite`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='好友';
 
--- ----------------------------
--- Records of player_friends
--- ----------------------------
-INSERT INTO `player_friends` VALUES ('1', 'FD826FE2E378445594D23CA84C0C485D', '99B1D351FD5242CD8F73E86A2BBC89A0', '0', '123', '0', '2019-09-11 17:04:40', '2019-09-12 09:44:19');
-INSERT INTO `player_friends` VALUES ('2', 'FD826FE2E378445594D23CA84C0C485D', 'E13D6322D389411C959CD7AC7A2B230F', '0', '123', '0', '2019-09-12 17:21:09', null);
-INSERT INTO `player_friends` VALUES ('6', '99B1D351FD5242CD8F73E86A2BBC89A0', 'E13D6322D389411C959CD7AC7A2B230F', '1', '123', '1', '2019-09-28 17:36:01', '2019-09-28 19:39:33');
-INSERT INTO `player_friends` VALUES ('7', 'E13D6322D389411C959CD7AC7A2B230F', '99B1D351FD5242CD8F73E86A2BBC89A0', '0', '123', '1', '2019-09-28 18:01:24', null);
 
 -- ----------------------------
 -- Table structure for player_game_setting
@@ -568,12 +504,6 @@ CREATE TABLE `player_game_setting` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='游戏设置';
 
 -- ----------------------------
--- Records of player_game_setting
--- ----------------------------
-INSERT INTO `player_game_setting` VALUES ('1', 'FD826FE2E378445594D23CA84C0C485D', 'game', 'true', '1', '2019-10-07 15:35:11', '2019-09-16 08:25:39');
-INSERT INTO `player_game_setting` VALUES ('2', 'FD826FE2E378445594D23CA84C0C485D', 'bg', 'false', '1', '2019-10-07 15:35:17', '2019-09-16 08:26:33');
-
--- ----------------------------
 -- Table structure for player_grade
 -- ----------------------------
 DROP TABLE IF EXISTS `player_grade`;
@@ -588,13 +518,6 @@ CREATE TABLE `player_grade` (
   KEY `index_player_id` (`player_id`),
   KEY `index_grade` (`grade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='玩家等级(会员/商会等级)';
-
--- ----------------------------
--- Records of player_grade
--- ----------------------------
-INSERT INTO `player_grade` VALUES ('1', 'E13D6322D389411C959CD7AC7A2B230F', '1', '0', null, null);
-INSERT INTO `player_grade` VALUES ('2', '99B1D351FD5242CD8F73E86A2BBC89A0', '1', '0', null, null);
-INSERT INTO `player_grade` VALUES ('3', 'FD826FE2E378445594D23CA84C0C485D', '1', '0', null, null);
 
 -- ----------------------------
 -- Table structure for player_likes
@@ -612,16 +535,6 @@ CREATE TABLE `player_likes` (
   KEY `index_liked_player_id` (`liked_player_id`),
   KEY `index_liked_invest_id` (`liked_invest_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='玩家获赞表';
-
--- ----------------------------
--- Records of player_likes
--- ----------------------------
-INSERT INTO `player_likes` VALUES ('1', 'FD826FE2E378445594D23CA84C0C485D', '1', '2', '0', '2019-09-08 15:58:07', null);
-INSERT INTO `player_likes` VALUES ('2', 'FD826FE2E378445594D23CA84C0C485D', '2', '1', '1', '2019-09-09 15:58:23', null);
-INSERT INTO `player_likes` VALUES ('3', 'FD826FE2E378445594D23CA84C0C485D', null, '1', '4', '2019-09-18 11:59:08', null);
-INSERT INTO `player_likes` VALUES ('4', 'FD826FE2E378445594D23CA84C0C485D', null, '1', '7', '2019-09-18 11:59:13', null);
-INSERT INTO `player_likes` VALUES ('5', 'FD826FE2E378445594D23CA84C0C485D', null, '1', '5', '2019-09-18 12:02:44', null);
-INSERT INTO `player_likes` VALUES ('6', 'FD826FE2E378445594D23CA84C0C485D', null, '1', '3', '2019-09-18 12:02:44', null);
 
 -- ----------------------------
 -- Table structure for player_login_log
@@ -666,16 +579,6 @@ CREATE TABLE `player_trade` (
   KEY `index_trade_player_id` (`trade_player_id`),
   KEY `index_trade_order_id` (`trade_order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='交易记录表';
-
--- ----------------------------
--- Records of player_trade
--- ----------------------------
-INSERT INTO `player_trade` VALUES ('1', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', '1', '200.0000', '1.0000', '1.0000', 'FREEZE', 'IN', 'INVEST', '待审核', '2019-10-09 21:50:30', '2019-10-13 18:43:08');
-INSERT INTO `player_trade` VALUES ('2', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '100.0000', null, null, 'IN', 'IN', 'RECHARGE', '充值', '2019-10-08 18:02:15', '2019-10-09 18:02:19');
-INSERT INTO `player_trade` VALUES ('3', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '10.0000', '5.0000', '0.0000', 'FREEZE', 'OUT', 'WITHDRAW', '待审核', '2019-10-08 18:03:52', '2019-10-13 17:24:13');
-INSERT INTO `player_trade` VALUES ('4', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '5.0000', '5.0000', '0.0000', 'OUT', 'OUT', 'WITHDRAW', '提现审核通过扣款', '2019-10-01 18:05:43', '2019-10-02 18:05:46');
-INSERT INTO `player_trade` VALUES ('5', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '2.0000', null, null, 'OUT', 'OUT', 'TRANSFER', '内部转账', '2019-10-03 18:07:14', '2019-10-04 18:07:19');
-INSERT INTO `player_trade` VALUES ('6', '1000000006', '99B1D351FD5242CD8F73E86A2BBC89A0', null, '10.0000', '5.0000', null, 'FREEZE', 'OUT', 'TRANSFER', '待审核', '2019-10-01 18:08:51', '2019-10-13 20:29:15');
 
 
 -- ----------------------------
@@ -785,11 +688,6 @@ CREATE TABLE `sales_order` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of sales_order
--- ----------------------------
-INSERT INTO `sales_order` VALUES ('1', '1', '10', '1', '1', '10', 'FD826FE2E378445594D23CA84C0C485D', '99B1D351FD5242CD8F73E86A2BBC89A0', '0', '2019-10-09 11:33:46', null);
-
--- ----------------------------
 -- Table structure for trade_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `trade_detail`;
@@ -831,14 +729,6 @@ CREATE TABLE `trade_verify` (
   PRIMARY KEY (`verify_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='交易审核表';
 
--- ----------------------------
--- Records of trade_verify
--- ----------------------------
-INSERT INTO `trade_verify` VALUES ('1', '1', '1', '1', 'WAIT', '待审核', '2019-10-01 19:58:44', '2019-10-01 19:58:47');
-INSERT INTO `trade_verify` VALUES ('2', '1', '4', null, 'PASS', '提现审核通过扣款', '2019-10-01 20:00:14', '2019-10-01 20:00:18');
-INSERT INTO `trade_verify` VALUES ('3', null, '3', null, 'WAIT', '待审核', '2019-10-05 20:18:15', '2019-10-05 20:18:15');
-INSERT INTO `trade_verify` VALUES ('4', null, '4', null, 'WAIT', '提现冻结', null, null);
-INSERT INTO `trade_verify` VALUES ('5', null, '6', null, 'WAIT', '转账冻结', null, null);
 
 -- ----------------------------
 -- Table structure for user
