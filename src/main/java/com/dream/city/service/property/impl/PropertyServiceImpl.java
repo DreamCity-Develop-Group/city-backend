@@ -4,12 +4,13 @@ package com.dream.city.service.property.impl;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.CityInvest;
 import com.dream.city.base.model.mapper.CityInvestMapper;
+import com.dream.city.base.model.req.CityInvestReq;
+import com.dream.city.base.model.resp.InvestResp;
 import com.dream.city.base.model.resp.PropertyResp;
 import com.dream.city.base.utils.DataUtils;
 import com.dream.city.service.property.PropertyService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -58,15 +59,15 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PageInfo<PropertyResp> getInvestLsit(Page pageReq) {
-        CityInvest invest = DataUtils.toJavaObject(pageReq.getCondition(),CityInvest.class);
+        CityInvestReq invest = DataUtils.toJavaObject(pageReq.getCondition(), CityInvestReq.class);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
-        List<CityInvest> investLsit = investMapper.getInvestLsit(invest);
+        List<InvestResp> investLsit = investMapper.getInvestLsit(invest);
 
         List<PropertyResp> lsit = new ArrayList<>();
         if (!CollectionUtils.isEmpty(investLsit)){
             lsit = new ArrayList<>();
             PropertyResp propertyResp = null;
-            for (CityInvest property : investLsit){
+            for (InvestResp property : investLsit){
                 propertyResp = DataUtils.toJavaObject(property,PropertyResp.class);
                 lsit.add(propertyResp);
             }

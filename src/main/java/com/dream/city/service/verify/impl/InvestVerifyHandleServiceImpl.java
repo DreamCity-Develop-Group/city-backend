@@ -57,7 +57,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
             PlayerTrade tradeReq = new PlayerTrade();
             tradeReq.setTradeId(verifyReq.getTradeId());
             tradeReq.setTradeOrderId(verifyReq.getOrderId());
-            tradeReq.setTradePlayerId(order.getPayerId());
+            tradeReq.setTradePlayerId(order.getPlayerId());
             PlayerTrade playerTrade = tradeService.getPlayerTrade(tradeReq);
 
             //必须是预约中的
@@ -82,7 +82,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
                         }
                     }else if (VerifyStatus.NOTPASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
                         //审核不通过解冻金额
-                        result = this.unfreezePlayerAccount(order.getPayerId(),  playerTrade.getTradeId(),  playerTrade.getTradeAmount(),
+                        result = this.unfreezePlayerAccount(order.getPlayerId(),  playerTrade.getTradeId(),  playerTrade.getTradeAmount(),
                                 order.getOrderId(), playerTrade.getPersonalTax(), playerTrade.getEnterpriseTax(), verify.getVerifyId());
                         success = result.getSuccess();
                         descr = result.getMsg();
@@ -200,18 +200,18 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
         String msg = "扣除冻结投资金额失败";
         JSONObject json = new JSONObject();
         //扣除冻结usdt投资金额
-        Result<JSONObject> result = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getTradeAmount(),"usdtfreeze");
+        Result<JSONObject> result = verifyCommonService.playerSubtractAmount(order.getPlayerId(),playerTrade.getTradeAmount(),"usdtfreeze");
         //扣除冻结mt投资税
         if (result.getSuccess()){
             json.putAll(result.getData());
             json.put("tradeAmount",playerTrade.getTradeAmount());
             //扣个人所得税
-            result = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getPersonalTax(),"mtfreeze");
+            result = verifyCommonService.playerSubtractAmount(order.getPlayerId(),playerTrade.getPersonalTax(),"mtfreeze");
         }
         if (result.getSuccess()){
             json.put("personalTax",playerTrade.getPersonalTax());
             //扣企业所得税
-            result = verifyCommonService.playerSubtractAmount(order.getPayerId(),playerTrade.getEnterpriseTax(),"mtfreeze");
+            result = verifyCommonService.playerSubtractAmount(order.getPlayerId(),playerTrade.getEnterpriseTax(),"mtfreeze");
         }
 
         //更新交易记录
@@ -225,17 +225,17 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
         TradeDetail tradeDetail = null;
         if (playerTrade != null){
             //扣除冻结usdt投资金额流水
-            tradeDetail = verifyCommonService.createTradeDetail(order.getPayerId(), verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
+            tradeDetail = verifyCommonService.createTradeDetail(order.getPlayerId(), verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
                     playerTrade.getTradeAmount(), TradeDetailType.USDT_INVEST_VERIFY.getCode(), TradeDetailType.USDT_INVEST_VERIFY.getDesc());
         }
         if (tradeDetail != null){
             //扣个人所得税流水
-            tradeDetail = verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
+            tradeDetail = verifyCommonService.createTradeDetail(order.getPlayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
                     playerTrade.getPersonalTax(),TradeDetailType.MT_INVEST_PERSONAL_TAX.getCode(),TradeDetailType.MT_INVEST_PERSONAL_TAX.getDesc());
         }
         if (tradeDetail != null){
             //扣企业所得税流水
-            tradeDetail = verifyCommonService.createTradeDetail(order.getPayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
+            tradeDetail = verifyCommonService.createTradeDetail(order.getPlayerId(),verifyReq.getOrderId(), playerTrade.getTradeId(), verify.getVerifyId(),
                     playerTrade.getEnterpriseTax(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getCode(),TradeDetailType.MT_INVEST_ENTERPRISE_TAX.getDesc());
         }
         if (tradeDetail != null){

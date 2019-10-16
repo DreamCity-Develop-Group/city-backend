@@ -1,17 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : mysql-localhost
-Source Server Version : 50562
-Source Host           : localhost:3306
-Source Database       : dreamcity2
-
-Target Server Type    : MYSQL
-Target Server Version : 50562
-File Encoding         : 65001
-
-Date: 2019-10-14 18:37:58
-*/
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -439,7 +425,7 @@ CREATE TABLE `player_earning` (
   `earn_current` decimal(9,4) DEFAULT NULL COMMENT '当前获得额度',
   `earn_personal_tax` decimal(9,4) unsigned DEFAULT '0.0000' COMMENT '个人税金',
   `earn_enterprise_tax` decimal(9,4) DEFAULT NULL COMMENT '企业税金',
-  `is_withdrew` char(1) NOT NULL DEFAULT 'N' COMMENT '是否可以提取(N否，Y是）',
+  `is_withdrew` tinyint(4) DEFAULT '0' COMMENT '是否可以提取',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`earn_id`) USING BTREE,

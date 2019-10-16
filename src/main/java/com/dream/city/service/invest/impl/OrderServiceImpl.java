@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
             recordReq.setInvestId(property.getInId());
         }
         if (player != null) {
-            recordReq.setPayerId(player.getPlayerId());
+            recordReq.setPlayerId(player.getPlayerId());
         }
         PageHelper.startPage(record.getPageNum(),record.getPageSize(),record.isCount());
         List<InvestOrderResp> orders = orderMapper.getInvestOrders(recordReq);
