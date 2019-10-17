@@ -1,5 +1,7 @@
 package com.dream.city.job;
 
+import com.alibaba.fastjson.JSON;
+import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.enu.InvestStatus;
 import com.dream.city.base.model.enu.VerifyStatus;
@@ -44,7 +46,7 @@ public class InverstVerifyJob extends QuartzJobBean {
         } catch (SchedulerException e) {
             log.error("预约自动审核任务执行Exception",e);
         }
-        log.info(">>>>>>>>>>> 预约自动审核任务执行结束,使用时间(毫秒)：" + (time - System.currentTimeMillis()));
+        log.info(">>>>>>>>>>> 预约自动审核任务执行结束,使用时间(毫秒)：" + (System.currentTimeMillis() - time));
     }
 
     private void executeTask() throws SchedulerException {
@@ -52,21 +54,28 @@ public class InverstVerifyJob extends QuartzJobBean {
 
         InvestOrderReq orderReq = new InvestOrderReq();
         orderReq.setOrderState(InvestStatus.SUBSCRIBED.name());
+
         Page pageReq = new Page(0,10000000);
+        pageReq.setCondition(orderReq);
+
         PageInfo<InvestOrderResp> orderRespPageInfo =  orderService.getInvestOrderList(pageReq);
         List<InvestOrderResp> dataList = null;
         if (orderRespPageInfo != null){
             dataList = orderRespPageInfo.getList();
         }
+        if (CollectionUtils.isEmpty(dataList)){
+            log.info("预约自动审核结果:没有待审核数据");
+        }
 
-        if (!CollectionUtils.isEmpty(dataList)){
-            VerifyReq verifyReq = null;
-            for (InvestOrderResp orderResp : dataList){
-                verifyReq = new VerifyReq();
-                verifyReq.setVerifyStatus(VerifyStatus.PASS.getCode());
-                verifyReq.setVerifyDesc("预约自动审核");
-                investVerifyHandleService.subscribeOrderVerify(verifyReq);
-            }
+        VerifyReq verifyReq = null;
+        Result result = null;
+        for (InvestOrderResp orderResp : dataList){
+            verifyReq = new VerifyReq();
+            verifyReq.setOrderId(orderResp.getOrderId());
+            verifyReq.setVerifyStatus(VerifyStatus.PASS.getCode());
+            verifyReq.setVerifyDesc("预约自动审核");
+            result = investVerifyHandleService.subscribeOrderVerify(verifyReq);
+            log.info("预约自动审核结果:"+JSON.toJSONString(result));
         }
 
         log.info(">>>>>>>>>>> 处理预约自动审核业务结束...");

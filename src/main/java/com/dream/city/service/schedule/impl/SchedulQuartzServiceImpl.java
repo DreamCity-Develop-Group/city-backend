@@ -113,7 +113,7 @@ public class SchedulQuartzServiceImpl implements SchedulQuartzService {
      * @param jobTime      时间表达式 （如：0/5 * * * * ? ）
      */
     @Override
-    public void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime,JobDataMap jobDataMap) {
+    public void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime) {
         try {
             JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).build();
 
@@ -135,11 +135,11 @@ public class SchedulQuartzServiceImpl implements SchedulQuartzService {
      * @param jobTime
      */
     @Override
-    public void updateJob(String jobName, String jobGroupName, String jobTime,JobDataMap jobDataMap) {
+    public void updateJob(String jobName, String jobGroupName, String jobTime) {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroupName);
             CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-            cronTrigger = cronTrigger.getTriggerBuilder().withIdentity(triggerKey).usingJobData(jobDataMap)
+            cronTrigger = cronTrigger.getTriggerBuilder().withIdentity(triggerKey)
                     .withSchedule(CronScheduleBuilder.cronSchedule(jobTime)).build();
             scheduler.rescheduleJob(triggerKey, cronTrigger);
 

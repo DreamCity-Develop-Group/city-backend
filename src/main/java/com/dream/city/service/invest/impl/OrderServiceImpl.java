@@ -74,8 +74,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PageInfo<InvestOrderResp> getInvestOrderList(Page record) {
         InvestOrderReq invest = DataUtils.toJavaObject(record.getCondition(),InvestOrderReq.class);
-        PropertyResp property = propertyService.getInvestByIdOrName(null, invest.getInName());
-        PlayerResp player = playerService.getPlayerByName(invest.getPayerName());
+        PropertyResp property = null;
+        PlayerResp player = null;
+        if (invest != null){
+            property = propertyService.getInvestByIdOrName(null, invest.getInName());
+            player = playerService.getPlayerByName(invest.getPayerName());
+        }
         InvestOrderReq recordReq =  DataUtils.toJavaObject(record.getCondition(),InvestOrderReq.class);
         if (property != null) {
             recordReq.setInvestId(property.getInId());

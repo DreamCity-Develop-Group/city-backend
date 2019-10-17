@@ -96,7 +96,7 @@ public class SchedulQuartzController extends BaseController {
         logger.info("新增"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         try {
-            quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),record.getJobTime(),new JobDataMap());
+            quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),record.getJobTime());
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("新增"+ modelName +"异常",e);
@@ -165,9 +165,9 @@ public class SchedulQuartzController extends BaseController {
         logger.info("修改"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         try {
-            JobDataMap jobDataMap = new JobDataMap();
+            //JobDataMap jobDataMap = new JobDataMap();
             //jobDataMap.put("DESCRIPTION",record.getDescr());
-            quartzService.updateJob(record.getJobName(),record.getJobGroupName(),record.getJobTime(),jobDataMap);
+            quartzService.updateJob(record.getJobName(),record.getJobGroupName(),record.getJobTime());
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("修改"+ modelName +"异常",e);

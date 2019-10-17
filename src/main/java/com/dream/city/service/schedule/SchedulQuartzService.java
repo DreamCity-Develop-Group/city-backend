@@ -37,9 +37,9 @@ public interface SchedulQuartzService {
      * @param jobGroupName 任务组名
      * @param jobTime      时间表达式 （如：0/5 * * * * ? ）
      */
-    void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime,JobDataMap jobDataMap) ;
+    void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime) ;
 
-    void updateJob(String jobName, String jobGroupName, String jobTime, JobDataMap jobDataMap);
+    void updateJob(String jobName, String jobGroupName, String jobTime);
 
     void deleteJob(String jobName, String jobGroupName) ;
 
