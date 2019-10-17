@@ -62,4 +62,5 @@ public interface OrderService {
      */
     @Transactional
     int updateOrderStateById(InvestOrder record);
+
 }
