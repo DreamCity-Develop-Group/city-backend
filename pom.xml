@@ -24,6 +24,7 @@
 		<shiro.version>1.2.4</shiro.version>
 		<spring-boot-admin.version>2.1.5</spring-boot-admin.version>
 		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencies>
