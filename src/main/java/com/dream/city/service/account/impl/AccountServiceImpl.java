@@ -1,5 +1,6 @@
 package com.dream.city.service.account.impl;
 
+import com.dream.city.base.service.DictionaryService;
 import com.dream.city.base.utils.ListUtils;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.model.entity.PlayerAccount;
@@ -7,7 +8,6 @@ import com.dream.city.base.model.mapper.PlayerAccountMapper;
 import com.dream.city.base.model.req.PlayerAccountReq;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +17,10 @@ import java.util.List;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Value("${dreamcity.platform.account.accIds}")
-    String platformAccIds;
     @Autowired
     PlayerAccountMapper accountMapper;
-
+    @Autowired
+    DictionaryService dictionaryService;
 
 
     @Override
@@ -56,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
     public List<PlayerAccount> getPlatformAccounts(PlayerAccountReq record) {
         if (record == null || record.getAccId() == null) {
             record = new PlayerAccountReq();
-            String[] ids = platformAccIds.split(",");
+            String[] ids = dictionaryService.getValByKey("platform.account.accIds").split(",");
             String idList = ListUtils.listToString(Arrays.asList(ids));
             record.setPlatformAccIds(idList);
         }

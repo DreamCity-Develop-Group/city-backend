@@ -335,7 +335,7 @@
 						field: "jobClazz"
 					},{
 						title: "状态",
-						field: "jobStatus",
+						field: "jobStatus"/*,
 						formatter: function (value, row, index) {
 							var operateHtml = '无';
 							if (value === 'NORMAL' || value === 'ACQUIRED'){
@@ -352,7 +352,7 @@
 								operateHtml = '阻塞';
 							}
 							return operateHtml;
-						}
+						}*/
 					},{
 						title: "执行时间",
 						field: "jobTime"
@@ -370,19 +370,20 @@
                         field: "empty",
                         formatter: function (value, row, index) {
 							var operateHtml = '';
-							if (row.jobStatus !== 'NORMAL' && row.jobStatus !== 'PAUSED' && row.jobStatus !== 'ACQUIRED'){
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'run\')"><i class="fa fa-edit"></i>&nbsp;启动</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'run\')"><i class="fa fa-edit"></i>&nbsp;启动</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'run\')"><i class="fa fa-edit"></i>&nbsp;执行</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'pause\')"><i class="fa fa-edit"></i>&nbsp;停止</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'resume\')"><i class="fa fa-edit"></i>&nbsp;恢复</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.jobName+'\',\''+row.jobGroupName+'\',\''+row.jobTime+'\',\''+row.jobStatus+'\',\''+row.descr+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+							/*if (row.jobStatus !== 'NORMAL' && row.jobStatus !== 'PAUSED' && row.jobStatus !== 'ACQUIRED'){
 							}
 							if (row.jobStatus === 'NORMAL' || row.jobStatus === 'ACQUIRED'){
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'pause\')"><i class="fa fa-edit"></i>&nbsp;停止</button> &nbsp;';
 							}
 							if (row.jobStatus === 'PAUSED'){
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'resume\')"><i class="fa fa-edit"></i>&nbsp;恢复</button> &nbsp;';
 							}
 							if (row.jobStatus !== 'NORMAL' && row.jobStatus !== 'ACQUIRED'){
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.jobName+'\',\''+row.jobGroupName+'\',\''+row.jobTime+'\',\''+row.jobStatus+'\',\''+row.descr+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-							}
+							}*/
 							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }

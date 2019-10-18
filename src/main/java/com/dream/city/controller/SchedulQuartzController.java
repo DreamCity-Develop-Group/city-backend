@@ -6,6 +6,7 @@ import com.dream.city.base.model.Page;
 import com.dream.city.base.model.req.ScheduleReq;
 import com.dream.city.service.schedule.SchedulQuartzService;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.quartz.JobDataMap;
 import org.quartz.Trigger;
 import org.slf4j.Logger;
@@ -96,7 +97,9 @@ public class SchedulQuartzController extends BaseController {
         logger.info("新增"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         try {
-            quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),record.getJobTime());
+            JobDataMap jobDataMap = getJobDataMap(record.getJsonParameter());
+            quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),
+                    record.getJobTime(),record.getStartNow(),record.getStartAt(),jobDataMap,record.getDescr());
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("新增"+ modelName +"异常",e);
@@ -165,9 +168,8 @@ public class SchedulQuartzController extends BaseController {
         logger.info("修改"+ modelName +"，：{}",record);
         boolean success = Boolean.FALSE;
         try {
-            //JobDataMap jobDataMap = new JobDataMap();
-            //jobDataMap.put("DESCRIPTION",record.getDescr());
-            quartzService.updateJob(record.getJobName(),record.getJobGroupName(),record.getJobTime());
+            JobDataMap jobDataMap = getJobDataMap(record.getJsonParameter());
+            quartzService.updateJob(record.getJobName(),record.getJobGroupName(),record.getJobTime(),jobDataMap,record.getDescr());
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("修改"+ modelName +"异常",e);
@@ -177,5 +179,17 @@ public class SchedulQuartzController extends BaseController {
 
 
 
+    private JobDataMap getJobDataMap(String jsonParameter){
+        JobDataMap jobDataMap = new JobDataMap();
+        if(StringUtils.isNotBlank(jsonParameter)){
+            String[] parameter = jsonParameter.split(",");
+            String[] kv = {};
+            for (String param : parameter){
+                kv = param.split(":");
+                jobDataMap.put(kv[0],kv[1]);
+            }
+        }
+        return jobDataMap;
+    }
 
 }

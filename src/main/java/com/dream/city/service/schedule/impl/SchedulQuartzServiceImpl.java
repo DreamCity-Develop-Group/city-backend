@@ -113,14 +113,29 @@ public class SchedulQuartzServiceImpl implements SchedulQuartzService {
      * @param jobTime      时间表达式 （如：0/5 * * * * ? ）
      */
     @Override
-    public void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime) {
+    public void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime,
+                       Boolean startNow, Date startAt, JobDataMap jobDataMap,String jobDescription) {
         try {
-            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).build();
+            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).withDescription(jobDescription).build();
 
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroupName)
+            TriggerBuilder<CronTrigger> cronTriggerTriggerBuilder = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroupName)
                     .startAt(DateBuilder.futureDate(1, DateBuilder.IntervalUnit.SECOND))
-                    .withSchedule(CronScheduleBuilder.cronSchedule(jobTime))
-                    .startNow().build();
+                    .withSchedule(CronScheduleBuilder.cronSchedule(jobTime));
+
+            if (startNow != null && startNow) {
+                //新增并启动
+                cronTriggerTriggerBuilder.startNow();
+            }
+            if (startAt != null) {
+                //在此时间启动
+                cronTriggerTriggerBuilder.startAt(startAt);
+            }
+            Trigger trigger = cronTriggerTriggerBuilder.build();
+
+            if (jobDataMap != null && jobDataMap.size() > 0){
+                //参数
+                trigger.getJobDataMap().putAll(jobDataMap);
+            }
 
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
@@ -135,14 +150,20 @@ public class SchedulQuartzServiceImpl implements SchedulQuartzService {
      * @param jobTime
      */
     @Override
-    public void updateJob(String jobName, String jobGroupName, String jobTime) {
+    public void updateJob(String jobName, String jobGroupName, String jobTime, JobDataMap jobDataMap, String triggerDescription) {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroupName);
             CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-            cronTrigger = cronTrigger.getTriggerBuilder().withIdentity(triggerKey)
-                    .withSchedule(CronScheduleBuilder.cronSchedule(jobTime)).build();
+            cronTrigger = cronTrigger.getTriggerBuilder()
+                    .withIdentity(triggerKey)
+                    .withDescription(triggerDescription)
+                    .withSchedule(CronScheduleBuilder.cronSchedule(jobTime))
+                    .build();
+            if (jobDataMap != null && jobDataMap.size() > 0){
+                //参数
+                cronTrigger.getJobDataMap().putAll(jobDataMap);
+            }
             scheduler.rescheduleJob(triggerKey, cronTrigger);
-
         } catch (SchedulerException e) {
             log.error("updateJob() Exception",e);
         }

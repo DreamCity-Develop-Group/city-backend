@@ -65,9 +65,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public PageInfo<MessageResp> getCityMessageList(Page record) {
         MessageReq messageReq = DataUtils.toJavaObject(record.getCondition(),MessageReq.class);
-        CityMessage getCityMessageListReq = this.getMessage(messageReq);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
-        List<CityMessage> messageList = messageMapper.getCityMessageList(getCityMessageListReq);
+        List<CityMessage> messageList = messageMapper.getCityMessageList(messageReq);
         List<MessageResp> messageListResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(messageList)){
             messageListResp = new ArrayList<>();

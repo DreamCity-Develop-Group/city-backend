@@ -3,6 +3,7 @@ package com.dream.city.service.other.impl;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.Notice;
 import com.dream.city.base.model.mapper.NoticeMapper;
+import com.dream.city.base.model.req.NoticeReq;
 import com.dream.city.base.model.resp.NoticeResp;
 import com.dream.city.base.utils.DataUtils;
 import com.dream.city.service.other.NoticeService;
@@ -32,7 +33,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public PageInfo<NoticeResp> getNoticeList(Page record) {
-        Notice noticeReq = DataUtils.toJavaObject(record.getCondition(),Notice.class);
+        NoticeReq noticeReq = DataUtils.toJavaObject(record.getCondition(), NoticeReq.class);
         PageHelper.startPage(record.getPageNum(), record.getPageSize(),record.isCount());
         List<Notice> noticeList = noticeMapper.getNoticeList(noticeReq);
         List<NoticeResp> noticeListResp = new ArrayList<>();
