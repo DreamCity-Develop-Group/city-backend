@@ -42,7 +42,7 @@ public interface SchedulQuartzService {
      * @param jobTime      时间表达式 （如：0/5 * * * * ? ）
      */
     void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime,
-                Boolean startNow, Date startAt, JobDataMap jobDataMap,String jobDescription) ;
+                Boolean startNow, Date startAt, JobDataMap jobDataMap,String jobDescription, String triggerDescription) ;
 
     void updateJob(String jobName, String jobGroupName, String jobTime,JobDataMap jobDataMap,String triggerDescription);
 

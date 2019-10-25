@@ -99,7 +99,7 @@ public class SchedulQuartzController extends BaseController {
         try {
             JobDataMap jobDataMap = getJobDataMap(record.getJsonParameter());
             quartzService.addJob(record.getJobClass(),record.getJobName(),record.getJobGroupName(),
-                    record.getJobTime(),record.getStartNow(),record.getStartAt(),jobDataMap,record.getDescr());
+                    record.getJobTime(),record.getStartNow(),record.getStartAt(),jobDataMap,record.getDescr(),record.getDescr());
             success = Boolean.TRUE;
         }catch (Exception e){
             logger.error("新增"+ modelName +"异常",e);
