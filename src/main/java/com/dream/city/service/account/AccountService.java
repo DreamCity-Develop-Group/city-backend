@@ -25,7 +25,7 @@ public interface AccountService {
      * @param record
      * @return
      */
-    PlayerAccount getPlayerAccount(PlayerAccount record);
+    PlayerAccount getPlayerAccount(PlayerAccountReq record);
 
     /**
      * 玩家账户列表

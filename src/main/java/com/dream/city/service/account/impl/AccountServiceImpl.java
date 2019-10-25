@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public PlayerAccount getPlayerAccount(PlayerAccount record) {
+    public PlayerAccount getPlayerAccount(PlayerAccountReq record) {
         if (record.getAccId() == null && StringUtils.isBlank(record.getAccPlayerId())){
             return null;
         }
