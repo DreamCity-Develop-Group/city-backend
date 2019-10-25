@@ -157,12 +157,12 @@
                         角色管理
                     </a>
                 </li>
-                <li>
+                <#--<li>
                     <a href="${ctx}/menu/index">
                         <i class="icon-double-angle-right"></i>
                         资源管理
                     </a>
-                </li>
+                </li>-->
                 <li>
                     <a href="${ctx}/other/dic/index">
                         <i class="icon-double-angle-right"></i>
@@ -300,6 +300,12 @@
                 <b class="arrow icon-angle-down"></b>
             </a>
             <ul class="submenu">
+                <li>
+                    <a href="${ctx}/player/account/index">
+                        <i class="icon-double-angle-right"></i>
+                        玩家账户列表
+                    </a>
+                </li>
                 <li>
                     <a href="${ctx}/player/player/index">
                         <i class="icon-double-angle-right"></i>

@@ -3,6 +3,9 @@ package com.dream.city.service.verify.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.entity.*;
+import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.resp.PlayerAccountResp;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.service.trade.EarningService;
@@ -41,12 +44,12 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
     public Result<JSONObject> playerSubtractAmount(String accPlayerId, BigDecimal amount, String amountType) {
         boolean success = Boolean.FALSE;
         String msg = "扣减金额失败";
-        PlayerAccount getPlayerAccountReq = new PlayerAccount();
+        PlayerAccountReq getPlayerAccountReq = new PlayerAccountReq();
         getPlayerAccountReq.setAccPlayerId(accPlayerId);
-        PlayerAccount playerAccount = accountService.getPlayerAccount(getPlayerAccountReq);
+        PlayerAccountResp playerAccount = accountService.getPlayerAccount(getPlayerAccountReq);
         //玩家账户扣除金额 扣冻结Usdt金额
         PlayerAccount updateAccountReq = new PlayerAccount();
-        updateAccountReq.setAccPlayerId(playerAccount.getAccPlayerId());
+        updateAccountReq.setAccPlayerId(playerAccount.getPlayerId());
         if ("usdtfreeze".equalsIgnoreCase(amountType)) {
             updateAccountReq.setAccUsdtFreeze(playerAccount.getAccUsdtFreeze().subtract(amount));
         }
@@ -67,7 +70,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
             success = Boolean.TRUE;
             msg = "扣减金额成功";
             json.put("accAddr",playerAccount.getAccAddr());
-            json.put("playerId",playerAccount.getAccPlayerId());
+            json.put("playerId",playerAccount.getPlayerId());
         }
         return new Result<>(success,msg,json);
     }
@@ -177,10 +180,10 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
      */
     @Override
     public int unfreezePlayerAccount(String playerId,BigDecimal amount,String amountType, String msg) {
-        PlayerAccount accountReq = new PlayerAccount();
+        PlayerAccountReq accountReq = new PlayerAccountReq();
         accountReq.setAccPlayerId(playerId);
         //获取玩家账户
-        PlayerAccount playerAccount = accountService.getPlayerAccount(accountReq);
+        PlayerAccountResp playerAccount = accountService.getPlayerAccount(accountReq);
         if ("usdtUnfreeze".equalsIgnoreCase(amountType)){
             playerAccount.setAccUsdtFreeze(playerAccount.getAccUsdtFreeze().subtract(amount));
             playerAccount.setAccUsdtAvailable(playerAccount.getAccUsdtAvailable().add(amount));
@@ -191,7 +194,10 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
             playerAccount.setAccMtAvailable(playerAccount.getAccMtAvailable().add(amount));
             playerAccount.setAccMt(playerAccount.getAccMt().add(amount));
         }
-        return accountService.updatePlayerAccount(playerAccount);
+        PlayerAccount record = DataUtils.toJavaObject(playerAccount,PlayerAccount.class);
+        record.setAccPlayerId(playerAccount.getPlayerId());
+        record.setAccIncome(playerAccount.getTotalIncome());
+        return accountService.updatePlayerAccount(record);
     }
 
 

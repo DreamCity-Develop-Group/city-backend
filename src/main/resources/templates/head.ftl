@@ -4,7 +4,7 @@
     </script>
 
     <div class="navbar-container" id="navbar-container">
-        <input type="hidden" id="username" name="username" value="${user.loginName}">
+        <#--<input type="hidden" id="username" name="username" value="${user.loginName}">-->
         <div class="navbar-header pull-left">
             <a href="#" class="navbar-brand">
                 <small>

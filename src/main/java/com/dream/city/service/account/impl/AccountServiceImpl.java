@@ -1,17 +1,18 @@
 package com.dream.city.service.account.impl;
 
+import com.dream.city.base.model.Page;
 import com.dream.city.base.model.mapper.AccountMapper;
+import com.dream.city.base.model.resp.PlayerAccountResp;
 import com.dream.city.base.service.DictionaryService;
-import com.dream.city.base.utils.ListUtils;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.req.PlayerAccountReq;
-import org.apache.commons.lang3.StringUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,16 +32,19 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public PlayerAccount getPlayerAccount(PlayerAccount record) {
-        if (record.getAccId() == null && StringUtils.isBlank(record.getAccPlayerId())){
-            return null;
-        }
-        return accountMapper.getPlayerAccount(record.getAccPlayerId());
+    public PlayerAccountResp getPlayerAccount(PlayerAccountReq record) {
+        String ids = dictionaryService.getValByKey("platform.account.accIds");
+        record.setPlatformAccIds("\'"+ids+"\'");
+        return accountMapper.getPlayerAccountSelective(record);
     }
 
     @Override
-    public List<PlayerAccount> getPlayerAccountList(PlayerAccount record) {
-        return accountMapper.getPlayerAccountList(record);
+    public PageInfo<PlayerAccountResp> getPlayerAccountList(Page pageReq, PlayerAccountReq record) {
+        String ids = dictionaryService.getValByKey("platform.account.accIds");
+        record.setPlatformAccIds("\'"+ids+"\'");
+        PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
+        List<PlayerAccountResp> playerAccountList = accountMapper.getPlayerAccountList(record);
+        return new PageInfo<>(playerAccountList);
     }
 
     @Override
@@ -55,9 +59,8 @@ public class AccountServiceImpl implements AccountService {
     public List<PlayerAccount> getPlatformAccounts(PlayerAccountReq record) {
         if (record == null || record.getAccId() == null) {
             record = new PlayerAccountReq();
-            String[] ids = dictionaryService.getValByKey("platform.account.accIds").split(",");
-            String idList = ListUtils.listToString(Arrays.asList(ids));
-            record.setPlatformAccIds(idList);
+            String ids = dictionaryService.getValByKey("platform.account.accIds");
+            record.setPlatformAccIds("\'"+ids+"\'");
         }
         return accountMapper.getPlatformAccounts(record);
     }

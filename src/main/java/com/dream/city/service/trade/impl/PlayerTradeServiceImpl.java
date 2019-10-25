@@ -11,6 +11,7 @@ import com.dream.city.service.trade.PlayerTradeService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class PlayerTradeServiceImpl implements PlayerTradeService {
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public PlayerTrade insertPlayerTrade(PlayerTrade record) {
         Integer integer = tradeMapper.insertSelective(record);
         if (integer == null || integer < 1){
