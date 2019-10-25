@@ -60,7 +60,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">物业管理</a></li>
+							<li><a href="#">设置管理</a></li>
 							<li class="active">${title}</li>
 						</ul><!-- .breadcrumb -->
 
@@ -89,9 +89,15 @@
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
-										<div class="col-sm-3 form-group">
-											名称：<input id="inName" name="inName" type="text"/>
-										</div>
+										<#--<div class="col-sm-3 form-group">
+											：
+											<select id="itemName" name="itemName" class="">
+												<option value=""></option>
+												<#list items as item>
+													<option value="${item.itemName}">${item.itemName}</option>
+												</#list>
+											</select>
+										</div>-->
 										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
@@ -100,18 +106,8 @@
 													   value="">
 											</div>
 										</div>-->
-										<#--<div class="col-sm-3 form-group">
-											接收人：<input id="friendNick" name="friendNick" type="text"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											消息内容：<input id="content" name="content" type="text"/>
-										</div>
-										<div class="col-sm-3 form-group">
-											是否已读：<input id="haveRead" name="haveRead" type="text"/>
-										</div>
-										-->
-										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+										<#--<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>-->
+										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>添加创世号</button>
 										<#--<@shiro.hasPermission name="system:user:add">
                                         </@shiro.hasPermission>-->
                                     </div>
@@ -317,43 +313,28 @@
                         };
                     },
                     //数据列
-                    columns: [{
-                        title: "ID",
-                        field: "inId",
-                        sortable: true
-                    },{
-						title: "名称",
-						field: "inName"
+					columns: [{
+						title: "创世ID",
+						field: "playerId"
 					},{
-						title: "限额",
-						field: "inLimit"
+						title: "创世昵称",
+						field: "playerName"
 					},{
-                        title: "税金",
-                        field: "inTax"
-                    },{
-                        title: "收益倍数",
-                        field: "inEarning"
-                    },{
-                        title: "是否可投",
-                        field: "isValid",
-                        formatter: function (value, row, index) {
-                            if (value === 1)
-                                return '<span class="label label-info">是</span>';
-                            return '<span class="label label-danger">否</span>';
-                        }
-                    },{
-						title: "投资结束时间",
-						field: "inEnd"
+						title: "钱包地址",
+						field: "accAddr"
 					},{
-                        title: "操作",
-                        field: "empty",
-                        formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.inId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.inId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
-                            return operateHtml;
-                        }
-                    }]
+						title: "MT",
+						field: "accMt"
+					},{
+						title: "MT总量",
+						field: "accQuantum"
+					},{
+						title: "上级",
+						field: "superior"
+					},{
+						title: "创世时间",
+						field: "createTime"
+					}]
                 });
             });
 
@@ -372,17 +353,13 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"inName":$("#inName").val(),
-					"isValid":$("#isValid").val(),
-					"inEnd":$("#inEnd").val()
+					/*"itemName":$("#itemName").val()*/
                 }
                 return params;
             }
             function search() {
 				var params={
-					"inName":$("#inName").val(),
-					"isValid":$("#isValid").val(),
-					"inEnd":$("#inEnd").val()
+					"itemName":$("#itemName").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
@@ -408,7 +385,6 @@
                     area: ['800px', '600px'],
                     content: '${ctx}/${actionPath}/edit/'  + id,
                     end: function(index){
-                    	alert(index);
                         $('#helpListTable').bootstrapTable("refresh");
                     }
                 });

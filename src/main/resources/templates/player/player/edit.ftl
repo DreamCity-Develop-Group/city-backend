@@ -54,15 +54,15 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <label class="col-sm-3 control-label">注册时间：</label>
                             <div class="col-sm-8">
                                 <input id="createTime" name="createTime"
                                        class="laydate-icon form-control"
                                        value="${data.createTime}">
                             </div>
-                        </div>
-                        <div class="form-group">
+                        </div>-->
+                        <#--<div class="form-group">
                             <label class="col-sm-3 control-label">头像：</label>
                             <div class="col-sm-8">
                                 <#if data.imgur? exists>
@@ -71,13 +71,11 @@
                                     <img id="imgurl" class="pull-left" src="${ctx}/avatars/avatar5.png">
                                 </#if>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
-                            <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
                             </div>
-                            </#if>
                         </div>
                     </form>
                 </div>

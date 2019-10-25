@@ -1,10 +1,12 @@
 package com.dream.city.service.player.impl;
 
 import com.dream.city.base.model.Page;
-import com.dream.city.base.model.entity.Player;
-import com.dream.city.base.model.entity.PlayerGrade;
+import com.dream.city.base.model.entity.*;
+import com.dream.city.base.model.mapper.GenesisMapper;
+import com.dream.city.base.model.mapper.PlayerAccountMapper;
 import com.dream.city.base.model.mapper.PlayerGradeMapper;
 import com.dream.city.base.model.mapper.PlayerMapper;
+import com.dream.city.base.model.resp.PlayerAccountResp;
 import com.dream.city.base.model.resp.PlayerResp;
 import com.dream.city.base.utils.DataUtils;
 import com.dream.city.service.player.FriendsService;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -31,6 +34,12 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private FriendsService friendsService;
 
+    @Autowired
+    private PlayerAccountMapper playerAccountMapper;
+
+    @Autowired
+    private GenesisMapper genesisMapper;
+
     @Value("${spring.application.name}")
     private String appName;
 
@@ -39,6 +48,8 @@ public class PlayerServiceImpl implements PlayerService {
     public PlayerResp getPlayer(Player player) {
         return playerMapper.getPlayerById(player);
     }
+
+
 
     @Override
     public PlayerResp getPlayerByrId(Long id) {
@@ -51,6 +62,18 @@ public class PlayerServiceImpl implements PlayerService {
         Player player = new Player();
         player.setId(id);
         return playerMapper.getPlayerById(player);
+    }
+
+    @Override
+    public Player selectPlayerId(Long id) {
+        if (id == null){
+            return null;
+        }
+        if (id <= 0){
+            return null;
+        }
+        Player pp = playerMapper.selectPlayerId(Integer.valueOf(id.toString()));
+        return pp;
     }
 
 
@@ -72,6 +95,18 @@ public class PlayerServiceImpl implements PlayerService {
         List<PlayerResp> players = playerMapper.getPlayerList(playerReq);
         return new PageInfo<>(players);
     }
+
+    @Override
+    public PageInfo getGenesis(Page pageReq){
+         Genesis item = DataUtils.toJavaObject(pageReq.getCondition(),Genesis.class);
+         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize(),pageReq.isCount());
+        List<Genesis> list = genesisMapper.getListGenesis(item);
+        System.out.println("*-----------------------*"+list);
+         return  new PageInfo<>(list);
+
+    }
+
+
 
     @Override
     public PlayerResp getPlayerByName(String playerName) {
@@ -135,5 +170,44 @@ public class PlayerServiceImpl implements PlayerService {
         return gradeMapper.getPlayerGradeByPlayerId(record);
     }
 
+
+
+    @Override
+    public PlayerAccount getPlayerAccountRespForId(String playerId) {
+        PlayerAccount playerResp = null;
+        if (StringUtils.isNotBlank(playerId)) {
+            //PlayerAccount PlayerAccountResp = new PlayerAccountResp();
+            //PlayerAccountResp.setPlayerId(playerId);
+            playerResp = playerAccountMapper.getAccountByPlayerId(playerId);
+        }
+        return playerResp;
+    }
+
+
+    @Override
+    public Player getPlayerId(String playerId){
+        return playerMapper.getPlayer(playerId);
+    }
+
+    @Override
+    public Integer updateGenesisPlayer(String playerId, String accAddr) {
+        return genesisMapper.updateGenesis(playerId,accAddr);
+    }
+
+    @Override
+    public Integer add(Genesis genesis){
+        return genesisMapper.add(genesis);
+    }
+
+
+   /* @Override
+    public  List<Genesis> getListGenesis(Genesis gnesis){
+        return genesisMapper.getListGenesis(genesis);
+    }*/
+
+    @Override
+    public Genesis getGenesis(String playerId){
+        return genesisMapper.getGenesis(playerId);
+    }
 
 }

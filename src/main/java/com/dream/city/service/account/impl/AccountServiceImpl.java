@@ -1,7 +1,11 @@
 package com.dream.city.service.account.impl;
 
+import com.dream.city.base.model.entity.PlayerAccountLog;
 import com.dream.city.base.model.mapper.AccountMapper;
+import com.dream.city.base.model.mapper.PlayerAccountLogMapper;
+import com.dream.city.base.model.resp.PlayerAccountResp;
 import com.dream.city.base.service.DictionaryService;
+import com.dream.city.base.utils.DataUtils;
 import com.dream.city.base.utils.ListUtils;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.base.model.entity.PlayerAccount;
@@ -22,6 +26,8 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     DictionaryService dictionaryService;
 
+    @Autowired
+    PlayerAccountLogMapper  playerAccountLogMapper;
 
     @Override
     @Transactional
@@ -39,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<PlayerAccount> getPlayerAccountList(PlayerAccount record) {
+    public List<PlayerAccountResp> getPlayerAccountList(PlayerAccountReq record) {
         return accountMapper.getPlayerAccountList(record);
     }
 
@@ -61,4 +67,33 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountMapper.getPlatformAccounts(record);
     }
+
+
+    @Override
+    public PlayerAccount selectByPrimaryKey(Integer accId){
+        PlayerAccount  playerAccount = accountMapper.selectByPrimaryKey(accId);
+        return playerAccount;
+    }
+
+    @Override
+    public PlayerAccountResp getAccountByIdOrName(Integer inId, String inName) {
+            if (inId == null){
+                return null;
+            }
+        PlayerAccount property = accountMapper.selectByPrimaryPlayerId(inId);
+            return DataUtils.toJavaObject(property,PlayerAccountResp.class);
+    }
+
+    public void updateByPrimaryKeySelective(PlayerAccount record){
+        if (record.getAccId() != null ){
+            accountMapper.updateByPrimaryKeySelective(record);
+        }
+
+    }
+
+    @Override
+    public  Integer  insertPlayAccountLog(PlayerAccountLog playerAccountLog){
+       return playerAccountLogMapper.insert(playerAccountLog);
+    }
+
 }

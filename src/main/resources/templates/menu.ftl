@@ -330,6 +330,12 @@
                         玩家登陆日志
                     </a>
                 </li>
+                <li>
+                    <a href="${ctx}/player/genesis/index">
+                        <i class="icon-double-angle-right"></i>
+                        创世账号
+                    </a>
+                </li>
             </ul>
         </li>
 

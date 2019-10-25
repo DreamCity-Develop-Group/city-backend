@@ -2,6 +2,7 @@ package com.dream.city.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dream.city.base.model.entity.User;
+import com.dream.city.base.model.req.CityInvestReq;
 import com.dream.city.base.model.vo.UserVo;
 import com.dream.city.base.utils.DataUtils;
 import com.dream.city.base.utils.RedisKeys;
@@ -39,6 +40,8 @@ public class AdminController {
 
 	@RequestMapping(value = "/login" , method = RequestMethod.GET)
 	public String login() {
+
+
 		return "admin/login";
 	}
 

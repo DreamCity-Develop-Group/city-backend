@@ -1,11 +1,14 @@
 package com.dream.city.service.player;
 
 import com.dream.city.base.model.Page;
-import com.dream.city.base.model.entity.Player;
-import com.dream.city.base.model.entity.PlayerGrade;
+import com.dream.city.base.model.entity.*;
+import com.dream.city.base.model.resp.PlayerAccountResp;
 import com.dream.city.base.model.resp.PlayerResp;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -19,6 +22,8 @@ public interface PlayerService {
 
     PlayerResp getPlayerByrId(Long id);
 
+    Player selectPlayerId(Long id);
+
     PlayerResp getPlayerByPlayerId(String playerId);
 
     /**
@@ -27,6 +32,8 @@ public interface PlayerService {
      * @return
      */
     PageInfo getPlayers(Page pageReq);
+
+    PageInfo<Genesis> getGenesis(Page pageReq);
 
     PlayerResp getPlayerByName(String playerName);
 
@@ -47,4 +54,15 @@ public interface PlayerService {
     PlayerGrade getPlayerGradeByPlayerId(String playerId);
 
 
+    PlayerAccount getPlayerAccountRespForId(String playerId);
+
+    Player getPlayerId(String playerId);
+
+    Integer  updateGenesisPlayer(String playerId,String accAddr);
+
+    Integer add(Genesis genesis);
+
+    //List<Genesis> getListGenesis();
+
+    Genesis getGenesis(String playerId);
 }

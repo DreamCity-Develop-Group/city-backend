@@ -2,7 +2,9 @@ package com.dream.city.service.account;
 
 
 import com.dream.city.base.model.entity.PlayerAccount;
+import com.dream.city.base.model.entity.PlayerAccountLog;
 import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.resp.PlayerAccountResp;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public interface AccountService {
      * @param record
      * @return
      */
-    List<PlayerAccount> getPlayerAccountList(PlayerAccount record);
+    List<PlayerAccountResp> getPlayerAccountList(PlayerAccountReq record);
 
     /**
      * 更新玩家账户
@@ -47,5 +49,10 @@ public interface AccountService {
      */
     List<PlayerAccount> getPlatformAccounts(PlayerAccountReq record);
 
+    PlayerAccount selectByPrimaryKey(Integer accId);
 
+
+    PlayerAccountResp getAccountByIdOrName(Integer inId, String inName);
+
+    Integer  insertPlayAccountLog(PlayerAccountLog playerAccount);
 }

@@ -348,11 +348,13 @@
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-							var operateHtml = '';
-                            //operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-                            operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
-                            return operateHtml;
+							var operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;拨币</button> &nbsp;';
+							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
+							//operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.ruleId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+							//operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.ruleId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+							return operateHtml;
+
+
                         }
                     }]
                 });
@@ -401,12 +403,13 @@
             function edit(id){
                 layer.open({
 					type: 2,
-                    title: '编辑'+${title},
+                    title: '${title}拨币',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
                     content: '${ctx}/${actionPath}/edit/'  + id,
                     end: function(index){
+                    	alert(index);
                         $('#helpListTable').bootstrapTable("refresh");
                     }
                 });
@@ -426,11 +429,12 @@
                     });
                 });
             }
+
 			function detail(id) {
 
 				layer.open({
 					type: 2,
-					title: ${title}+'详情',
+					title: '${title}详情',
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
@@ -439,7 +443,10 @@
 						$('#helpListTable').bootstrapTable("refresh");
 					}
 				});
+
+
 			}
+
 		</script>
 </body>
 </html>
