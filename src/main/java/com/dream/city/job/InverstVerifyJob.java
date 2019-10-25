@@ -27,12 +27,12 @@ import java.util.List;
 @Component
 public class InverstVerifyJob extends QuartzJobBean {
 
+    private String jobType = "投资预约";
 
     @Autowired
     private InvestVerifyHandleService investVerifyHandleService;
     @Autowired
     private OrderService orderService;
-    private String jobType = "投资预约";
 
 
     @Override

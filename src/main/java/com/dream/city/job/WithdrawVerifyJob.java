@@ -28,12 +28,12 @@ import java.util.List;
 @Component
 public class WithdrawVerifyJob extends QuartzJobBean {
 
+    private String jobType = "提现";
 
     @Autowired
     private WithdrawVerifyHandleService verifyHandleService;
     @Autowired
     private PlayerTradeService tradeService;
-    private String jobType = "提现";
 
 
     @Override
