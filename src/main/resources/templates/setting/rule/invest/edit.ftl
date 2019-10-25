@@ -84,7 +84,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则描述：</label>
                             <div class="col-sm-8">
-                                <input id="ruleDesc" name="ruleDesc" class="form-control" value="${data.ruleDesc}">
+                                <textarea class="form-control" id="ruleDesc" name="ruleDesc" placeholder="Default Text">${data.ruleDesc}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -95,6 +95,7 @@
                                        value="${data.createTime}">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

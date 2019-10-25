@@ -72,6 +72,7 @@
                                 </#if>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

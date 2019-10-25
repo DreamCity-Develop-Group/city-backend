@@ -51,19 +51,10 @@
                                 <input id="type" name="type" class="form-control" type="text" value="${data.type}">
                             </div>
                         </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">可用状态：</label>
-                            <div class="col-sm-8">
-                                <select name="itemState" class="form-control">
-                                    <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
-                                </select>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <input id="descr" name="descr" class="form-control" value="${data.descr}">
+                                <textarea class="form-control" id="descr" name="descr" placeholder="Default Text">${data.descr}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -74,6 +65,7 @@
                                        value="${data.createTime}">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

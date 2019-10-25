@@ -57,29 +57,7 @@
                                 <img class="pull-left" src="${ctx}/${data.imgurl}">
                             </div>
                         </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">是否可投：</label>
-                            <div class="col-sm-8">
-                                <select name="isValid" class="form-control">
-                                    <option value="0" <#if data.isValid == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.isValid == 1>selected="selected"</#if>>是</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">投资结束时间：</label>
-                            <div class="col-sm-8">
-                                <input id="sendTime" name="inEnd"
-                                       class="laydate-icon form-control"
-                                       value="${data.inEnd}">
-                            </div>
-                        </div>-->
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">内容：</label>
-                            <div class="col-sm-8">
-                                <input id="content" name="content" class="form-control" value="${data.content}">
-                            </div>
-                        </div>-->
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

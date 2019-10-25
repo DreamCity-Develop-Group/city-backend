@@ -51,15 +51,6 @@
                                 <input id="likedSetTotal" name="likedSetTotal" class="form-control" type="text" value="${data.likedSetTotal}">
                             </div>
                         </div>
-                        <#--<div class="form-group">
-                            <label class="col-sm-3 control-label">可用状态：</label>
-                            <div class="col-sm-8">
-                                <select name="itemState" class="form-control">
-                                    <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
-                                    <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
-                                </select>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">获赞时间：</label>
                             <div class="col-sm-8">
@@ -68,6 +59,7 @@
                                        value="${data.createTime}">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">
