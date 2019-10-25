@@ -91,21 +91,7 @@
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
 											任务名称：<input id="jobName" name="jobName" type="text"/>
-											<#--<select id="jobName" name="jobName" class="">
-												<option value=""></option>
-												<#list items as item>
-													<option value="${item.itemName}">${item.itemName}</option>
-												</#list>
-											</select>-->
 										</div>
-										<#--<div class="col-sm-3 form-group">
-											<label class="col-sm-3 control-label">发送时间：</label>
-											<div class="col-sm-8">
-												<input id="inEnd" name="inEnd"
-													   class="laydate-icon form-control"
-													   value="">
-											</div>
-										</div>-->
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
 										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
 										<#--<@shiro.hasPermission name="system:user:add">
@@ -258,14 +244,6 @@
 		<script type="text/javascript">
             $(document).ready(function () {
 
-				//外部js调用
-				/*laydate({
-					elem: '#inEnd', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
-					format: 'YYYY-MM-DD hh:mm:ss',
-					istime: true
-				});*/
-
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({
                     //使用get请求到服务器获取数据
@@ -335,24 +313,7 @@
 						field: "jobClazz"
 					},{
 						title: "状态",
-						field: "jobStatus"/*,
-						formatter: function (value, row, index) {
-							var operateHtml = '无';
-							if (value === 'NORMAL' || value === 'ACQUIRED'){
-								operateHtml = '启动';
-							}else if (value === 'PAUSED'){
-								operateHtml = '暂停';
-							}else if (value === 'COMPLETE'){
-								operateHtml = '完成';
-							}else if (value === 'NONE'){
-								operateHtml = '无';
-							}else if (value === 'ERROR'){
-								operateHtml = '异常';
-							}else if (value === 'BLOCKED'){
-								operateHtml = '阻塞';
-							}
-							return operateHtml;
-						}*/
+						field: "jobStatus"
 					},{
 						title: "执行时间",
 						field: "jobTime"

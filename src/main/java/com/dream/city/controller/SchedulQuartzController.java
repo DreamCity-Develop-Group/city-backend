@@ -62,6 +62,7 @@ public class SchedulQuartzController extends BaseController {
             result = quartzService.getJobTriggerCronList(pageReq);
         }catch (Exception e){
             success = Boolean.FALSE;
+            logger.error(modelName+"列表异常",e);
         }
         return new Result(success,modelName + "列表",result);
     }
