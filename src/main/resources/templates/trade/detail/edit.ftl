@@ -116,7 +116,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">交易描述：</label>
                             <div class="col-sm-8">
-                                <input id="detailDesc" name="detailDesc" class="form-control" value="${data.detailDesc}">
+                                <textarea class="form-control" id="detailDesc" name="detailDesc" placeholder="Default Text">${data.detailDesc}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -135,6 +135,7 @@
                                        value="${data.verifyTime}">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

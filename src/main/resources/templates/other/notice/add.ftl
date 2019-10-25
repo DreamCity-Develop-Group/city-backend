@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">内容：</label>
                                 <div class="col-sm-8">
-                                    <input id="noticeContent" name="noticeContent" class="form-control" value="" />
+                                    <textarea class="form-control" id="noticeContent" name="noticeContent" placeholder="Default Text"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">

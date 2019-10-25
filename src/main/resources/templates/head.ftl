@@ -4,7 +4,7 @@
     </script>
 
     <div class="navbar-container" id="navbar-container">
-        <input type="hidden" id="username" name="username" value="${user.loginName}">
+        <#--<input type="hidden" id="username" name="username" value="${user.loginName}">-->
         <div class="navbar-header pull-left">
             <a href="#" class="navbar-brand">
                 <small>
@@ -19,7 +19,7 @@
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <#if '${user.loginName}' != ''>
-                            <img class="nav-user-photo" src="${ctx}/${user.photo}" alt="User's Photo" />
+                            <img class="nav-user-photo" <#if user.photo == ''>src="${ctx}/avatars/user.jpg"<#else>src="${ctx}/${user.photo}"</#if> alt="User's Photo" />
                         <#else>
                             <img class="nav-user-photo" src="${ctx}/avatars/user.jpg" alt="Photo" />
                         </#if>

@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">交易描述：</label>
                             <div class="col-sm-8">
-                                <input id="tradeDesc" name="tradeDesc" class="form-control" value="${data.tradeDesc}">
+                                <textarea class="form-control" id="tradeDesc" name="tradeDesc" placeholder="Default Text">${data.tradeDesc}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -109,6 +109,7 @@
                                        value="${data.createTime}">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

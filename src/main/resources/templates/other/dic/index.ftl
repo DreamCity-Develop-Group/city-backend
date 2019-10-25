@@ -60,7 +60,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">任务管理</a></li>
+							<li><a href="#">设置管理</a></li>
 							<li class="active">${title}</li>
 						</ul><!-- .breadcrumb -->
 
@@ -90,7 +90,13 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">${table}</h3>
 										<div class="col-sm-3 form-group">
-											任务名称：<input id="jobName" name="jobName" type="text"/>
+											名称：<input id="name" name="name" class="" type="text" value="">
+										</div>
+										<div class="col-sm-3 form-group">
+											键：<input id="key" name="key" class="" type="text" value="">
+										</div>
+										<div class="col-sm-3 form-group">
+											值：<input id="val" name="val" class="" type="text" value="">
 										</div>
 										<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
 										<button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
@@ -244,6 +250,14 @@
 		<script type="text/javascript">
             $(document).ready(function () {
 
+				//外部js调用
+				/*laydate({
+					elem: '#inEnd', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+					event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+					format: 'YYYY-MM-DD hh:mm:ss',
+					istime: true
+				});*/
+
                 //初始化表格,动态从服务器加载数据
                 $("#helpListTable").bootstrapTable({
                     //使用get请求到服务器获取数据
@@ -293,57 +307,36 @@
                     //数据列
 					columns: [{
 						title: "ID",
-						field: "jobId",
-						sortable: true,
-						formatter: function (value, row, index) {
-							if (typeof(value) === 'undefined' || value === null || value === ''){
-								return index;
-							}else {
-								return value;
-							}
-						}
+						field: "id",
+						sortable: true
 					},{
-						title: "任务名",
-						field: "jobName"
+						title: "名称",
+						field: "name"
 					},{
-						title: "任务组",
-						field: "jobGroupName"
+						title: "键",
+						field: "key"
 					},{
-						title: "执行类",
-						field: "jobClazz"
+						title: "值",
+						field: "val"
 					},{
 						title: "状态",
-						field: "jobStatus"
-					},{
-						title: "执行时间",
-						field: "jobTime"
-					},{
-						title: "上次执行时间",
-						field: "prevFireTime"
-					},{
-						title: "下次执行时间",
-						field: "nextFireTime"
+						field: "isValid",
+						formatter: function (value, row, index) {
+							if (value === 1)
+								return '可用';
+							return '不可用';
+						}
 					},{
 						title: "描述",
-						field: "triggerDescr"
+						field: "descr"
 					},{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
 							var operateHtml = '';
-							if (row.jobStatus !== 'ACQUIRED'){
-								/*operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'run\')"><i class="fa fa-edit"></i>&nbsp;启动</button> &nbsp;';*/
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'run\')"><i class="fa fa-edit"></i>&nbsp;执行</button> &nbsp;';
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.jobName+'\',\''+row.jobGroupName+'\',\''+row.jobTime+'\',\''+row.jobStatus+'\',\''+row.descr+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
-							}
-							if (row.jobStatus !== 'PAUSED' && row.jobStatus !== 'ACQUIRED'){
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'pause\')"><i class="fa fa-edit"></i>&nbsp;停止</button> &nbsp;';
-							}
-							if (row.jobStatus === 'PAUSED'){
-								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="changeStatus(\''+row.jobName+'\',\''+row.jobGroupName+'\',\'resume\')"><i class="fa fa-edit"></i>&nbsp;恢复</button> &nbsp;';
-							}
-							/*operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.jobName+'\',\''+row.jobGroupName+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';*/
+                            operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+                            /*operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.id+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';*/
                             return operateHtml;
                         }
                     }]
@@ -365,13 +358,17 @@
                     "total":params.total,
                     "pages":params.pages,
                     "count":params.count,
-					"jobName":$("#jobName").val()
+					"name":$("#name").val(),
+					"key":$("#key").val(),
+					"val":$("#val").val()
                 }
                 return params;
             }
             function search() {
 				var params={
-					"jobName":$("#jobName").val()
+					"name":$("#name").val(),
+					"key":$("#key").val(),
+					"val":$("#val").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
@@ -388,39 +385,25 @@
                     }
                 });
             }
-            function changeStatus(name,group,type){
-				$.ajax({
-					type: "GET",
-					dataType: "json",
-					url: '${ctx}/${actionPath}/changeStatus?jobName='+name+'&jobGroupName='+group+'&editType='+type,
-					success: function(msg){
-						layer.msg(msg.msg, {time: 1500},function(){
-							$('#helpListTable').bootstrapTable("refresh");
-							layer.close(index);
-						});
-					}
-				});
-            }
-            function edit(name,group,jobTime,jobStatus,descr){
+            function edit(id){
                 layer.open({
 					type: 2,
                     title: '编辑${title}',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/edit?jobName='+name+'&jobGroupName='+group+'&jobStatus='+jobStatus
-							+"&jobTime="+jobTime+"&descr="+descr,
+                    content: '${ctx}/${actionPath}/edit/'  + id,
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
                 });
             }
-            function del(name,group){
+            function del(id){
                 layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
                     $.ajax({
-                        type: "GET",
+                        type: "POST",
                         dataType: "json",
-                        url: '${ctx}/${actionPath}/delete?jobName='+name+'&jobGroupName='+group,
+                        url: "${ctx}/${actionPath}/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#helpListTable').bootstrapTable("refresh");
@@ -430,7 +413,7 @@
                     });
                 });
             }
-			function detail(name,group) {
+			function detail(id) {
 
 				layer.open({
 					type: 2,
@@ -438,7 +421,7 @@
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/${actionPath}/get?jobName='+name+'&jobGroupName='+group,
+					content: '${ctx}/${actionPath}/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

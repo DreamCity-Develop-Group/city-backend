@@ -61,13 +61,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                        <label class="col-sm-3 control-label">投资结束时间：</label>
-                                        <div class="col-sm-8">
-                                            <input id="sendTime" name="inEnd"
-                                                   class="laydate-icon form-control"
-                                                   value="">
-                                        </div>
+                                <label class="col-sm-3 control-label">投资结束时间：</label>
+                                <div class="col-sm-8">
+                                    <input id="sendTime" name="inEnd"
+                                           class="laydate-icon form-control"
+                                           value="">
                                 </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
                                     <button class="btn btn-primary" type="submit">提交</button>

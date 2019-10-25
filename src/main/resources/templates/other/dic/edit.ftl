@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
     <link href="${ctx}/css/animate.css" rel="stylesheet">
-    <#--<link href="${ctx}/backend/css/style.css" rel="stylesheet">-->
-
 
 </head>
 
@@ -26,45 +24,42 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="updateForm">
-                        <input type="hidden" id="ruleId" name="ruleId" value="${data.ruleId}">
+                        <input type="hidden" id="id" name="id" value="${data.id}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">玩家：</label>
+                            <label class="col-sm-3 control-label">名称：</label>
                             <div class="col-sm-8">
-                                <input id="playerName" name="playerName" class="form-control" type="text" value="${data.playerName}">
+                                <input id="name" name="name" class="form-control" type="text" value="${data.name}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">登陆机器：</label>
+                            <label class="col-sm-3 control-label">键：</label>
                             <div class="col-sm-8">
-                                <input id="imei" name="imei" class="form-control" type="text" value="${data.imei}">
+                                <input id="key" name="key" class="form-control" type="text" value="${data.key}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">登陆ip：</label>
+                            <label class="col-sm-3 control-label">值：</label>
                             <div class="col-sm-8">
-                                <input id="ip" name="ip" class="form-control" type="text" value="${data.ip}">
+                                <input id="val" name="val" class="form-control" type="text" value="${data.val}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">日志类型：</label>
+                            <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
-                                <input id="type" name="type" class="form-control" type="text" value="${data.type}">
+                                <select id="isValid" name="isValid" class="form-control">
+                                    <option value="0" <#if data.isValid == 0>selected="selected"</#if>>不可用</option>
+                                    <option value="1" <#if data.isValid == 1>selected="selected"</#if>>可用</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="descr" name="descr" placeholder="Default Text">${data.descr}</textarea>
+                                    <textarea class="form-control" id="descr" name="descr"
+                                              placeholder="Default Text">${data.descr}</textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">登陆时间：</label>
-                            <div class="col-sm-8">
-                                <input id="createTime" name="inEnd"
-                                       class="laydate-icon form-control"
-                                       value="${data.createTime}">
-                            </div>
-                        </div>
+
 
                         <div class="form-group">
                             <#if edit>
@@ -85,23 +80,24 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            //外部js调用
-            /*laydate({
-                elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-                event: 'focus', //响应事件。如果没有传入event，则按照默认的click
-                format: 'YYYY-MM-DD hh:mm:ss',
-                istime: true
-            });*/
 
             $("#updateForm").validate({
                 rules: {
-                    itemName: {
+                    name: {
                         required: true,
                         minlength: 1,
                         maxlength: 60
-                    },itemState: {
+                    },key: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 200
+                    },val: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 200
+                    },isValid: {
                         required: true
-                    },itemDesc: {
+                    },descr: {
                         required: true,
                         minlength: 1,
                         maxlength: 600

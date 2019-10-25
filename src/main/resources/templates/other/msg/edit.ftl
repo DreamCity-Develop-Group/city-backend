@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">内容：</label>
                             <div class="col-sm-8">
-                                <input id="content" name="content" class="form-control" value="${data.content}">
+                                <textarea class="form-control" id="content" name="content" placeholder="Default Text">${data.content}</textarea>
                             </div>
                         </div>
                         <div class="form-group">

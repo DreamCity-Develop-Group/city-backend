@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
     <link href="${ctx}/css/animate.css" rel="stylesheet">
-    <#--<link href="${ctx}/backend/css/style.css" rel="stylesheet">-->
 
 </head>
 
@@ -26,44 +25,39 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="addForm">
-                            <input type="hidden" id="ruleId" name="ruleId" value="">
+                            <input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">规则项目名称：</label>
+                                <label class="col-sm-3 control-label">名称：</label>
                                 <div class="col-sm-8">
-                                    <input id="itemName" name="itemName" class="form-control" type="text" value="">
+                                    <input id="name" name="name" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">规则名称：</label>
+                                <label class="col-sm-3 control-label">键：</label>
                                 <div class="col-sm-8">
-                                    <input id="ruleName" name="ruleName" class="form-control" type="text" value="">
+                                    <input id="key" name="key" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">规则税率：</label>
+                                <label class="col-sm-3 control-label">值：</label>
                                 <div class="col-sm-8">
-                                    <input id="ruleRate" name="ruleRate" class="form-control" type="text" value="">
+                                    <input id="val" name="val" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">规则优先级别：</label>
+                                <label class="col-sm-3 control-label">状态：</label>
                                 <div class="col-sm-8">
-                                    <input id="raleLevel" name="raleLevel" class="form-control" type="text" value="">
-                                </div>
-                            </div>
-                            <#--<div class="form-group">
-                                <label class="col-sm-3 control-label">可用状态：</label>
-                                <div class="col-sm-8">
-                                    <select name="itemState" class="form-control">
-                                        <option value="0" <#if data.itemState == 0>selected="selected"</#if>>否</option>
-                                        <option value="1" <#if data.itemState == 1>selected="selected"</#if>>是</option>
+                                    <select id="isValid" name="isValid" class="form-control">
+                                        <option value="0" >不可用</option>
+                                        <option value="1" selected="selected">可用</option>
                                     </select>
                                 </div>
-                            </div>-->
+                            </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">规则描述：</label>
+                                <label class="col-sm-3 control-label">描述：</label>
                                 <div class="col-sm-8">
-                                    <input id="ruleDesc" name="ruleDesc" class="form-control" value="">
+                                    <textarea class="form-control" id="descr" name="descr"
+                                              placeholder="Default Text"></textarea>
                                 </div>
                             </div>
 
@@ -84,23 +78,23 @@
     <script type="text/javascript">
     $(document).ready(function () {
 
-        //外部js调用
-        /*laydate({
-            elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-            event: 'focus', //响应事件。如果没有传入event，则按照默认的click
-            format: 'YYYY-MM-DD hh:mm:ss',
-            istime: true
-        });*/
-
 	    $("#addForm").validate({
             rules: {
-                itemName: {
+                name: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },itemState: {
+                },key: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 200
+                },val: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 200
+                },isValid: {
                     required: true
-                },itemDesc: {
+                },descr: {
                     required: true,
                     minlength: 1,
                     maxlength: 600

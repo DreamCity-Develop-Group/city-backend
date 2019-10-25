@@ -62,18 +62,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">规则项描述：</label>
                             <div class="col-sm-8">
-                                <input id="itemDesc" name="itemDesc" class="form-control" value="${data.itemDesc}">
+                                <textarea class="form-control" id="itemDesc" name="itemDesc" placeholder="Default Text">${data.itemDesc}</textarea>
                             </div>
                         </div>
-                        <#--
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">投资结束时间：</label>
-                            <div class="col-sm-8">
-                                <input id="sendTime" name="inEnd"
-                                       class="laydate-icon form-control"
-                                       value="${data.inEnd}">
-                            </div>
-                        </div>-->
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="${ctx}/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
     <link href="${ctx}/css/animate.css" rel="stylesheet">
-    <#--<link href="${ctx}/backend/css/style.css" rel="stylesheet">-->
 
 </head>
 
@@ -26,48 +25,62 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="addForm">
-                            <input type="hidden" id="jobId" name="jobId" value="${data.jobId}">
+                            <input type="hidden" id="accId" name="accId" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">任务名：</label>
+                                <label class="col-sm-3 control-label">玩家：</label>
                                 <div class="col-sm-8">
-                                    <input id="jobName" name="jobName" class="form-control" type="text"
-                                           value="${data.jobName}">
+                                    <input id="username" name="username" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">任务组：</label>
+                                <label class="col-sm-3 control-label">账户地址：</label>
                                 <div class="col-sm-8">
-                                    <input id="jobGroupName" name="jobGroupName" class="form-control" type="text"
-                                           value="${data.jobGroupName}">
+                                    <input id="accAddr" name="accAddr" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">执行类：</label>
+                                <label class="col-sm-3 control-label">USDT总额：</label>
                                 <div class="col-sm-8">
-                                    <input id="jobClass" name="jobClass" class="form-control" type="text"
-                                           value="${data.jobClass}">
+                                    <input id="accUsdt" name="accUsdt" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">执行时间：</label>
+                                <label class="col-sm-3 control-label">USDT可用：</label>
                                 <div class="col-sm-8">
-                                    <input id="jobTime" name="jobTime" class="form-control" type="text"
-                                           value="${data.jobTime}">
+                                    <input id="accUsdtAvailable" name="accUsdtAvailable" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">状态：</label>
+                                <label class="col-sm-3 control-label">USDT冻结：</label>
                                 <div class="col-sm-8">
-                                    <input id="jobStatus" name="jobStatus" class="form-control" type="text"
-                                           value="${data.jobStatus}" readonly="readonly">
+                                    <input id="accUsdtFreeze" name="accUsdtFreeze" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">描述：</label>
+                                <label class="col-sm-3 control-label">MT总额：</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" id="descr" name="descr" placeholder="Default Text">${data.triggerDescr}</textarea>
+                                    <input id="accMt" name="accMt" class="form-control" type="text" value="">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">MT可用：</label>
+                                <div class="col-sm-8">
+                                    <input id="accMtAvailable" name="accMtAvailable" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">MT冻结：</label>
+                                <div class="col-sm-8">
+                                    <input id="accMtFreeze" name="accMtFreeze" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">收益：</label>
+                                <div class="col-sm-8">
+                                    <input id="totalIncome" name="totalIncome" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
@@ -86,39 +99,40 @@
     <script type="text/javascript">
     $(document).ready(function () {
 
-        //外部js调用
-        /*laydate({
-            elem: '#sendTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-            event: 'focus', //响应事件。如果没有传入event，则按照默认的click
-            format: 'YYYY-MM-DD hh:mm:ss',
-            istime: true
-        });*/
-
 	    $("#addForm").validate({
             rules: {
-                jobName: {
+                username: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },jobGroupName: {
+                },accUsdt: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },jobClass: {
-                    required: true,
-                    minlength: 1,
-                    maxlength: 600
-                },jobTime: {
+                },accUsdtAvailable: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },jobStatus: {
-                    minlength: 1,
-                    maxlength: 30
-                },descr: {
+                },accUsdtFreeze: {
                     required: true,
                     minlength: 1,
-                    maxlength: 600
+                    maxlength: 60
+                },accMt: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },accMtAvailable: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },accMtFreeze: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },totalIncome: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
                 }
             },
     	    messages: {},

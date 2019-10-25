@@ -114,12 +114,12 @@ public class SchedulQuartzServiceImpl implements SchedulQuartzService {
      */
     @Override
     public void addJob(Class<? extends QuartzJobBean> jobClass, String jobName, String jobGroupName, String jobTime,
-                       Boolean startNow, Date startAt, JobDataMap jobDataMap,String jobDescription) {
+                       Boolean startNow, Date startAt, JobDataMap jobDataMap,String jobDescription, String triggerDescription) {
         try {
             JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).withDescription(jobDescription).build();
 
             TriggerBuilder<CronTrigger> cronTriggerTriggerBuilder = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroupName)
-                    .startAt(DateBuilder.futureDate(1, DateBuilder.IntervalUnit.SECOND))
+                    .startAt(DateBuilder.futureDate(1, DateBuilder.IntervalUnit.SECOND)).withDescription(triggerDescription)
                     .withSchedule(CronScheduleBuilder.cronSchedule(jobTime));
 
             if (startNow != null && startNow) {

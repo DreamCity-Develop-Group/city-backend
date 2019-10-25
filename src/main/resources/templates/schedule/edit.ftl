@@ -81,9 +81,11 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <input id="descr" name="descr" class="form-control" value="${data.descr}">
+                                <textarea class="form-control" id="descr" name="descr" placeholder="Default Text">${data.triggerDescr}</textarea>
                             </div>
                         </div>
+
+
                         <div class="form-group">
                             <#if edit>
                             <div class="col-sm-8 col-sm-offset-3">

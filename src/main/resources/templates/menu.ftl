@@ -157,10 +157,16 @@
                         角色管理
                     </a>
                 </li>
-                <li>
+                <#--<li>
                     <a href="${ctx}/menu/index">
                         <i class="icon-double-angle-right"></i>
                         资源管理
+                    </a>
+                </li>-->
+                <li>
+                    <a href="${ctx}/other/dic/index">
+                        <i class="icon-double-angle-right"></i>
+                        系统配置项
                     </a>
                 </li>
             </ul>
@@ -294,6 +300,12 @@
                 <b class="arrow icon-angle-down"></b>
             </a>
             <ul class="submenu">
+                <li>
+                    <a href="${ctx}/player/account/index">
+                        <i class="icon-double-angle-right"></i>
+                        玩家账户列表
+                    </a>
+                </li>
                 <li>
                     <a href="${ctx}/player/player/index">
                         <i class="icon-double-angle-right"></i>
@@ -505,12 +517,7 @@
                 <b class="arrow icon-angle-down"></b>
             </a>
             <ul class="submenu">
-                <li>
-                    <a href="${ctx}/other/help/index">
-                        <i class="icon-double-angle-right"></i>
-                        帮助列表
-                    </a>
-                </li>
+
                 <li>
                     <a href="${ctx}/other/message/index">
                         <i class="icon-double-angle-right"></i>
@@ -523,7 +530,12 @@
                         公告列表
                     </a>
                 </li>
-
+                <li>
+                    <a href="${ctx}/other/help/index">
+                        <i class="icon-double-angle-right"></i>
+                        帮助列表
+                    </a>
+                </li>
 
                 <#--<li>
                     <a href="error-404.html">

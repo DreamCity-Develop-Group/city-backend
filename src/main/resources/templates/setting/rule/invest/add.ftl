@@ -105,7 +105,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">规则描述：</label>
                                 <div class="col-sm-8">
-                                    <input id="ruleDesc" name="ruleDesc" class="form-control" value="">
+                                    <textarea class="form-control" id="ruleDesc" name="ruleDesc" placeholder="Default Text"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
