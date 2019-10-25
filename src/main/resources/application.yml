@@ -7,7 +7,7 @@ spring:
   application:
     name: city-backend
   profiles:
-    active: dev
+    active: ${spring.profiles.active}
 
 
 mybatis:
