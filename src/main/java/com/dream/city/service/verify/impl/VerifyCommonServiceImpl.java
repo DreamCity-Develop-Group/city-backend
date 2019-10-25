@@ -146,6 +146,7 @@ public class VerifyCommonServiceImpl implements VerifyCommonService {
                                          String tradeStatus, String inOutStatus, String descr) {
         PlayerTrade tradeReq = new PlayerTrade();
         tradeReq.setTradeId(tradeId);
+        tradeReq.setTradeType(tradeType);
         tradeReq.setTradeStatus(tradeStatus);
         tradeReq.setInOutStatus(inOutStatus);
         tradeReq.setTradeDesc(descr);
