@@ -1,8 +1,11 @@
 package com.dream.city.service.trade;
 
 
+import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.PlayerEarning;
+import com.dream.city.base.model.req.EarningReq;
 import com.dream.city.base.model.resp.PlayerEarningResp;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -40,7 +43,7 @@ public interface EarningService {
      * @param record
      * @return
      */
-    List<PlayerEarning> getEarningList(PlayerEarning record);
+    PageInfo<PlayerEarningResp> getEarningList(Page page, EarningReq record);
 
     /**
      * 更新玩家提现收入

@@ -1,9 +1,13 @@
 package com.dream.city.service.trade.impl;
 
+import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.PlayerEarning;
 import com.dream.city.base.model.mapper.PlayerEarningMapper;
+import com.dream.city.base.model.req.EarningReq;
 import com.dream.city.base.model.resp.PlayerEarningResp;
 import com.dream.city.service.trade.EarningService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +19,6 @@ public class EarningServiceImpl implements EarningService {
     @Autowired
     private PlayerEarningMapper earningMapper;
 
-    /*@Override
-    public int deleteEarningById(Integer earnId) {
-        Integer i = earningMapper.deleteByPrimaryKey(earnId);
-        return i == null? 0: i;
-    }
-
-    @Override
-    public int insertEarning(PlayerEarning record) {
-        Integer i = earningMapper.insertSelective(record);
-        return i == null? 0: i;
-    }*/
 
     @Override
     public PlayerEarning getEarningById(Integer earnId) {
@@ -38,8 +31,10 @@ public class EarningServiceImpl implements EarningService {
     }
 
     @Override
-    public List<PlayerEarning> getEarningList(PlayerEarning record) {
-        return earningMapper.selectPlayerEarningList(record);
+    public PageInfo<PlayerEarningResp> getEarningList(Page page, EarningReq record) {
+        PageHelper.startPage(page.getPageNum(),page.getPageSize());
+        List<PlayerEarningResp> earningList = earningMapper.getEarningList(record);
+        return new PageInfo<>(earningList);
     }
 
     @Override

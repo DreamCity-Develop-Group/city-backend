@@ -457,6 +457,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="${ctx}/trade/earning/index">
+                        <i class="icon-double-angle-right"></i>
+                        玩家收益
+                    </a>
+                </li>
+                <li>
                     <a href="${ctx}/trade/detail/index">
                         <i class="icon-double-angle-right"></i>
                         交易明细列表
