@@ -1,14 +1,13 @@
 package com.dream.city.controller;
 
 
-import com.alibaba.druid.sql.visitor.functions.Now;
 import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.Genesis;
 import com.dream.city.base.model.entity.Player;
-import com.dream.city.base.model.entity.PlayerAccount;
-import com.dream.city.base.model.entity.RuleItem;
+import com.dream.city.base.model.req.PlayerAccountReq;
+import com.dream.city.base.model.resp.PlayerAccountResp;
 import com.dream.city.service.account.AccountService;
 import com.dream.city.service.player.PlayerService;
 import com.github.pagehelper.PageInfo;
@@ -18,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
 
 /**
- * @author Administrator
+ * @author
  */
 @RestController
 @RequestMapping("/player/genesis")
@@ -48,7 +45,7 @@ public class GenesisController extends BaseController {
         }
         Result result = new Result();
         Integer i = null;
-        PlayerAccount playerAccount = new PlayerAccount();
+        PlayerAccountReq playerAccount = new PlayerAccountReq();
         playerAccount.setAccPlayerId(playerId);
         try{
             Genesis genesis = playerService.getGenesis(playerId);
@@ -59,7 +56,7 @@ public class GenesisController extends BaseController {
                 result.setData(null);
                 return result;
             }
-            PlayerAccount pa = accountService.getPlayerAccount(playerAccount);
+            PlayerAccountResp pa = accountService.getPlayerAccount(playerAccount);
             Player player = playerService.getPlayerId(playerId);
             if(pa == null || player == null){
                 result.setMsg("没有该用户");

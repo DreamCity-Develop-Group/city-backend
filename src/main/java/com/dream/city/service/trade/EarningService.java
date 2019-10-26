@@ -2,6 +2,7 @@ package com.dream.city.service.trade;
 
 
 import com.dream.city.base.model.entity.PlayerEarning;
+import com.dream.city.base.model.resp.PlayerEarningResp;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface EarningService {
      */
     PlayerEarning getEarningById(Integer earnId);
 
-    PlayerEarning getEarning(PlayerEarning record);
+    PlayerEarningResp getEarning(PlayerEarning record);
 
 
     /**

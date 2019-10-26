@@ -69,6 +69,9 @@ public class PropertyServiceImpl implements PropertyService {
             PropertyResp propertyResp = null;
             for (InvestResp property : investLsit){
                 propertyResp = DataUtils.toJavaObject(property,PropertyResp.class);
+                propertyResp.setInPersonalTax(property.getPersonalInTax());
+                propertyResp.setInEnterpriseTax(property.getEnterpriseIntax());
+
                 lsit.add(propertyResp);
             }
         }

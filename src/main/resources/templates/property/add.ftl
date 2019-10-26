@@ -34,15 +34,33 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">类型：</label>
+                                <div class="col-sm-8">
+                                    <input id="inType" name="inType" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">限额：</label>
                                 <div class="col-sm-8">
                                     <input id="inLimit" name="inLimit" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">税金：</label>
+                                <label class="col-sm-3 control-label">个人所得税：</label>
                                 <div class="col-sm-8">
-                                    <input id="inTax" name="inTax" class="form-control" type="text" value="">
+                                    <input id="inPersonalTax" name="inPersonalTax" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业所得税：</label>
+                                <div class="col-sm-8">
+                                    <input id="inEnterpriseTax" name="inEnterpriseTax" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">定额税：</label>
+                                <div class="col-sm-8">
+                                    <input id="inQuotaTax" name="inQuotaTax" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -100,11 +118,23 @@
                     required: true,
                     minlength: 1,
                     maxlength: 60
+                },inType: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 10
                 },inLimit: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
-                },inTax: {
+                },inPersonalTax: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },inEnterpriseTax: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 60
+                },inQuotaTax: {
                     required: true,
                     minlength: 1,
                     maxlength: 60
@@ -125,7 +155,7 @@
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/${actionPath}/insert",
+   	    		   url: "${ctx}/property/insert",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){

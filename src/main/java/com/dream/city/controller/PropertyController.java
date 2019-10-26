@@ -5,8 +5,10 @@ import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.CityInvest;
+import com.dream.city.base.model.req.CityInvestReq;
 import com.dream.city.base.model.req.PropertyReq;
 import com.dream.city.base.model.resp.PropertyResp;
+import com.dream.city.base.utils.DateUtils;
 import com.dream.city.service.property.PropertyService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -35,7 +37,6 @@ public class PropertyController extends BaseController {
     public ModelAndView add(CityInvest record,Model model){
         model.addAttribute("title","添加");
         model.addAttribute("table","添加物业");
-        model.addAttribute("actionPath","property");
         model.addAttribute("data",record);
         return new ModelAndView("property/add");
     }
@@ -61,7 +62,7 @@ public class PropertyController extends BaseController {
     }
 
 
-    /*@RequestMapping("/delete/{id}")
+    @RequestMapping("/delete/{id}")
     public Result delete(@PathVariable("id") Integer id){
         logger.info("删除物业，：{}",id);
         boolean success = Boolean.FALSE;
@@ -75,7 +76,7 @@ public class PropertyController extends BaseController {
             logger.error("删除物业异常",e);
         }
         return new Result(success,"删除物业",result);
-    }*/
+    }
 
     /**
      * 修改物业
@@ -88,17 +89,28 @@ public class PropertyController extends BaseController {
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑物业");
         model.addAttribute("edit",Boolean.TRUE);
-        model.addAttribute("actionPath","property");
         model.addAttribute("data",result);
         return new ModelAndView("property/edit");
     }
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Integer> update(@RequestBody CityInvest record){
+    public Result<Integer> update(CityInvestReq record){
         logger.info("修改物业，：{}",record);
         boolean success = Boolean.FALSE;
         Integer result = 0;
         try {
-            result = propertyService.updateInvest(record);
+            CityInvest updateInvest = new CityInvest();
+            updateInvest.setInId(record.getInId());
+            updateInvest.setInType(record.getInType());
+            updateInvest.setInEarning(record.getInEarning());
+            updateInvest.setInEnd(DateUtils.str2Date(record.getInEnd()));
+            updateInvest.setInEnterpriseTax(record.getInEnterpriseTax());
+            updateInvest.setInLimit(record.getInLimit());
+            updateInvest.setInName(record.getInName());
+            updateInvest.setInPersonalTax(record.getInPersonalTax());
+            updateInvest.setInQuotaTax(record.getInQuotaTax());
+            updateInvest.setInStart(DateUtils.str2Date(record.getInStart()));
+            updateInvest.setIsValid(record.getIsValid());
+            result = propertyService.updateInvest(updateInvest);
             if (result != null && result > 0){
                 success = Boolean.TRUE;
             }
@@ -143,7 +155,6 @@ public class PropertyController extends BaseController {
     public ModelAndView index(Model model){
         model.addAttribute("title","物业");
         model.addAttribute("table","物业列表");
-        model.addAttribute("actionPath","property");
         return new ModelAndView("property/index");
     }
     @RequestMapping("/getList")

@@ -92,6 +92,9 @@
 										<div class="col-sm-3 form-group">
 											名称：<input id="inName" name="inName" type="text"/>
 										</div>
+										<div class="col-sm-3 form-group">
+											类型：<input id="inType" name="inType" type="text"/>
+										</div>
 										<#--<div class="col-sm-3 form-group">
 											<label class="col-sm-3 control-label">发送时间：</label>
 											<div class="col-sm-8">
@@ -277,7 +280,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/${actionPath}/getList",
+                    url: "${ctx}/property/getList",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -325,11 +328,20 @@
 						title: "名称",
 						field: "inName"
 					},{
+						title: "类型",
+						field: "inType"
+					},{
 						title: "限额",
 						field: "inLimit"
 					},{
-                        title: "税金",
-                        field: "inTax"
+                        title: "个人所得税",
+                        field: "inPersonalTax"
+                    },{
+                        title: "企业所得税",
+                        field: "inEnterpriseTax"
+                    },{
+                        title: "定额税",
+                        field: "inQuotaTax"
                     },{
                         title: "收益倍数",
                         field: "inEarning"
@@ -349,7 +361,7 @@
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\''+row.inId+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;';
-                            //operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
+                            operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.inId+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;';
                             operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.inId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
                             return operateHtml;
                         }
@@ -373,16 +385,14 @@
                     "pages":params.pages,
                     "count":params.count,
 					"inName":$("#inName").val(),
-					"isValid":$("#isValid").val(),
-					"inEnd":$("#inEnd").val()
+					"inType":$("#inType").val()
                 }
                 return params;
             }
             function search() {
 				var params={
 					"inName":$("#inName").val(),
-					"isValid":$("#isValid").val(),
-					"inEnd":$("#inEnd").val()
+					"inType":$("#inType").val()
 				}
                 $('#helpListTable').bootstrapTable("refresh");
             }
@@ -393,7 +403,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/add/',
+                    content: '${ctx}/property/add/',
                     end: function(index){
                         $('#helpListTable').bootstrapTable("refresh");
                     }
@@ -406,9 +416,8 @@
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
-                    content: '${ctx}/${actionPath}/edit/'  + id,
+                    content: '${ctx}/property/edit/'  + id,
                     end: function(index){
-                    	alert(index);
                         $('#helpListTable').bootstrapTable("refresh");
                     }
                 });
@@ -418,7 +427,7 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${ctx}/${actionPath}/delete/" + id,
+                        url: "${ctx}/property/delete/" + id,
                         success: function(msg){
                             layer.msg(msg.msg, {time: 1500},function(){
                                 $('#helpListTable').bootstrapTable("refresh");
@@ -436,7 +445,7 @@
 					shadeClose: true,
 					shade: false,
 					area: ['800px', '600px'],
-					content: '${ctx}/${actionPath}/get/'  + id,
+					content: '${ctx}/property/get/'  + id,
 					end: function(index){
 						$('#helpListTable').bootstrapTable("refresh");
 					}

@@ -1,10 +1,12 @@
 package com.dream.city.service.account;
 
 
+import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.entity.PlayerAccountLog;
 import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.resp.PlayerAccountResp;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -25,14 +27,14 @@ public interface AccountService {
      * @param record
      * @return
      */
-    PlayerAccount getPlayerAccount(PlayerAccountReq record);
+    PlayerAccountResp getPlayerAccount(PlayerAccountReq record);
 
     /**
      * 玩家账户列表
      * @param record
      * @return
      */
-    List<PlayerAccountResp> getPlayerAccountList(PlayerAccountReq record);
+    PageInfo<PlayerAccountResp> getPlayerAccountList(Page pageReq, PlayerAccountReq record);
 
     /**
      * 更新玩家账户
