@@ -152,6 +152,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="${ctx}/user/account/index">
+                        <i class="icon-double-angle-right"></i>
+                        用户账户
+                    </a>
+                </li>
+                <li>
                     <a href="${ctx}/role/index">
                         <i class="icon-double-angle-right"></i>
                         角色管理

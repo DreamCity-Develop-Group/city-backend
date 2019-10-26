@@ -51,6 +51,8 @@ public interface AccountService {
      */
     List<PlayerAccount> getPlatformAccounts(PlayerAccountReq record);
 
+    List<PlayerAccountResp> getPlatformAccountList(PlayerAccountReq record);
+
     PlayerAccount selectByPrimaryKey(Integer accId);
 
 

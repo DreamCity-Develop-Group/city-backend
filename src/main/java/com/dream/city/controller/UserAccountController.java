@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
-import com.dream.city.base.model.entity.Dictionary;
 import com.dream.city.base.model.entity.PlayerAccount;
 import com.dream.city.base.model.entity.PlayerTrade;
 import com.dream.city.base.model.entity.TradeDetail;
@@ -13,8 +12,6 @@ import com.dream.city.base.model.req.AccountUpdateReq;
 import com.dream.city.base.model.req.PlayerAccountReq;
 import com.dream.city.base.model.resp.PlayerAccountResp;
 import com.dream.city.base.model.vo.UserVo;
-import com.dream.city.base.service.DictionaryService;
-import com.dream.city.base.utils.DataUtils;
 import com.dream.city.base.utils.RedisKeys;
 import com.dream.city.base.utils.RedisUtils;
 import com.dream.city.service.account.AccountService;
@@ -26,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,20 +32,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
  * @author
- * 玩家账户
+ * 用户账户
  */
 @RestController
-@RequestMapping("/player/account")
-public class AccountController extends BaseController {
+@RequestMapping("/user/account")
+public class UserAccountController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final String modelName = "玩家账户";
-    private final String actionPath = "player/account";
+    private final String modelName = "用户账户";
+    private final String actionPath = "user/account";
 
     @Autowired
     private AccountService accountService;
@@ -59,56 +58,30 @@ public class AccountController extends BaseController {
     private RedisUtils redisUtils;
 
 
-    @RequestMapping("/add")
-    public ModelAndView add(Model model){
-        model.addAttribute("title","添加");
-        model.addAttribute("table","添加" + modelName);
+
+
+    @RequestMapping("/index")
+    public ModelAndView index(Model model){
+        model.addAttribute("title",modelName);
+        model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
-        model.addAttribute("data",new PlayerAccountResp());
-        return new ModelAndView(actionPath + "/add");
+        model.addAttribute("data",new PlayerAccountReq());
+        return new ModelAndView(actionPath + "/index");
     }
-    @RequestMapping("/insert")
-    public Result insert(PlayerAccountResp record){
-        logger.info("新增"+ modelName +"，：{}",record);
-        boolean success = Boolean.FALSE;
-        Integer result = 0;
-        try {
-            PlayerAccount accountReq = new PlayerAccount();
-            accountReq.setAccAddr(record.getAccAddr());
-            accountReq.setAccPlayerId(record.getPlayerId());
-            accountReq.setAccMtAvailable(record.getAccMtAvailable());
-            accountReq.setAccMt(record.getAccMt());
-            accountReq.setAccMtFreeze(record.getAccMtFreeze());
-            accountReq.setAccIncome(record.getTotalIncome());
-            accountReq.setAccUsdt(record.getAccUsdt());
-            accountReq.setAccUsdtFreeze(record.getAccUsdtFreeze());
-            accountReq.setAccUsdtAvailable(record.getAccUsdtAvailable());
-            result = accountService.createPlayerAccount(accountReq);
-            if (result > 0){
-                success = Boolean.TRUE;
-            }
+    @RequestMapping("/getList")
+    public Result getList(PlayerAccountReq record){
+        logger.info(modelName + "列表，：{}",record);
+        boolean success = Boolean.TRUE;
+        PageInfo<PlayerAccountResp> result = null;
+        List<PlayerAccountResp> list = null;
+        try{
+            list = accountService.getPlatformAccountList(record);
+            result = new PageInfo<>(list);
         }catch (Exception e){
-            logger.error("新增"+ modelName +"异常",e);
+            success = Boolean.FALSE;
         }
-        return new Result(success,"新增" + modelName,result);
+        return new Result(success,modelName + "列表",result);
     }
-
-
-    /*@RequestMapping("/delete/{id}")
-    public Result delete(@PathVariable("id") Integer id){
-        logger.info("删除"+ modelName +"，：{}",id);
-        boolean success = Boolean.FALSE;
-        Integer result = 0;
-        try {
-            result = accountService.deleteById(id);
-            if (result > 0){
-                success = Boolean.TRUE;
-            }
-        }catch (Exception e){
-            logger.error("删除"+ modelName +"异常",e);
-        }
-        return new Result(success,"删除"+ modelName,result);
-    }*/
 
 
 
@@ -116,7 +89,11 @@ public class AccountController extends BaseController {
     public ModelAndView edit(@PathVariable("id") Integer id, Model model){
         PlayerAccountReq accountReq = new PlayerAccountReq();
         accountReq.setAccId(id);
-        PlayerAccountResp result = accountService.getPlayerAccount(accountReq);
+        PlayerAccountResp result = null;
+        List<PlayerAccountResp> list = accountService.getPlatformAccountList(accountReq);
+        if (!CollectionUtils.isEmpty(list)){
+            result = list.get(0);
+        }
         model.addAttribute("data",result);
         model.addAttribute("title","编辑");
         model.addAttribute("table","编辑"+ modelName);
@@ -245,49 +222,59 @@ public class AccountController extends BaseController {
 
 
 
-
-    @RequestMapping("/get/{id}")
-    public ModelAndView get(@PathVariable("id") Integer id,Model model){
-        logger.info("查询"+ modelName +"：{}",id);
-        PlayerAccountResp result = null;
-        try {
-            PlayerAccountReq accountReq = new PlayerAccountReq();
-            accountReq.setAccId(id);
-            result = accountService.getPlayerAccount(accountReq);
-        }catch (Exception e){
-            logger.error("查询"+ modelName +"异常",e);
-        }
-        model.addAttribute("data",result);
-        model.addAttribute("edit",Boolean.FALSE);
-        model.addAttribute("title","详情");
-        model.addAttribute("table",modelName + "详情");
-        return new ModelAndView(actionPath + "/edit");
-    }
-
-
-
-
-    @RequestMapping("/index")
-    public ModelAndView index(Model model){
-        model.addAttribute("title",modelName);
-        model.addAttribute("table", modelName + "列表");
+    /*@RequestMapping("/add")
+    public ModelAndView add(Model model){
+        model.addAttribute("title","添加");
+        model.addAttribute("table","添加" + modelName);
         model.addAttribute("actionPath",actionPath);
-        model.addAttribute("data",new PlayerAccountReq());
-        return new ModelAndView(actionPath + "/index");
+        model.addAttribute("data",new PlayerAccountResp());
+        return new ModelAndView(actionPath + "/add");
     }
-    @RequestMapping("/getList")
-    public Result getList(Page pageReq, PlayerAccountReq record){
-        logger.info(modelName + "列表，：{}",record);
-        boolean success = Boolean.TRUE;
-        PageInfo<PlayerAccountResp> result = null;
-        try{
-            pageReq.setCondition(record);
-            result = accountService.getPlayerAccountList(pageReq, record);
+    @RequestMapping("/insert")
+    public Result insert(PlayerAccountResp record){
+        logger.info("新增"+ modelName +"，：{}",record);
+        boolean success = Boolean.FALSE;
+        Integer result = 0;
+        try {
+            PlayerAccount accountReq = new PlayerAccount();
+            accountReq.setAccAddr(record.getAccAddr());
+            accountReq.setAccPlayerId(record.getPlayerId());
+            accountReq.setAccMtAvailable(record.getAccMtAvailable());
+            accountReq.setAccMt(record.getAccMt());
+            accountReq.setAccMtFreeze(record.getAccMtFreeze());
+            accountReq.setAccIncome(record.getTotalIncome());
+            accountReq.setAccUsdt(record.getAccUsdt());
+            accountReq.setAccUsdtFreeze(record.getAccUsdtFreeze());
+            accountReq.setAccUsdtAvailable(record.getAccUsdtAvailable());
+            result = accountService.createPlayerAccount(accountReq);
+            if (result > 0){
+                success = Boolean.TRUE;
+            }
         }catch (Exception e){
-            success = Boolean.FALSE;
+            logger.error("新增"+ modelName +"异常",e);
         }
-        return new Result(success,modelName + "列表",result);
-    }
+        return new Result(success,"新增" + modelName,result);
+    }*/
+
+
+    /*@RequestMapping("/delete/{id}")
+    public Result delete(@PathVariable("id") Integer id){
+        logger.info("删除"+ modelName +"，：{}",id);
+        boolean success = Boolean.FALSE;
+        Integer result = 0;
+        try {
+            result = accountService.deleteById(id);
+            if (result > 0){
+                success = Boolean.TRUE;
+            }
+        }catch (Exception e){
+            logger.error("删除"+ modelName +"异常",e);
+        }
+        return new Result(success,"删除"+ modelName,result);
+    }*/
+
+
+
 
 
 }

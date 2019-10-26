@@ -40,8 +40,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public PlayerAccountResp getPlayerAccount(PlayerAccountReq record) {
-        String ids = dictionaryService.getValByKey("platform.account.accIds");
-        record.setPlatformAccIds("\'"+ids+"\'");
+//        String ids = dictionaryService.getValByKey("platform.account.accIds");
+//        record.setPlatformAccIds("\'"+ids+"\'");
         return accountMapper.getPlayerAccountSelective(record);
     }
 
@@ -72,6 +72,14 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.getPlatformAccounts(record);
     }
 
+    @Override
+    public List<PlayerAccountResp> getPlatformAccountList(PlayerAccountReq record) {
+        String ids = dictionaryService.getValByKey("platform.account.accIds");
+        record.setPlatformAccIds("\'"+ids+"\'");
+        List<PlayerAccountResp> playerAccountList = accountMapper.getPlatformAccountList(record);
+        return playerAccountList;
+    }
+
 
     @Override
     public PlayerAccount selectByPrimaryKey(Integer accId){
@@ -81,9 +89,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public PlayerAccountResp getAccountByIdOrName(Integer inId, String inName) {
-            if (inId == null){
-                return null;
-            }
         PlayerAccount property = accountMapper.selectByPrimaryPlayerId(inId);
             return DataUtils.toJavaObject(property,PlayerAccountResp.class);
     }
