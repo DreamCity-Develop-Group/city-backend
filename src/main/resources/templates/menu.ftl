@@ -154,7 +154,7 @@
                 <li>
                     <a href="${ctx}/user/account/index">
                         <i class="icon-double-angle-right"></i>
-                        用户账户
+                        平台账户
                     </a>
                 </li>
                 <li>
