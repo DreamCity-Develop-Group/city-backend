@@ -96,7 +96,8 @@ public class ShiroConfig {
 	@ConditionalOnMissingBean
 	public Realm realm() {
 		return new MyRealm();
-	}
+	}*/
+
     @Bean(name = "shiroCacheManager")
     @ConditionalOnMissingBean
     public CacheManager cacheManager() {
@@ -109,7 +110,7 @@ public class ShiroConfig {
         sm.setCacheManager(cacheManager());
         return sm;
     }
-	@Bean(name = "shiroFilter")
+	/*@Bean(name = "shiroFilter")
 	@DependsOn("securityManager")
 	@ConditionalOnMissingBean
 	public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultSecurityManager securityManager, @Qualifier("realm") Realm realm) {
@@ -153,7 +154,7 @@ public class ShiroConfig {
 	 * 生命周期处理器
 	 * @return
 	 */
-	 /*@Bean
+	 @Bean
 	 public HashedCredentialsMatcher hashedCredentialsMatcher() {
 		 HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
 		 //加密方式
@@ -161,12 +162,12 @@ public class ShiroConfig {
 		 //散列次数
 		 credentialsMatcher.setHashIterations(2);
 		 return credentialsMatcher;
-	 }*/
+	 }
 	@Bean(name = "realm")
 	@DependsOn("lifecycleBeanPostProcessor")
 	 public Realm realm() {
 		 MyRealm customRealm = new MyRealm();
-		 //customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+		 customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		 customRealm.setAuthenticationCachingEnabled(true);
 		 customRealm.setAuthorizationCachingEnabled(true);
 		 return customRealm;
@@ -197,10 +198,10 @@ public class ShiroConfig {
 		defaultSecurityManager.setRememberMeManager(rememberMeManager());
 		return defaultSecurityManager;
 	}
-	@Bean(name = "securityManager")
+	/*@Bean(name = "securityManager")
 	public SecurityManager securityManager() {
-		return defaultSecurityManager() ;
-	}
+		return defaultSecurityManager();
+	}*/
 	private SimpleCookie rememberMeCookie() {
 		// 设置 cookie 名称，对应 login.html 页面的 <input type="checkbox" name="rememberMe"/>
 		SimpleCookie cookie = new SimpleCookie("rememberMe");

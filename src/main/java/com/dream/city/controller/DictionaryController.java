@@ -4,7 +4,7 @@ import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
 import com.dream.city.base.model.entity.Dictionary;
-import com.dream.city.base.service.DictionaryService;
+import com.dream.city.service.common.DictionaryService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

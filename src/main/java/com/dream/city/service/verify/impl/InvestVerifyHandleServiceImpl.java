@@ -281,14 +281,14 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
         int i = 0;
         if (VerifyStatus.PASS.getCode().equalsIgnoreCase(verifyReq.getVerifyStatus())){
             //审核通过 预约中->经营中
-            i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.MANAGEMENT.name());
+            i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.MANAGEMENT.getStatus());
             if (i < 1){
                 msg = "审核通过修改订单状态失败";
                 success = Boolean.FALSE;
             }
         }else {
             //审核不通过 预约中->预约审核不通过
-            i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.SUBSCRIBE_VERIFY_FAIL.name());
+            i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.SUBSCRIBE_VERIFY_FAIL.getStatus());
             if (i < 1){
                 msg = "审核不通过修改订单状态失败";
                 success = Boolean.FALSE;
@@ -308,7 +308,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
     }
 
 
-    private int updateOrderState(Integer orderId,String orderState){
+    private int updateOrderState(Integer orderId,Integer orderState){
         InvestOrder orderReq = new InvestOrder();
         orderReq.setOrderId(orderId);
         orderReq.setOrderState(orderState);
@@ -329,7 +329,7 @@ public class InvestVerifyHandleServiceImpl implements InvestVerifyHandleService 
         }else {
             if (InvestStatus.INVESTED.name().equalsIgnoreCase(order.getOrderState())){
                 //审核成功，将状态改成经营中
-                i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.MANAGEMENT.name());
+                i = this.updateOrderState(verifyReq.getOrderId(), InvestStatus.MANAGEMENT.getStatus());
                 if (i > 0){
                     success = Boolean.TRUE;
                     descr = "预约审核成功";

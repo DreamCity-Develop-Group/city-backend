@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public int investOrderInvalid(InvestOrder record) {
-        record.setOrderState(InvestStatus.INVALID.name());
+        record.setOrderState(InvestStatus.INVALID.getStatus());
         Integer integer = orderMapper.updateByPrimaryKeySelective(record);
         return integer ==null?0:integer;
     }
@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public int investOrderCancel(InvestOrder record) {
-        record.setOrderState(InvestStatus.CANCEL.name());
+        record.setOrderState(InvestStatus.CANCEL.getStatus());
         Integer integer = orderMapper.updateByPrimaryKeySelective(record);
         return integer ==null?0:integer;
     }
