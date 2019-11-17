@@ -3,6 +3,8 @@ package com.dream.city.controller;
 import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.Page;
+import com.dream.city.base.model.enu.InvestStatus;
+import com.dream.city.base.model.enu.OrderState;
 import com.dream.city.base.model.req.InvestOrderReq;
 import com.dream.city.service.invest.OrderService;
 import com.dream.city.service.verify.InvestVerifyHandleService;
@@ -66,13 +68,22 @@ public class InvestOrderController extends BaseController {
         model.addAttribute("title",modelName);
         model.addAttribute("table", modelName + "列表");
         model.addAttribute("actionPath",actionPath);
+
+
+
         return new ModelAndView(actionPath + "/index");
     }
+
+
     @RequestMapping("/getList")
     public Result getList(Page pageReq, InvestOrderReq record){
         logger.info(modelName + "列表，：{}",record);
         boolean success = Boolean.TRUE;
         PageInfo pageInfo = null;
+        String status = InvestStatus.SUBSCRIBED.name();
+        if (record.getOrderState().equals(status)){
+            record.setOrderState("1");
+        }
         try{
             pageReq.setCondition(record);
             pageInfo = orderService.getInvestOrderList(pageReq);

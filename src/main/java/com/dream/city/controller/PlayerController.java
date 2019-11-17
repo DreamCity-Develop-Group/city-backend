@@ -48,6 +48,7 @@ public class PlayerController extends BaseController {
         model.addAttribute("table", modelName + "详情");
         model.addAttribute("edit",Boolean.FALSE);
         model.addAttribute("data",result);
+        model.addAttribute("actionPath",actionPath);
         return new ModelAndView(actionPath + "/edit");
     }
 

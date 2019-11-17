@@ -1,17 +1,21 @@
 package com.dream.city.controller;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSONObject;
 import com.dream.city.base.BaseController;
 import com.dream.city.base.Result;
 import com.dream.city.base.model.enu.VerifyStatus;
 import com.dream.city.base.model.req.VerifyReq;
 import com.dream.city.base.model.resp.InvestOrderResp;
 import com.dream.city.base.model.resp.PlayerTradeResp;
+import com.dream.city.base.utils.JsonUtil;
 import com.dream.city.service.invest.OrderService;
 import com.dream.city.service.trade.PlayerTradeService;
 import com.dream.city.service.verify.InvestVerifyHandleService;
 import com.dream.city.service.verify.WithdrawVerifyHandleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Objects;
 
 /**
  * @author
@@ -49,9 +55,20 @@ public class VerifyController extends BaseController {
     @RequestMapping("/subscribeOrderVerifyPage/{id}")
     public ModelAndView subscribeOrderVerifyPage(@PathVariable("id") Integer id, Model model){
         InvestOrderResp result = orderService.getInvestOrderById(id);
-        this.getModel(result, model, "投资预约");
+
+        String json = JsonUtil.parseObjToJson(result);
+        JSONObject jsonObject = JsonUtil.parseJsonToObj(json,JSONObject.class);
+        jsonObject.put("orderId",jsonObject.getInteger("orderId")+"");
+        this.getModel(jsonObject, model, "投资预约");
         return new ModelAndView("/invest/edit");
     }
+
+    /**
+     * 投资审核
+     *
+     * @param record
+     * @return
+     */
     @RequestMapping(value = "/subscribeOrderVerify", method = RequestMethod.POST)
     public Result<Integer> subscribeOrderVerify(VerifyReq record){
         logger.info("投资预约审核，{}",record);

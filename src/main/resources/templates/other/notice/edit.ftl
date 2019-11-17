@@ -28,6 +28,12 @@
                     <form class="form-horizontal m-t" id="updateForm">
                         <input type="hidden" id="noticeId" name="noticeId" value="${data.noticeId}">
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">标题：</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="title" name="title" placeholder="Default Text" value="${data.title}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">内容：</label>
                             <div class="col-sm-8">
                                 <textarea class="form-control" id="noticeContent" name="noticeContent" placeholder="Default Text">${data.noticeContent}</textarea>

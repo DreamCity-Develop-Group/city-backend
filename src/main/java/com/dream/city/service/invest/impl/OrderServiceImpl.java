@@ -68,7 +68,8 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }
         InvestOrderResp order = orderMapper.selectByPrimaryKey(orderId);
-        return this.getOrderResp(order);
+        //return this.getOrderResp(order);
+        return (order);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
         List<InvestOrderResp> ordersResp = new ArrayList<>();
         if (!CollectionUtils.isEmpty(orders)){
             for (InvestOrderResp order : orders){
-                ordersResp.add(this.getOrderResp(order));
+                ordersResp.add(order);//this.getOrderResp(order)
             }
         }
         return new PageInfo<>(ordersResp);

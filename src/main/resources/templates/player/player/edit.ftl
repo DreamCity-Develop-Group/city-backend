@@ -109,7 +109,7 @@
                         required: true,
                         minlength: 1,
                         maxlength: 600
-                    }
+                    },
                 },
                 messages: {},
                 submitHandler:function(form){

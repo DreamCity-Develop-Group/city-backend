@@ -11,10 +11,12 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sun.security.provider.MD5;
 
 import java.util.HashSet;
 import java.util.List;
@@ -46,8 +48,7 @@ public class MyRealm extends AuthorizingRealm {
 
 
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(
-			PrincipalCollection principals) {
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		User user = (User) principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		User dbUser = userService.findUserByName(user.getLoginName());
@@ -68,8 +69,7 @@ public class MyRealm extends AuthorizingRealm {
 	}
 
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(
-			AuthenticationToken token) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String loginName = (String) token.getPrincipal();
 
 		User user = userService.findUserByName(loginName);
@@ -81,7 +81,9 @@ public class MyRealm extends AuthorizingRealm {
 			throw new UnknownAccountException("账号或密码不正确");
 		}
 		// 密码错误
-		if (!EncryptUtils.encryptMD5(password).equals(user.getPassword())) {
+        String pwd = new Md5Hash(password,loginName).toHex();
+		String pwd2 = EncryptUtils.encryptMD5(password);
+		if (!pwd2.equals(user.getPassword())) {
 			throw new IncorrectCredentialsException("账号或密码不正确");
 		}
 		// 账号锁定
@@ -89,7 +91,7 @@ public class MyRealm extends AuthorizingRealm {
 			throw new LockedAccountException("账号已被锁定,请联系管理员");
 		}
 
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, pwd2, getName());
 		return info;
 	}
 

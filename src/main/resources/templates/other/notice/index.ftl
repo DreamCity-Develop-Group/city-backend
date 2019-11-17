@@ -316,6 +316,9 @@
                         field: "noticeId",
                         sortable: true
                     },{
+						title: "标题",
+						field: "title"
+					},{
                         title: "内容",
                         field: "noticeContent"
                     },{

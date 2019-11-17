@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -47,8 +48,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public PageInfo<PlayerAccountResp> getPlayerAccountList(Page pageReq, PlayerAccountReq record) {
-        String ids = dictionaryService.getValByKey("platform.account.accIds");
-        record.setPlatformAccIds("\'"+ids+"\'");
+        String id = dictionaryService.getValByKey("platform.account.accIds");
+        List<String>ids = Arrays.asList(id.split(","));
+        record.setPlatformAccIds(ids);
         PageHelper.startPage(pageReq.getPageNum(),pageReq.getPageSize());
         List<PlayerAccountResp> playerAccountList = accountMapper.getPlayerAccountList(record);
         return new PageInfo<>(playerAccountList);
@@ -66,16 +68,18 @@ public class AccountServiceImpl implements AccountService {
     public List<PlayerAccount> getPlatformAccounts(PlayerAccountReq record) {
         if (record == null || record.getAccId() == null) {
             record = new PlayerAccountReq();
-            String ids = dictionaryService.getValByKey("platform.account.accIds");
-            record.setPlatformAccIds("\'"+ids+"\'");
+            String id = dictionaryService.getValByKey("platform.account.accIds");
+            List<String>ids = Arrays.asList(id.split(","));
+            record.setPlatformAccIds(ids);
         }
         return accountMapper.getPlatformAccounts(record);
     }
 
     @Override
     public List<PlayerAccountResp> getPlatformAccountList(PlayerAccountReq record) {
-        String ids = dictionaryService.getValByKey("platform.account.accIds");
-        record.setPlatformAccIds("\'"+ids+"\'");
+        String id = dictionaryService.getValByKey("platform.account.accIds");
+        List<String>ids = Arrays.asList(id.split(","));
+        record.setPlatformAccIds(ids);
         List<PlayerAccountResp> playerAccountList = accountMapper.getPlatformAccountList(record);
         return playerAccountList;
     }

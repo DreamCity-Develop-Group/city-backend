@@ -71,7 +71,7 @@ public class QuartzConfig {
         schedulerFactoryBean.setAutoStartup(true);
         schedulerFactoryBean.setDataSource(dataSource);
         schedulerFactoryBean.setApplicationContextSchedulerContextKey("applicationContext");
-        schedulerFactoryBean.setConfigLocation(new ClassPathResource("quartz.properties"));
+        schedulerFactoryBean.setConfigLocation(new ClassPathResource("quartz.yml"));
         //schedulerFactoryBean.setQuartzProperties(quartzProperties());
         return schedulerFactoryBean;
     }

@@ -262,7 +262,7 @@
 
 		<script type="text/javascript">
             $(document).ready(function () {
-
+				var me =this;
 				//外部js调用
 				laydate({
 					elem: '#createTimeStart', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
@@ -383,7 +383,30 @@
 							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.tradeId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';
 							return operateHtml;
 						}
-					}]
+					}],
+					onPageChange: function (number, size) {alert("分叉");
+						//设置在分页事件触发时，传递分页参数给后台，重新加载数据
+						t_limit = number;
+						t_size = size;
+						var params = {};
+						params.start = number;
+						params.limit = size;
+						//加上排序的参数
+						params.sort = t_sort;
+						params.order = t_order;
+						me.ajaxGetData(params);
+					},
+					onSort: function (name, order) {
+						t_sort = name;
+						t_order = order;
+						var params = {};
+						//加上分页的参数
+						params.start = t_limit;
+						params.limit = t_size;
+						params.sort = t_sort;
+						params.order = t_order;
+						me.ajaxGetData(params);
+					}
                 });
             });
 
@@ -406,6 +429,7 @@
 					"tradeDesc":$("#tradeDesc").val(),
 					"tradeType":$("#tradeType").val()
                 }
+                console.log(params);
                 return params;
             }
             function search() {

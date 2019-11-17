@@ -369,7 +369,7 @@
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '';
-							if (row.orderState === '预约中' || row.orderState === 'WAIT') {
+							if (row.orderState === '预约中' || row.orderState === '1') {
 								operateHtml = operateHtml + '<button class="btn btn-danger btn-xs" type="button" onclick="edit(\'' + row.orderId + '\')"><i class="fa fa-check"></i>&nbsp;审核</button> &nbsp;';
 							}
 							operateHtml = operateHtml + '<button class="btn btn-primary btn-xs" type="button" onclick="detail(\''+row.orderId+'\')"><i class="fa fa-check"></i>&nbsp;详情</button> &nbsp;';

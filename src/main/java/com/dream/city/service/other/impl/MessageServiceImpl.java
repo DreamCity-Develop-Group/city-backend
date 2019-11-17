@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -99,12 +100,18 @@ public class MessageServiceImpl implements MessageService {
 
     private MessageResp getMessageResp(CityMessage message){
         PlayerResp player = playerService.getPlayerByPlayerId(message.getPlayerId());
-        PlayerResp frien = playerService.getPlayerByPlayerId(message.getFriendId());
+        PlayerResp friend = playerService.getPlayerByPlayerId(message.getFriendId());
         MessageResp messageResp = DataUtils.toJavaObject(message,MessageResp.class);
+
         messageResp.setPlayerName(player.getPlayerName());
         messageResp.setPlayerNick(player.getPlayerNick());
-        messageResp.setFriendName(frien.getPlayerName());
-        messageResp.setFriendNick(frien.getPlayerNick());
+        if(Objects.nonNull(friend)){
+            messageResp.setFriendName(friend.getPlayerName());
+            messageResp.setFriendNick(friend.getPlayerNick());
+        }else{
+            messageResp.setFriendName("平台消息");
+            messageResp.setFriendNick("平台");
+        }
         return messageResp;
     }
 

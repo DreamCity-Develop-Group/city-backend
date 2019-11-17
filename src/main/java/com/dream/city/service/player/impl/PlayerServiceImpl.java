@@ -61,7 +61,8 @@ public class PlayerServiceImpl implements PlayerService {
         }
         Player player = new Player();
         player.setId(id);
-        return playerMapper.getPlayerById(player);
+        PlayerResp resp =playerMapper.getPlayerById(player);
+        return resp;
     }
 
     @Override
